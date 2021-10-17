@@ -1,0 +1,25 @@
+{
+  "name": "e-commerce-shop",
+  "version": "1.0.0",
+  "description": "Full Stack E-commerce Shop",
+  "repository": "https://github.com/huylee99/e-commerce-shop.git",
+  "author": "huylee99 <huy.le7@pcc.edu>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "serve:frontend": "yarn workspace @app/frontend run dev",
+    "build:frontend": "yarn workspace @app/frontend run build",
+    "commit:all": "git add . && git-cz",
+    "push": "git push -u origin HEAD"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-plugin-react": "^7.26.1",
+    "git-cz": "^4.8.0"
+  }
+}
