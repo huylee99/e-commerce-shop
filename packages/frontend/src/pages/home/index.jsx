@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import NavigationBar from '@/components/CategoriesBar';
 import Hero from './components/Hero';
 import HorizontalCategoryBar from './components/HorizontalCategoryBar';
+import PromotionSection from './components/PromotionSection';
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <NavigationBar />
       <Hero />
       <HorizontalCategoryBar />
+      <PromotionSection />
     </div>
   );
 };
