@@ -1,6 +1,6 @@
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
-
+import SectionHeader from '@/components/SectionHeader';
 import ProductList from '@/components/ProductList';
 
 const PromotionSection = () => {
@@ -8,9 +8,7 @@ const PromotionSection = () => {
     <SectionDivider size='lg'>
       <Container size='lg'>
         <>
-          <h2 className='text-center text-5xl font-bold text-dark mb-10'>
-            Deal of the days.
-          </h2>
+          <SectionHeader title='Deal of the days.' />
           <ProductList />
         </>
       </Container>

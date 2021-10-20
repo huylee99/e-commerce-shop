@@ -10,7 +10,7 @@ const Hero = () => {
             <img
               src='https://wpbingosite.com/wordpress/econis/wp-content/uploads/2021/06/slider2-3.jpg'
               alt='hero-1'
-              className='object-cover h-full w-full'
+              className='h-full w-full object-cover'
             />
           </div>
           <div className='flex flex-col gap-4 h-full'>

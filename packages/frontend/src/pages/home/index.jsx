@@ -5,6 +5,8 @@ import Hero from './components/Hero';
 import HorizontalCategoryBar from './components/HorizontalCategoryBar';
 import PromotionSection from './components/PromotionSection';
 import PromotionBanner from './components/PromotionBanner';
+import BestSeller from './components/BestSeller';
+import SaleBanner from './components/SaleBanner';
 
 const Home = () => {
   return (
@@ -16,6 +18,8 @@ const Home = () => {
       <HorizontalCategoryBar />
       <PromotionSection />
       <PromotionBanner />
+      <BestSeller />
+      <SaleBanner />
     </div>
   );
 };

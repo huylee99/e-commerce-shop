@@ -12,7 +12,7 @@ const PromotionBanner = () => {
               src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634764393/fruit/promote-3_grrtyp.jpg'
               alt='promote-1'
             />
-            <div className='max-w-[180px] absolute z-30 right-[80px] bottom-[100px]'>
+            <div className='max-w-[180px] absolute z-30 right-[80px] bottom-1/4'>
               <span className='capitalize block text-3xl text-white font-medium mb-2'>
                 discover real organic flavors
               </span>
@@ -33,7 +33,7 @@ const PromotionBanner = () => {
               src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634764393/fruit/promote-2_ngmz4f.jpg'
               alt='promote-2'
             />
-            <div className='max-w-[250px] absolute z-30 right-1/4 bottom-[100px] text-center'>
+            <div className='max-w-[250px] absolute z-30 right-1/4 bottom-1/4 text-center'>
               <span className='text-sm font-bold uppercase text-gray-200 block mb-2'>
                 Natural Fresh
               </span>
@@ -55,7 +55,7 @@ const PromotionBanner = () => {
               src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634764393/fruit/promote-1_ws2j7g.jpg'
               alt='promote-3'
             />
-            <div className='max-w-[180px] absolute z-30 left-[30px] bottom-[100px]'>
+            <div className='max-w-[180px] absolute z-30 left-[30px] bottom-1/4'>
               <span className='capitalize block text-3xl text-white font-medium mb-2'>
                 grow only organic & food
               </span>
