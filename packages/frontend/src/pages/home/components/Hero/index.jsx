@@ -1,5 +1,5 @@
-import SectionDivider from '../SectionDivider';
-import Container from '../Container';
+import SectionDivider from '@/components/SectionDivider';
+import Container from '@/components/Container';
 
 const Hero = () => {
   return (
@@ -8,7 +8,7 @@ const Hero = () => {
         <div className='flex gap-4 h-full max-h-[650px]'>
           <div className='rounded-3xl overflow-hidden'>
             <img
-              src='https://wpbingosite.com/wordpress/econis/wp-content/uploads/2021/06/slider2-4.jpg'
+              src='https://wpbingosite.com/wordpress/econis/wp-content/uploads/2021/06/slider2-3.jpg'
               alt='hero-1'
               className='object-cover h-full w-full'
             />
