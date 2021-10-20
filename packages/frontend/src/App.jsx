@@ -1,5 +1,7 @@
+import AppRouter from './routes';
+
 const App = () => {
-  return <div className="text-red-500 font-semibold">Hello</div>;
+  return <AppRouter />;
 };
 
 export default App;
