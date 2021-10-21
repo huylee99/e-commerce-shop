@@ -7,8 +7,10 @@ const BestSeller = () => {
   return (
     <SectionDivider size='lg'>
       <Container size='lg'>
-        <SectionHeader title='Best Seller' />
-        <ProductList />
+        <>
+          <SectionHeader title='Best Seller' />
+          <ProductList />
+        </>
       </Container>
     </SectionDivider>
   );
