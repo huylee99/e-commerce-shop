@@ -1,14 +1,14 @@
-import Container from '@/components/Container';
-import SectionDivider from '@/components/SectionDivider';
 import SectionHeader from '@/components/SectionHeader';
+import SectionDivider from '@/components/SectionDivider';
+import Container from '@/components/Container';
 import ProductList from '@/components/ProductList';
 
-const PromotionSection = () => {
+const BestSeller = () => {
   return (
     <SectionDivider size='lg'>
       <Container size='lg'>
         <>
-          <SectionHeader title='Deal of the days.' />
+          <SectionHeader title='Best Seller' />
           <ProductList />
         </>
       </Container>
@@ -16,4 +16,4 @@ const PromotionSection = () => {
   );
 };
 
-export default PromotionSection;
+export default BestSeller;

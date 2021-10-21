@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 import { MenuAlt1Icon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
@@ -8,6 +9,13 @@ import Container from '../Container';
 
 const NavigationBar = () => {
   const [isShown, setShow] = useState(false);
+  const menuRef = useRef(null);
+
+  useClickOutside(menuRef, () => {
+    if (isShown) {
+      setShow(false);
+    }
+  });
 
   return (
     <SectionDivider size='sm'>
@@ -26,6 +34,7 @@ const NavigationBar = () => {
               className={`absolute z-10 w-full mt-2 top-full bg-white rounded-xl shadow-custom-1 overflow-hidden ${
                 !isShown ? 'hidden' : ''
               }`}
+              ref={menuRef}
             >
               <ul>
                 <li className='py-2 px-6 text-gray-500 font-semibold hover:text-primary hover:bg-gray-100'>
