@@ -9,6 +9,7 @@ import BestSeller from './components/BestSeller';
 import SaleBanner from './components/SaleBanner';
 import Features from './components/Features';
 import Subscription from './components/Subscription';
+import Footer from './components/Footer';
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
       <SaleBanner />
       <Features />
       <Subscription />
+      <Footer />
     </div>
   );
 };

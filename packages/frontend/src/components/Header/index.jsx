@@ -1,11 +1,8 @@
-import {
-  PhoneIcon,
-  HeartIcon,
-  ShoppingCartIcon,
-} from '@heroicons/react/outline';
+import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 
 import Container from '../Container';
 import SectionDivider from '../SectionDivider';
+import ContactPhone from '@/pages/home/components/ContactPhone';
 
 const Header = () => {
   return (
@@ -15,19 +12,7 @@ const Header = () => {
           <span className='font-bold text-3xl text-green-600'>SuperMarket</span>
           <div className='flex items-center'>
             <div>
-              <div className='flex items-center'>
-                <div className='relative w-16 h-16 leading-[64px] bg-primary text-primary bg-opacity-25 rounded-full text-center mr-5'>
-                  <PhoneIcon className='w-8 inline-block' />
-                </div>
-                <div>
-                  <span className='block font-bold text-sm uppercase'>
-                    Call us free
-                  </span>
-                  <span className='block font-semibold text-primary text-xl'>
-                    (503) - 444 - 8888
-                  </span>
-                </div>
-              </div>
+              <ContactPhone />
             </div>
             <div className='bg-gray-300 h-12 w-[1px] mx-8'></div>
             <div className='text-dark font-bold text-base cursor-pointer hover:text-primary mr-4'>
