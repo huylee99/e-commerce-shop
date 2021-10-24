@@ -8,7 +8,7 @@ const Container = ({ children, size }) => {
       containerSize = 'max-w-[1732px]';
       break;
     case 'md':
-      containerSize = 'max-w-[1132px]';
+      containerSize = 'max-w-[1432px]';
       break;
     default:
       containerSize = 'max-w-[932px]';

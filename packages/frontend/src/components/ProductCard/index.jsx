@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   HeartIcon,
   SearchIcon,
@@ -5,9 +6,11 @@ import {
 } from '@heroicons/react/outline';
 import { StarIcon } from '@heroicons/react/solid';
 
-const ProductCard = () => {
+const ProductCard = ({ width }) => {
   return (
-    <div className='w-[16.67%] shadow-md rounded-xl p-4 group relative overflow-hidden'>
+    <div
+      className={`${width} shadow-md rounded-xl p-4 group relative overflow-hidden`}
+    >
       <div>
         <div className='flex items-center mb-5'>
           <span className='px-2 py-1 mr-2 inline-flex text-sm leading-5 font-bold rounded-lg bg-yellow-100 text-yellow-600'>
@@ -63,6 +66,10 @@ const ProductCard = () => {
       </div>
     </div>
   );
+};
+
+ProductCard.propTypes = {
+  width: PropTypes.string.isRequired,
 };
 
 export default ProductCard;
