@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import { LocationMarkerIcon, MailIcon } from '@heroicons/react/outline';
 
 import Container from '../Container';
 
-const TopBar = () => {
+const TopBar = ({ containerSize }) => {
   return (
     <div className='border border-b-1 border-gray-100'>
-      <Container size='lg'>
+      <Container size={containerSize ? containerSize : 'lg'}>
         <div className='flex items-center justify-between py-3'>
           <div className='flex items-center'>
             <div className='flex items-center text-gray-500'>
@@ -35,6 +36,10 @@ const TopBar = () => {
       </Container>
     </div>
   );
+};
+
+TopBar.propTypes = {
+  containerSize: PropTypes.string,
 };
 
 export default TopBar;

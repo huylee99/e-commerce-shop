@@ -10,13 +10,18 @@ import SaleBanner from './components/SaleBanner';
 import Features from './components/Features';
 import Subscription from './components/Subscription';
 import Footer from './components/Footer';
+import Container from '@/components/Container';
 
 const Home = () => {
   return (
     <div className='wrapper'>
       <TopBar />
-      <Header />
-      <NavigationBar />
+      <header>
+        <Container size='lg'>
+          <Header />
+          <NavigationBar />
+        </Container>
+      </header>
       <Hero />
       <HorizontalCategoryBar />
       <PromotionSection />
