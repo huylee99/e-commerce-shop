@@ -91,7 +91,7 @@ const Filters = () => {
                       .fill(0)
                       .map((item, idx) => (
                         <StarIcon
-                          key={index}
+                          key={idx}
                           className={`${
                             4 - idx >= index
                               ? 'text-yellow-500'
