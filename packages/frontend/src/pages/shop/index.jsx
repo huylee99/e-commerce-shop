@@ -13,16 +13,20 @@ const Shop = () => {
 
       <header>
         <Container size='md'>
-          <Header />
-          <NavigationBar />
+          <>
+            <Header />
+            <NavigationBar />
+          </>
         </Container>
       </header>
 
       <BreadCrumb />
 
       <Container size='md'>
-        <ShopBanner />
-        <MainShop />
+        <>
+          <ShopBanner />
+          <MainShop />
+        </>
       </Container>
     </div>
   );
