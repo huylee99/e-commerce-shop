@@ -10,7 +10,6 @@ const User = () => {
   return (
     <div className='wrapper'>
       <TopBar containerSize='md' />
-
       <header>
         <Container size='md'>
           <>
@@ -19,9 +18,7 @@ const User = () => {
           </>
         </Container>
       </header>
-
       <BreadCrumb />
-
       <Container size='md'>
         <>
           <DashBoard />

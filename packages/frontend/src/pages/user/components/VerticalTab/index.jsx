@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
 
-const VerticalTab = ({ setStep }) => {
+const VerticalTab = ({ setTab }) => {
   const [show, setShow] = useState(false);
 
   return (
     <>
-      <div className='flex rounded-md shadow-md p-2 mb-10'>
+      <div className='flex rounded-md border border-gray-200 p-4 mb-10'>
         <img
           src='https://www.w3schools.com/howto/img_avatar.png'
           alt='avatar'
@@ -38,13 +38,13 @@ const VerticalTab = ({ setStep }) => {
               <ul>
                 <li
                   className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
-                  onClick={() => setStep(0)}
+                  onClick={() => setTab(0)}
                 >
                   Profile Information
                 </li>
                 <li
                   className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
-                  onClick={() => setStep(1)}
+                  onClick={() => setTab(1)}
                 >
                   Change Password
                 </li>
@@ -74,7 +74,7 @@ const VerticalTab = ({ setStep }) => {
                 </li>
                 <li
                   className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
-                  onClick={() => setStep(2)}
+                  onClick={() => setTab(2)}
                 >
                   Order History
                 </li>
@@ -99,7 +99,10 @@ const VerticalTab = ({ setStep }) => {
               } px-9 h-full transition-all duration-300`}
             >
               <ul>
-                <li className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'>
+                <li
+                  className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
+                  onClick={() => setTab(3)}
+                >
                   Coupons
                 </li>
                 <li className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'>
@@ -115,7 +118,7 @@ const VerticalTab = ({ setStep }) => {
 };
 
 VerticalTab.propTypes = {
-  setStep: PropTypes.func,
+  setTab: PropTypes.func,
 };
 
 export default VerticalTab;
