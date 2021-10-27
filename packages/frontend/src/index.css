@@ -11,3 +11,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   @apply font-sans;
 }
+
+.list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Handle */
+.list-scroll::-webkit-scrollbar-thumb {
+  @apply bg-gray-300;
+  @apply rounded-full;
+}
+
+/* Handle on hover */
+.list-scroll::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
