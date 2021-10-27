@@ -18,8 +18,10 @@ const Home = () => {
       <TopBar />
       <header>
         <Container size='lg'>
-          <Header />
-          <NavigationBar />
+          <>
+            <Header />
+            <NavigationBar />
+          </>
         </Container>
       </header>
       <Hero />
