@@ -41,6 +41,9 @@ const Shipping = () => {
               <span className='block text-sm text-gray-500 font-semibold'>
                 {user.address}
               </span>
+              <span className='text-blue-600 font-medium hover:text-gray-500'>
+                Edit
+              </span>
             </div>
           </InputSelect>
         ))}

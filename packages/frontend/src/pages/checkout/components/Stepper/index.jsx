@@ -30,13 +30,12 @@ const Stepper = ({ steps }) => {
   return (
     <div className='flex items-center justify-center'>
       {steps.map((step, index) => (
-        <>
-          <div className='flex items-center'>
-            {statusRender(step.status, ++index)}
-            <span>{step.title}</span>
-          </div>
+        <div key={index} className='flex items-center'>
+          {statusRender(step.status, ++index)}
+          <span>{step.title}</span>
+
           {index === 3 ? null : <ChevronRightIcon className='mx-10 w-6' />}
-        </>
+        </div>
       ))}
     </div>
   );
