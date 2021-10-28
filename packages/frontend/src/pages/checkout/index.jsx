@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
 
 import TopBar from '@/components/TopBar';
 import Container from '@/components/Container';
@@ -31,6 +34,11 @@ const STEPS = [
 const Checkout = () => {
   const [step, setStep] = useState(0);
   const [stepsState, setStepsState] = useState([...STEPS]);
+  const history = useHistory();
+
+  const navigate = () => {
+    history.push('/cart');
+  };
 
   const renderStep = () => {
     switch (step) {
@@ -72,7 +80,16 @@ const Checkout = () => {
       <Container size='sm'>
         <>
           <SectionDivider size='sm'>
-            <h2 className='text-center text-4xl font-bold'>Checkout</h2>
+            <div className='flex relative items-center justify-center'>
+              <div
+                className='absolute left-0 flex items-center text-blue-600 hover:border-b hover:border-blue-600 cursor-pointer'
+                onClick={navigate}
+              >
+                <ChevronDoubleLeftIcon className='w-5 mr-2' />
+                Back to Cart
+              </div>
+              <h2 className='text-center text-4xl font-bold'>Checkout</h2>
+            </div>
           </SectionDivider>
           <SectionDivider size='sm'>
             <Stepper steps={stepsState} />
