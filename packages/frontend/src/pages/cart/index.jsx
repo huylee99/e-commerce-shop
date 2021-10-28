@@ -1,7 +1,5 @@
 import { useHistory } from 'react-router-dom';
 
-import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
-
 import TopBar from '@/components/TopBar';
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
