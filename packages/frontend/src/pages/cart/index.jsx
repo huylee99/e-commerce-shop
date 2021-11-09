@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import TopBar from '@/components/TopBar';
 import Container from '@/components/Container';
@@ -8,10 +8,10 @@ import CartItem from './components/CartItem';
 import CartSummary from './components/CartSummary';
 
 const Cart = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const navigate = () => {
-    history.push('/cart/checkout');
+  const navigationHandler = () => {
+    navigate('/checkout');
   };
 
   return (
@@ -24,9 +24,9 @@ const Cart = () => {
           </SectionDivider>
           <SectionDivider size='sm'>
             <div className='flex items-start gap-10'>
-              <div className='max-w-[70%] w-[70%]'>
-                <div className='mb-10 h-[600px]'>
-                  <div className='gap-4 h-[600px] list-scroll overflow-y-scroll border border-gray-200'>
+              <div className='w-[70%]'>
+                <div className='mb-10 max-h-[600px]'>
+                  <div className='gap-4 max-h-[600px] list-scroll overflow-y-scroll border border-gray-200'>
                     <table className='min-w-full divide-y divide-gray-200'>
                       <thead className='bg-gray-100 sticky top-0'>
                         <tr>
@@ -74,7 +74,7 @@ const Cart = () => {
                 <CartSummary />
                 <button
                   className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'
-                  onClick={navigate}
+                  onClick={navigationHandler}
                 >
                   Proceed to Checkout
                 </button>

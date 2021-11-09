@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 
 import Home from '../pages/home';
 import Shop from '../pages/shop';
@@ -12,16 +17,17 @@ import Product from '../pages/product';
 const AppRouter = () => {
   return (
     <Router>
-      <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/shop' exact component={Shop} />
-        <Route path='/user' exact component={User} />
-        <Route path='/cart' exact component={Cart} />
-        <Route path='/cart/checkout' exact component={Checkout} />
-        <Route path='/register' exact component={SignUp} />
-        <Route path='/login' exact component={SignIn} />
-        <Route path='/product' exact component={Product} />
-      </Switch>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/*' element={<Navigate replace to='/' />} />
+        <Route path='/shop' element={<Shop />} />
+        <Route path='/user' element={<User />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/checkout' element={<Checkout />} />
+        <Route path='/login' element={<SignIn />} />
+        <Route path='/register' element={<SignUp />} />
+        <Route path='/product/:id' element={<Product />} />
+      </Routes>
     </Router>
   );
 };

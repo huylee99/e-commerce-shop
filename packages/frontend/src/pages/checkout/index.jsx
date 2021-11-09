@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
 
@@ -34,10 +34,10 @@ const STEPS = [
 const Checkout = () => {
   const [step, setStep] = useState(0);
   const [stepsState, setStepsState] = useState([...STEPS]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const navigate = () => {
-    history.push('/cart');
+  const navigationHandler = () => {
+    navigate('/cart');
   };
 
   const renderStep = () => {
@@ -83,7 +83,7 @@ const Checkout = () => {
             <div className='flex relative items-center justify-center'>
               <div
                 className='absolute left-0 flex items-center text-blue-600 hover:border-b hover:border-blue-600 cursor-pointer'
-                onClick={navigate}
+                onClick={navigationHandler}
               >
                 <ChevronDoubleLeftIcon className='w-5 mr-2' />
                 Back to Cart
