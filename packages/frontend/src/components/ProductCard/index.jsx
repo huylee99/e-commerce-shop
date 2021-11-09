@@ -29,7 +29,7 @@ const ProductCard = ({ width }) => {
           />
         </div>
         <div className='productRate mb-1'>
-          {[...new Array(5)].map((item, index) => (
+          {[...new Array(5)].map((_, index) => (
             <StarIcon
               className='w-4 inline-block text-yellow-400'
               key={index}
@@ -69,7 +69,7 @@ const ProductCard = ({ width }) => {
 };
 
 ProductCard.propTypes = {
-  width: PropTypes.string.isRequired,
+  width: PropTypes.string,
 };
 
 export default ProductCard;
