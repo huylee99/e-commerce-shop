@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
 
-const VerticalTab = ({ setTab }) => {
-  const [show, setShow] = useState(false);
-
+const VerticalTab = () => {
   return (
     <>
-      <div className='flex rounded-md border border-gray-200 p-4 mb-10'>
+      <div className='flex rounded-md border border-gray-200 p-4 mb-5'>
         <img
           src='https://www.w3schools.com/howto/img_avatar.png'
           alt='avatar'
@@ -21,91 +20,86 @@ const VerticalTab = ({ setTab }) => {
       <div className='rounded-md border border-gray-200'>
         <div className='border-b border-gray-200'>
           <div className='p-4'>
-            <div
-              className='flex items-center cursor-pointer'
-              onClick={() => setShow(prevState => !prevState)}
-            >
+            <div className='flex items-center cursor-pointer'>
               <UserIcon className='w-5 text-primary mr-4' />
               <span className='text-gray-500 font-bold text-sm uppercase'>
                 Account Settings
               </span>
             </div>
-            <div
-              className={`h-0 overflow-hidden opacity-0 ${
-                show ? 'h-20 opacity-100 overflow-visible mt-2' : null
-              } px-9 h-full transition-all duration-300`}
-            >
+            <div className='h-full mt-2 px-9'>
               <ul>
-                <li
-                  className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
-                  onClick={() => setTab(0)}
+                <NavLink
+                  to='/user/information'
+                  className={link =>
+                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary block ${
+                      link.isActive ? 'text-primary' : 'text-dark'
+                    }`
+                  }
                 >
                   Profile Information
-                </li>
-                <li
-                  className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
-                  onClick={() => setTab(1)}
+                </NavLink>
+                <NavLink
+                  to='/user/security'
+                  className={link =>
+                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary ${
+                      link.isActive ? 'text-primary' : 'text-dark'
+                    }`
+                  }
                 >
                   Change Password
-                </li>
+                </NavLink>
               </ul>
             </div>
           </div>
         </div>
         <div className='border-b border-gray-200'>
           <div className='p-4'>
-            <div
-              className='flex items-center cursor-pointer'
-              onClick={() => setShow(prevState => !prevState)}
-            >
+            <div className='flex items-center cursor-pointer'>
               <ShoppingBagIcon className='w-5 text-primary mr-4' />
               <span className='text-gray-500 font-bold text-sm uppercase'>
                 Orders
               </span>
             </div>
-            <div
-              className={`h-0 overflow-hidden opacity-0 ${
-                show ? 'h-20 opacity-100 overflow-visible mt-2' : null
-              } px-9 h-full transition-all duration-300`}
-            >
+            <div className='h-full mt-2 px-9'>
               <ul>
                 <li className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'>
                   Current Order
                 </li>
-                <li
-                  className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
-                  onClick={() => setTab(2)}
+                <NavLink
+                  to='/user/order-history'
+                  className={link =>
+                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary ${
+                      link.isActive ? 'text-primary' : 'text-dark'
+                    }`
+                  }
                 >
                   Order History
-                </li>
+                </NavLink>
               </ul>
             </div>
           </div>
         </div>
         <div className='border-b border-gray-200'>
           <div className='p-4'>
-            <div
-              className='flex items-center cursor-pointer'
-              onClick={() => setShow(prevState => !prevState)}
-            >
+            <div className='flex items-center cursor-pointer'>
               <FolderIcon className='w-5 text-primary mr-4' />
               <span className='text-gray-500 font-bold text-sm uppercase'>
                 My Stuff
               </span>
             </div>
-            <div
-              className={`h-0 overflow-hidden opacity-0 ${
-                show ? 'h-20 opacity-100 overflow-visible mt-2' : null
-              } px-9 h-full transition-all duration-300`}
-            >
+            <div className='h-full mt-2 px-9'>
               <ul>
-                <li
-                  className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'
-                  onClick={() => setTab(3)}
+                <NavLink
+                  to='/user/coupons'
+                  className={link =>
+                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary ${
+                      link.isActive ? 'text-primary' : 'text-dark'
+                    }`
+                  }
                 >
                   Coupons
-                </li>
-                <li className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'>
+                </NavLink>
+                <li className='font-bold capitalize text-base py-2 cursor-pointer hover:text-primary'>
                   Wishlist
                 </li>
               </ul>

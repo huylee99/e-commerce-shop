@@ -1,5 +1,7 @@
-import SectionDivider from '@/components/SectionDivider';
-import Container from '@/components/Container';
+import PropTypes from 'prop-types';
+
+import SectionDivider from '../SectionDivider';
+import Container from '../Container';
 
 import ContactPhone from '../ContactPhone';
 
@@ -37,11 +39,11 @@ const MENUS = [
   },
 ];
 
-const Footer = () => {
+const Footer = ({ containerSize = 'lg' }) => {
   return (
-    <>
+    <div className='mt-auto'>
       <SectionDivider size='lg'>
-        <Container size='lg'>
+        <Container size={containerSize}>
           <div className='flex items-stretch gap-20'>
             <div className='max-w-xs'>
               <div className='mb-5'>
@@ -86,7 +88,7 @@ const Footer = () => {
       </SectionDivider>
       <div className='border border-t-1'>
         <SectionDivider size='sm'>
-          <Container size='lg'>
+          <Container size={containerSize}>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-10 font-semibold text-gray-500'>
                 <div>&copy; 2021 SuperMarket</div>
@@ -103,8 +105,12 @@ const Footer = () => {
           </Container>
         </SectionDivider>
       </div>
-    </>
+    </div>
   );
+};
+
+Footer.propTypes = {
+  containerSize: PropTypes.string,
 };
 
 export default Footer;

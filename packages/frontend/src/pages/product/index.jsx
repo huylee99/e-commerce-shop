@@ -1,6 +1,5 @@
-import TopBar from '@/components/TopBar';
 import Container from '@/components/Container';
-import Header from '@/components/Header';
+
 import NavigationBar from '@/components/CategoriesBar';
 import BreadCrumb from '@/components/BreadCrumb';
 import SectionDivider from '@/components/SectionDivider';
@@ -10,16 +9,8 @@ import ProductDetail from './components/ProductDetail';
 
 const Product = () => {
   return (
-    <div>
-      <TopBar containerSize='md' />
-      <header>
-        <Container size='md'>
-          <>
-            <Header />
-            <NavigationBar />
-          </>
-        </Container>
-      </header>
+    <>
+      <NavigationBar />
       <BreadCrumb />
       <SectionDivider size='lg'>
         <Container size='md'>
@@ -33,7 +24,7 @@ const Product = () => {
           </div>
         </Container>
       </SectionDivider>
-    </div>
+    </>
   );
 };
 

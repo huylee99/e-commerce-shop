@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types';
 
-const InputField = ({ type = 'text', name, value, onChange, placeholder }) => {
+const InputField = ({
+  type = 'text',
+  name,
+  value = '',
+  onChange,
+  placeholder,
+}) => {
   return (
     <input
       type={type}

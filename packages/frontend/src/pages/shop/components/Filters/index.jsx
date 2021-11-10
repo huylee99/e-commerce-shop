@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
 
 const CATEGORIES = [
@@ -22,6 +22,13 @@ const CATEGORIES = [
 
 const Filters = () => {
   const [price, setPrice] = useState(21);
+  const timerRef = useRef();
+
+  useEffect(() => {
+    timerRef.current = setTimeout(() => console.log(price), 500);
+
+    return () => clearTimeout(timerRef.current);
+  }, [price]);
 
   const handleChange = event => {
     setPrice(event.target.value);
@@ -77,7 +84,7 @@ const Filters = () => {
         <div className='w-full h-[1px] bg-gray-300 mt-2 mb-5'></div>
         <div>
           {[
-            ...new Array(5).fill(0).map((star, index) => (
+            ...new Array(5).fill(0).map((_, index) => (
               <div key={index} className='flex items-center mb-2 last:mb-0'>
                 <input
                   type='radio'
@@ -89,7 +96,7 @@ const Filters = () => {
                   {[
                     ...new Array(5)
                       .fill(0)
-                      .map((item, idx) => (
+                      .map((_, idx) => (
                         <StarIcon
                           key={idx}
                           className={`${

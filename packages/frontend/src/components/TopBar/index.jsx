@@ -3,10 +3,10 @@ import { LocationMarkerIcon, MailIcon } from '@heroicons/react/outline';
 
 import Container from '../Container';
 
-const TopBar = ({ containerSize }) => {
+const TopBar = ({ containerSize = 'lg' }) => {
   return (
     <div className='border border-b-1 border-gray-100'>
-      <Container size={containerSize ? containerSize : 'lg'}>
+      <Container size={containerSize}>
         <div className='flex items-center justify-between py-3'>
           <div className='flex items-center'>
             <div className='flex items-center text-gray-500'>

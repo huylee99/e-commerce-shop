@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
 
-import TopBar from '@/components/TopBar';
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
 
@@ -76,7 +75,6 @@ const Checkout = () => {
 
   return (
     <div className='wrapper'>
-      <TopBar containerSize='md' />
       <Container size='sm'>
         <>
           <SectionDivider size='sm'>
