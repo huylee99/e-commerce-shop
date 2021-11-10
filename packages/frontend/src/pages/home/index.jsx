@@ -1,5 +1,3 @@
-import TopBar from '@/components/TopBar';
-import Header from '@/components/Header';
 import NavigationBar from '@/components/CategoriesBar';
 import Hero from './components/Hero';
 import HorizontalCategoryBar from './components/HorizontalCategoryBar';
@@ -9,21 +7,11 @@ import BestSeller from './components/BestSeller';
 import SaleBanner from './components/SaleBanner';
 import Features from './components/Features';
 import Subscription from './components/Subscription';
-import Footer from './components/Footer';
-import Container from '@/components/Container';
 
 const Home = () => {
   return (
-    <div className='wrapper'>
-      <TopBar />
-      <header>
-        <Container size='lg'>
-          <>
-            <Header />
-            <NavigationBar />
-          </>
-        </Container>
-      </header>
+    <>
+      <NavigationBar />
       <Hero />
       <HorizontalCategoryBar />
       <PromotionSection />
@@ -32,8 +20,7 @@ const Home = () => {
       <SaleBanner />
       <Features />
       <Subscription />
-      <Footer />
-    </div>
+    </>
   );
 };
 

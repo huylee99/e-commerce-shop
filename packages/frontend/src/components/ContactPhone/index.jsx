@@ -1,4 +1,4 @@
-import { PhoneIcon } from '@heroicons/react/outline';
+import { PhoneIcon } from '@heroicons/react/solid';
 
 const ContactPhone = () => {
   return (
