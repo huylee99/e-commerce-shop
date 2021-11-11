@@ -12,8 +12,9 @@
     ]
   },
   "scripts": {
-    "serve:frontend": "yarn workspace @app/frontend run dev",
+    "dev:frontend": "yarn workspace @app/frontend run dev",
     "build:frontend": "yarn workspace @app/frontend run build",
+    "dev:backend": "yarn workspace @app/backend run dev",
     "commit:all": "git add . && git-cz",
     "push": "git push -u origin HEAD"
   },

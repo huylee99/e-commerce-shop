@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
+import { useTooltip } from '@/hooks/useTooltip';
 
 const CATEGORIES = [
   {
@@ -23,6 +24,10 @@ const CATEGORIES = [
 const Filters = () => {
   const [price, setPrice] = useState(21);
   const timerRef = useRef();
+  const areaRef = useRef();
+
+  const { positionRef, show, onMouseMove, onMouseDown, onMouseLeave } =
+    useTooltip();
 
   useEffect(() => {
     timerRef.current = setTimeout(() => console.log(price), 500);
@@ -61,7 +66,22 @@ const Filters = () => {
         <h3 className='text-dark font-bold text-2xl'>Price Range</h3>
         <div className='w-full h-[1px] bg-gray-300 mt-2 mb-5'></div>
 
-        <div>
+        <div className='relative'>
+          {show ? (
+            <div
+              style={{
+                top: -30,
+                left: positionRef.current.x - 298,
+                zIndex: 50,
+              }}
+              className='text-white absolute bg-black px-2 rounded-md tooltip'
+            >
+              ${price}
+            </div>
+          ) : (
+            ''
+          )}
+
           <input
             type='range'
             name='price'
@@ -72,6 +92,10 @@ const Filters = () => {
             value={price}
             onChange={handleChange}
             className='w-full mb-2'
+            onMouseMove={onMouseMove}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseLeave}
+            ref={areaRef}
           />
           <span className='inline-block text-base text-gray-500 font-semibold'>
             Range: $21 - {`$${price}`}
