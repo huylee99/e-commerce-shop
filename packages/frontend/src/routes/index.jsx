@@ -24,6 +24,8 @@ import CartLayout from '../components/Layout/CartLayout';
 import UserLayout from '../components/Layout/UserLayout';
 import ShopLayout from '../components/Layout/ShopLayout';
 
+import ProtectedRoute from './ProtectedRoute';
+
 const AppRouter = () => {
   return (
     <Router>
@@ -44,7 +46,14 @@ const AppRouter = () => {
           <Route path='checkout' element={<Checkout />} />
         </Route>
 
-        <Route path='/user/*' element={<UserLayout />}>
+        <Route
+          path='/user/*'
+          element={
+            <ProtectedRoute>
+              <UserLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<User />} />
           <Route path='information' element={<UserInfo />} />
           <Route path='coupons' element={<Coupons />} />
