@@ -1,20 +1,28 @@
 const userService = require('../services/user.service');
 const tokenService = require('../services/token.service');
-const userMessage = require('../core/constants/user.constant');
 
-const userController = {
-  register: async (req, res) => {
-    try {
-      const user = await userService.createUser(req.body);
-      const token = tokenService.authTokenGenerator(user._id);
+const register = async (req, res) => {
+  try {
+    const { result: user, message } = await userService.createUser(req.body);
+    const token = tokenService.authTokenGenerator(user._id);
 
-      res
-        .status(201)
-        .send({ user, token, message: userMessage.CREATE_SUCCESSFULLY });
-    } catch (error) {
-      res.status(401).send({ message: error.message });
-    }
-  },
+    res.status(201).send({ user, token, message });
+  } catch (error) {
+    res.status(401).send({ message: error.message });
+  }
 };
 
-module.exports = userController;
+const update = async (req, res) => {
+  try {
+    const { result: user, message } = await userService.updateUser(
+      req.body._id,
+      req.body.data
+    );
+
+    res.status(200).send({ user, message });
+  } catch (error) {
+    res.status(401).send({ message: error.message });
+  }
+};
+
+module.exports = { register, update };

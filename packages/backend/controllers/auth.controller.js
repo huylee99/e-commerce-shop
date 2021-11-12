@@ -1,17 +1,15 @@
 const authService = require('../services/auth.service');
 const tokenService = require('../services/token.service');
-const authMessage = require('../core/constants/auth.constant');
 
 const login = async (req, res) => {
   try {
-    const user = await authService.loginService(
+    const { result: user, message } = await authService.loginService(
       req.body.email,
       req.body.password
     );
+
     const token = tokenService.authTokenGenerator(user._id);
-    res
-      .status(201)
-      .send({ message: authMessage.LOGIN_SUCCESSFULLY, token, user });
+    res.status(200).send({ message, token, user });
   } catch (error) {
     res.status(401).send({ message: error.message });
   }
@@ -19,12 +17,12 @@ const login = async (req, res) => {
 
 const verify = async (req, res) => {
   try {
-    const isVerified = await tokenService.verifyToken(
+    const { verified, message } = await tokenService.verifyToken(
       req.headers.authorization
     );
 
-    if (isVerified) {
-      res.status(200).send({ message: authMessage.TOKEN_VERIFIED });
+    if (verified) {
+      res.status(200).send({ message });
     }
   } catch (error) {
     res.status(401).send({ message: error.message });

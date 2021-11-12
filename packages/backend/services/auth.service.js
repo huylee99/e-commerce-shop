@@ -1,6 +1,5 @@
 const { User } = require('../database/models/user.model');
 const authMessage = require('../core/constants/auth.constant');
-const toJSON = require('../core/helpers/toJSON');
 
 const loginService = async (email, password) => {
   const user = await User.checkEmail(email);
@@ -12,10 +11,8 @@ const loginService = async (email, password) => {
       throw Error(authMessage.WRONG_PASSWORD);
     }
 
-    const result = toJSON(user);
-    delete result.password;
-
-    return result;
+    const result = user.toJSON();
+    return { result, message: authMessage.LOGIN_SUCCESSFULLY };
   }
 
   throw Error(authMessage.WRONG_EMAIL);
