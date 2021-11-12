@@ -22,7 +22,7 @@ const verifyToken = async authHeader => {
   const user = await User.findOne({ _id: result.userId });
 
   if (user) {
-    return true;
+    return { verified: true, message: authMessage.TOKEN_VERIFIED };
   }
 
   throw Error(authMessage.TOKEN_NOT_VALID);

@@ -66,12 +66,26 @@ userSchema.methods.isPasswordMatched = async function (rawPassword) {
   return await comparePassword(rawPassword, user.password);
 };
 
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+
+  return user;
+};
+
 userSchema.statics.checkEmail = async function (email) {
   const users = this;
+  const user = await users.findOne({ email }).select('+password');
+  return user;
+};
 
-  const user = await users.findOne({ email });
-
-  console.log(user);
+userSchema.statics.updateInformation = async function (_id, data) {
+  const users = this;
+  const user = await users.findOneAndUpdate(
+    { _id },
+    { ...data },
+    { new: true }
+  );
 
   return user;
 };
