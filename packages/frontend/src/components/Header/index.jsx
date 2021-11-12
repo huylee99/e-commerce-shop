@@ -19,9 +19,12 @@ const Header = ({ containerSize = 'lg' }) => {
               <ContactPhone />
             </div>
             <div className='bg-gray-300 h-12 w-[1px] mx-8'></div>
-            <div className='text-dark font-bold text-base cursor-pointer hover:text-primary mr-4'>
+            <Link
+              to='/login'
+              className='text-dark inline-block font-bold text-base cursor-pointer hover:text-primary mr-4'
+            >
               Sign In / Sign up
-            </div>
+            </Link>
             <div className='flex items-center justify-center gap-4'>
               <div className='w-11 h-11 border-2 border-gray-200 rounded-lg leading-[38px] text-center relative group hover:bg-primary hover:border-primary cursor-pointer transition-all'>
                 <HeartIcon className='w-5 text-gray-400 group-hover:text-white inline-block' />

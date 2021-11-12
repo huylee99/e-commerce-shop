@@ -15,6 +15,7 @@ const InputField = ({
       className='px-2 py-1 block focus:outline-none border border-gray-300 rounded-md font-semibold w-full'
       onChange={onChange}
       placeholder={placeholder}
+      autoComplete='off'
     />
   );
 };
