@@ -35,8 +35,12 @@ const userSchema = new Schema({
   ],
   coupons: [
     {
-      id: String,
-      code: String,
+      id: {
+        type: String,
+      },
+      code: {
+        type: String,
+      },
     },
   ],
   isVerified: {
@@ -69,7 +73,6 @@ userSchema.methods.isPasswordMatched = async function (rawPassword) {
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;
-
   return user;
 };
 
