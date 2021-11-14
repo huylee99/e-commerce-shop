@@ -1,5 +1,5 @@
 const { User } = require('../database/models/user.model');
-const userMessage = require('../core/constants/user.constant');
+const commonMessage = require('../core/constants/common.constant');
 
 const createUser = async data => {
   const isEmailUsed = await User.checkEmail(data.email);
@@ -9,9 +9,9 @@ const createUser = async data => {
     await user.save();
 
     const result = user.toJSON();
-    return { result, message: userMessage.CREATE_SUCCESSFULLY };
+    return { result, message: commonMessage.CREATE_SUCCESSFULLY };
   } else {
-    throw Error(userMessage.INFO_NOT_VALID);
+    throw Error(commonMessage.INFO_NOT_VALID);
   }
 };
 
@@ -20,10 +20,10 @@ const updateUser = async (_id, data) => {
 
   const result = updatedUser.toJSON();
   if (updatedUser) {
-    return { result, message: userMessage.UPDATE_SUCCESSFULLY };
+    return { result, message: commonMessage.UPDATE_SUCCESSFULLY };
   }
 
-  throw Error(userMessage.UPDATE_FAILED);
+  throw Error(commonMessage.UPDATE_FAILED);
 };
 
 module.exports = { createUser, updateUser };

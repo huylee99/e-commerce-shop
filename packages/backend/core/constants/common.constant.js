@@ -1,8 +1,11 @@
-const userMessage = {
+const commonMessage = {
   INFO_NOT_VALID: 'INFO_NOT_VALID',
   CREATE_SUCCESSFULLY: 'CREATE_SUCCESSFULLY',
+  CREATE_FAILED: 'CREATE_FAILED',
   UPDATE_SUCCESSFULLY: 'UPDATE_SUCCESSFULLY',
   UPDATE_FAILED: 'UPDATE_FAILED',
+  GET_SUCCESSFULLY: 'GET_SUCCESSFULLY',
+  GET_FAILED: 'GET_FAILED',
 };
 
-module.exports = userMessage;
+module.exports = commonMessage;
