@@ -1,9 +1,20 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { signOut } from '@/features/auth/actions';
+
+import Button from '@/components/Button';
 
 import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
 
 const VerticalTab = () => {
+  const navigate = useNavigate();
+
+  const clickHandler = () => {
+    signOut();
+    navigate('/login', { replace: true });
+  };
+
   return (
     <>
       <div className='flex rounded-md border border-gray-200 p-4 mb-5'>
@@ -12,9 +23,14 @@ const VerticalTab = () => {
           alt='avatar'
           className='w-10 h-10 rounded-full mr-4'
         />
-        <div className='flex flex-col items-start'>
-          <span className='text-sm font-bold text-gray-400'>Welcome back,</span>
-          <span className='font-bold text-base uppercase'>Huy Le</span>
+        <div className='flex items-center justify-between w-full'>
+          <div>
+            <span className='text-sm font-bold text-gray-400'>
+              Welcome back,
+            </span>
+            <span className='font-bold text-base uppercase block'>Huy Le</span>
+          </div>
+          <Button onClick={clickHandler}>Log out</Button>
         </div>
       </div>
       <div className='rounded-md border border-gray-200'>

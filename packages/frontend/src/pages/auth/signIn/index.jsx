@@ -25,9 +25,8 @@ const SignIn = () => {
   const clickHandler = async () => {
     setLoading(true);
     const authenticated = await signIn(user.email, user.password);
-
+    setLoading(false);
     if (authenticated) {
-      setLoading(false);
       navigate('/user');
     }
   };
