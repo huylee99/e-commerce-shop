@@ -2,8 +2,10 @@ const productService = require('../services/product.service');
 
 const getAll = async (req, res) => {
   try {
-    const { skip, offset } = req.query;
-    const result = await productService.getAllProducts({ skip, offset });
+    const queries = req.query;
+    const result = await productService.getAllProducts({
+      ...queries,
+    });
 
     res.status(200).send(result);
   } catch (error) {
@@ -21,19 +23,4 @@ const createProduct = async (req, res) => {
   }
 };
 
-const getProductsByCategory = async (req, res) => {
-  try {
-    const { skip, offset, category } = req.query;
-    const products = await productService.getProductsByCategory({
-      skip,
-      offset,
-      category,
-    });
-
-    res.status(200).send(products);
-  } catch (error) {
-    res.status(200).send({ message: error.message });
-  }
-};
-
-module.exports = { getAll, createProduct, getProductsByCategory };
+module.exports = { getAll, createProduct };

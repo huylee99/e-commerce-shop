@@ -14,31 +14,11 @@ const createProduct = async data => {
   }
 };
 
-const getAllProducts = async ({ skip, offset }) => {
+const getAllProducts = async ({ skip = 0, offset = 10, ...rest }) => {
   try {
-    const products = await Product.find().skip(skip).limit(offset);
-    const totalItems = await Product.count();
-    const { currentPage, totalPages } = paginate(totalItems, skip, offset);
-
-    return {
-      message: commonMessage.GET_SUCCESSFULLY,
-      products,
-      currentPage,
-      totalItems,
-      totalPages,
-    };
-  } catch (error) {
-    throw Error(commonMessage.GET_FAILED);
-  }
-};
-
-const getProductsByCategory = async ({ skip, offset, category }) => {
-  try {
-    const products = await Product.getProductsByCategory({
-      skip,
-      offset,
-      category,
-    });
+    const products = await Product.find({ ...rest })
+      .skip(skip)
+      .limit(offset);
     const totalItems = products.length;
     const { currentPage, totalPages } = paginate(totalItems, skip, offset);
 
@@ -54,4 +34,4 @@ const getProductsByCategory = async ({ skip, offset, category }) => {
   }
 };
 
-module.exports = { getAllProducts, createProduct, getProductsByCategory };
+module.exports = { getAllProducts, createProduct };

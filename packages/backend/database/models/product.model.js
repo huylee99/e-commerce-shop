@@ -28,24 +28,12 @@ const productSchema = new Schema({
     },
   ],
   tags: [{ type: String }],
+  rating: {
+    type: Number,
+  },
 });
 
 productSchema.path('_id');
-
-productSchema.statics.getProductsByCategory = async function ({
-  skip,
-  offset,
-  category,
-}) {
-  const products = this;
-
-  const result = await products
-    .find({ categories: category })
-    .skip(skip)
-    .limit(offset);
-
-  return result;
-};
 
 const Product = model('products', productSchema);
 
