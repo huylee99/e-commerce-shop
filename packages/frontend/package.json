@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.24.0",
     "history": "5",
+    "jsurl": "^0.1.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-redux": "^7.2.6",
