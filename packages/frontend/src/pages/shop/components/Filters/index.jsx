@@ -1,10 +1,6 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { StarIcon } from '@heroicons/react/solid';
-
-import { useQuery } from '@/hooks/useQuery';
-import { stringifyQuery } from '@/helpers/URLHelpers';
-import productRequest from '@/api/productAPI';
 
 const CATEGORIES = [
   {
@@ -25,32 +21,12 @@ const CATEGORIES = [
   {
     title: 'Fruits',
     icon: 'https://wpbingosite.com/wordpress/econis/wp-content/uploads/2021/06/soy.svg',
-    query: 'fruits',
+    query: 'fruit',
   },
 ];
 
-const Filters = () => {
+const Filters = ({ handleChange, query }) => {
   const [price] = useState(21);
-  const [value, setValue] = useQuery();
-  const [, setData] = useState();
-
-  useEffect(() => {
-    const cancelToken = axios.CancelToken;
-    const source = cancelToken.source();
-
-    let queries = value ? stringifyQuery(value) : '';
-    fetchData(queries);
-    return () => source.cancel();
-  }, [value]);
-
-  const fetchData = async queries => {
-    const response = await productRequest.getProducts(queries);
-    setData(response.data);
-  };
-
-  const handleChange = event => {
-    setValue({ ...value, [event.target.name]: event.target.value });
-  };
 
   return (
     <div className='w-full'>
@@ -62,7 +38,11 @@ const Filters = () => {
             <label
               key={index}
               htmlFor={`category-${index + 1}`}
-              className='p-2 text-gray-500 font-semibold hover:text-primary hover:bg-gray-100 border-b border-dashed last:border-none cursor-pointer rounded-md block'
+              className={`p-2 font-semibold hover:text-primary hover:bg-gray-100 border-b border-dashed last:border-none cursor-pointer rounded-md block ${
+                category.query === query.categories
+                  ? 'text-primary bg-gray-100'
+                  : 'text-gray-500'
+              }`}
             >
               <img
                 src={`${category.icon}`}
@@ -85,7 +65,6 @@ const Filters = () => {
       <div className='px-8 py-6 rounded-xl border border-gray-200 mb-10'>
         <h3 className='text-dark font-bold text-2xl'>Price Range</h3>
         <div className='w-full h-[1px] bg-gray-300 mt-2 mb-5'></div>
-
         <div>
           <input
             type='range'
@@ -144,6 +123,11 @@ const Filters = () => {
       </div>
     </div>
   );
+};
+
+Filters.propTypes = {
+  handleChange: PropTypes.func,
+  query: PropTypes.object,
 };
 
 export default Filters;

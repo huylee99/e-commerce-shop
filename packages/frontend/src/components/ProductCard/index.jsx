@@ -6,7 +6,9 @@ import {
 } from '@heroicons/react/outline';
 import { StarIcon } from '@heroicons/react/solid';
 
-const ProductCard = ({ width }) => {
+const ProductCard = ({ width, product }) => {
+  const { name, price, categories, images } = product;
+
   return (
     <div
       className={`${width} shadow-md rounded-xl p-4 group relative overflow-hidden`}
@@ -23,9 +25,9 @@ const ProductCard = ({ width }) => {
         </div>
         <div className='w-full'>
           <img
-            src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634703312/fruit/unnamed_rfiaj5.png'
-            alt='product'
-            className='w-full object-contain min-h-[237px]'
+            src={images[0]}
+            alt={name}
+            className='w-full object-contain min-h-[200px]'
           />
         </div>
         <div className='productRate mb-1'>
@@ -40,17 +42,15 @@ const ProductCard = ({ width }) => {
           </span>
         </div>
         <span className='block text-xs text-gray-400 font-bold uppercase mb-1'>
-          Fruits
+          {categories.join(', ')}
         </span>
-        <span className='block text-lg font-bold text-dark mb-1'>
-          Watermelon
-        </span>
-        <div className=''>
-          <span className='text-base font-bold line-through text-gray-500 inline-block mr-2'>
-            $300
-          </span>
+        <span className='block text-lg font-bold text-dark mb-1'>{name}</span>
+        <div>
+          {/* <span className='text-base font-bold line-through text-gray-500 inline-block mr-2'>
+            {price}
+          </span> */}
           <span className='text-xl font-extrabold text-red-600 inline-block'>
-            $250
+            ${price}
           </span>
         </div>
       </div>
@@ -70,6 +70,7 @@ const ProductCard = ({ width }) => {
 
 ProductCard.propTypes = {
   width: PropTypes.string,
+  product: PropTypes.object,
 };
 
 export default ProductCard;
