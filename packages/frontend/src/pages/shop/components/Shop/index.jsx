@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 
 import { stringifyQuery } from '@/helpers/URLHelpers';
 import productRequest from '@/api/productAPI';
+import ProductsArrangement from '../ProductsArrangement';
 
 import ProductCard from '@/components/ProductCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const Shop = ({ query, handleChange }) => {
   const [data, setData] = useState([]);
@@ -32,41 +34,18 @@ const Shop = ({ query, handleChange }) => {
     }
   };
 
-  const idxTo = data.currentPage * query.limit;
-  const idxFrom = Math.ceil(idxTo / query.limit);
-
   return (
-    <div>
-      <div className='flex items-center justify-between mb-5'>
-        <h2 className='text-dark font-bold text-3xl'>Shop</h2>
-        <span className='font-semibold text-base text-gray-400'>
-          {/* {`${totalItems > 0 ? {'Showing'} ${idxFrom}-${idxTo > data.totalItems ? data.totalItems : idxTo}'of'} : ''`} */}
-          Showing{' '}
-          {data.totalItems > 0
-            ? `${idxFrom}-${
-                idxTo > data.totalItems ? data.totalItems : idxTo
-              } of`
-            : ''}{' '}
-          {data.totalItems} item(s)
-        </span>
-      </div>
-      <div className='p-2 bg-gray-200 rounded-3xl flex justify-between items-center mb-5'>
-        <select
-          className='py-1 px-4 appearance-none focus:outline-none rounded-3xl bg-gray-50 text-sm font-semibold text-gray-400 cursor-pointer'
-          name='limit'
-          onChange={handleChange}
-          value={query.limit}
-        >
-          <option value='12'>12 per page</option>
-          <option value='24'>24 per page</option>
-        </select>
-
-        <div className='px-4 py-1 rounded-3xl bg-gray-50 text-sm font-semibold text-gray-400'>
-          Default sorting
-        </div>
-      </div>
+    <div className='relative'>
+      <ProductsArrangement
+        handleChange={handleChange}
+        totalItems={data.totalItems}
+        currentPage={data.currentPage}
+        limit={query.limit}
+      />
       {loading ? (
-        'Loading...'
+        <div className='mt-[100px]'>
+          <LoadingSpinner size={12} />
+        </div>
       ) : (
         <div className='flex flex-wrap gap-3 items-stretch'>
           {data.products.length === 0
