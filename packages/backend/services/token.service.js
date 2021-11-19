@@ -13,19 +13,19 @@ const authTokenGenerator = userId => {
 };
 
 const verifyToken = async authHeader => {
-  if (!authHeader) {
-    throw Error(authMessage.LOGIN_REQUIRED);
+  try {
+    if (!authHeader) {
+      throw Error(authMessage.LOGIN_REQUIRED);
+    }
+
+    const token = splitToken(authHeader);
+    const result = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ _id: result.userId });
+
+    return user;
+  } catch (error) {
+    throw Error(authMessage.TOKEN_NOT_VALID);
   }
-
-  const token = splitToken(authHeader);
-  const result = jwt.verify(token, process.env.JWT_SECRET);
-  const user = await User.findOne({ _id: result.userId });
-
-  if (user) {
-    return { verified: true, message: authMessage.TOKEN_VERIFIED };
-  }
-
-  throw Error(authMessage.TOKEN_NOT_VALID);
 };
 
 module.exports = { authTokenGenerator, verifyToken };

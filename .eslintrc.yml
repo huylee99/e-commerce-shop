@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 env:
   browser: true
   es2021: true
@@ -17,3 +18,4 @@ rules:
   quotes:
     - error
     - single
+

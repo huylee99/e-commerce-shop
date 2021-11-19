@@ -17,13 +17,8 @@ const login = async (req, res) => {
 
 const verify = async (req, res) => {
   try {
-    const { verified, message } = await tokenService.verifyToken(
-      req.headers.authorization
-    );
-
-    if (verified) {
-      res.status(200).send({ message });
-    }
+    const user = await tokenService.verifyToken(req.headers.authorization);
+    res.status(200).send(user);
   } catch (error) {
     res.status(401).send({ message: error.message });
   }

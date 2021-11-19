@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '@/contexts/auth/authContext';
+import { login } from '../../../contexts/auth/actions';
+
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
 
@@ -8,11 +11,9 @@ import InputLabel from '@/components/Input/InputLabel';
 import InputField from '@/components/Input/InputField';
 import Button from '@/components/Button';
 
-import { signIn } from '../../../features/auth/actions';
-
 const SignIn = () => {
   const [user, setUser] = useState({ email: '', password: '' });
-  const [loading, setLoading] = useState(false);
+  const [{ isLoading, error }, dispatch] = useAuth();
   const navigate = useNavigate();
 
   const changeHandler = event => {
@@ -22,13 +23,8 @@ const SignIn = () => {
     }));
   };
 
-  const clickHandler = async () => {
-    setLoading(true);
-    const authenticated = await signIn(user.email, user.password);
-    setLoading(false);
-    if (authenticated) {
-      navigate('/user');
-    }
+  const submitHandler = () => {
+    login(dispatch, user).then(_ => navigate('/shop', { replace: true }));
   };
 
   return (
@@ -59,11 +55,12 @@ const SignIn = () => {
                   onChange={changeHandler}
                 />
               </div>
-              <Button size='full' onClick={clickHandler}>
+              <Button size='full' onClick={submitHandler}>
                 Sign In
               </Button>
             </form>
-            {loading ? <div>Loading...</div> : ''}
+            {isLoading ? <div>Loading...</div> : ''}
+            {error ? error : ''}
             <div className='text-base font-semibold'>
               <span>New to SuperMarket?</span>{' '}
               <span className='text-green-600 cursor-pointer hover:underline'>
