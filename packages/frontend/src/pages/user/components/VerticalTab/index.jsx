@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
+
 import { signOut } from '@/features/auth/actions';
-import { useAuth } from '../../../../contexts/auth/authContext';
 
 import Button from '@/components/Button';
 
-import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
-
 const VerticalTab = () => {
   const navigate = useNavigate();
-  const [{ user }, _] = useAuth();
 
   const clickHandler = () => {
     signOut();
@@ -30,9 +28,7 @@ const VerticalTab = () => {
             <span className='text-sm font-bold text-gray-400'>
               Welcome back,
             </span>
-            <span className='font-bold text-base uppercase block'>
-              {user ? user.fullName : ''}
-            </span>
+            <span className='font-bold text-base uppercase block'>Huy Le</span>
           </div>
           <Button onClick={clickHandler}>Log out</Button>
         </div>

@@ -37,11 +37,25 @@ const AppRouter = () => {
           <Route path='product/:id' element={<Product />} />
         </Route>
 
-        <Route path='/shop' element={<ShopLayout />}>
+        <Route
+          path='/shop'
+          element={
+            <ProtectedRoute isPrivate={false}>
+              <ShopLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Shop />} />
         </Route>
 
-        <Route path='/cart' element={<CartLayout />}>
+        <Route
+          path='/cart'
+          element={
+            <ProtectedRoute isPrivate={false}>
+              <CartLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Cart />} />
           <Route path='checkout' element={<Checkout />} />
         </Route>
@@ -49,7 +63,7 @@ const AppRouter = () => {
         <Route
           path='/user/*'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute isPrivate={true}>
               <UserLayout />
             </ProtectedRoute>
           }

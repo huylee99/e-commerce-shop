@@ -1,13 +1,22 @@
 import PropTypes from 'prop-types';
+
 import {
   HeartIcon,
   SearchIcon,
   ShoppingCartIcon,
 } from '@heroicons/react/outline';
+import { increaseQty } from '../../features/cart/actions';
 import { StarIcon } from '@heroicons/react/solid';
 
 const ProductCard = ({ width, product }) => {
-  const { name, price, categories, images } = product;
+  const { name, price, categories, images, _id } = product;
+
+  const onAddItem = () => {
+    increaseQty('6199ebf535bd35a726c6557c', {
+      id: _id,
+      quantity: 1,
+    });
+  };
 
   return (
     <div
@@ -57,7 +66,10 @@ const ProductCard = ({ width, product }) => {
       <div className='absolute right-[5px] top-1/2 transform translate-x-[150%] group-hover:translate-x-0 transition-transform duration-200 z-20'>
         <ul>
           <li className='w-8 h-8 border border-gray-200 rounded-full leading-[28px] text-center text-gray-500 mb-1 cursor-pointer hover:bg-primary hover:text-white'>
-            <ShoppingCartIcon className='w-4 inline-block' />
+            <ShoppingCartIcon
+              className='w-4 inline-block'
+              onClick={onAddItem}
+            />
           </li>
           <li className='w-8 h-8 border border-gray-200 rounded-full leading-[28px] text-center text-gray-500 cursor-pointer hover:bg-primary hover:text-white'>
             <SearchIcon className='w-4 inline-block' />

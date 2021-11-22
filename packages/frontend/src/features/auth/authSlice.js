@@ -14,6 +14,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { signInSuccess } = authSlice.actions;
+export const { signInSuccess, verifySuccess } = authSlice.actions;
 
 export default authSlice.reducer;

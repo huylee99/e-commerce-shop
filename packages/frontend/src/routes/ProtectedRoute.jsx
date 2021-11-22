@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../contexts/auth/authContext';
-import { verify } from '../contexts/auth/actions';
+import { verify } from '../features/auth/actions';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, isPrivate }) => {
   const [isFirstInit, setIsFirstInit] = useState(false);
-  const [{ isAuth }, dispatch] = useAuth();
+  const auth = useSelector(state => state.auth.isAuth);
 
   const verifyUser = async () => {
-    await verify(dispatch);
+    await verify();
   };
 
   useEffect(() => {
@@ -18,8 +18,10 @@ const ProtectedRoute = ({ children }) => {
     }
   }, [isFirstInit, setIsFirstInit]);
 
-  if (isFirstInit) {
-    return <>{isAuth ? <>{children}</> : <Navigate to='/login' replace />}</>;
+  if (!isPrivate && isFirstInit) {
+    return <>{children}</>;
+  } else if (isPrivate && isFirstInit) {
+    return <>{auth ? <>{children}</> : <Navigate to='/login' replace />}</>;
   } else {
     return <LoadingSpinner />;
   }

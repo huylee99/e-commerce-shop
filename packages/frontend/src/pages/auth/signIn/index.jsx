@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/contexts/auth/authContext';
-import { login } from '../../../contexts/auth/actions';
-
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
 
@@ -11,9 +8,11 @@ import InputLabel from '@/components/Input/InputLabel';
 import InputField from '@/components/Input/InputField';
 import Button from '@/components/Button';
 
+import { signIn } from '../../../features/auth/actions';
+
 const SignIn = () => {
   const [user, setUser] = useState({ email: '', password: '' });
-  const [{ isLoading, error }, dispatch] = useAuth();
+
   const navigate = useNavigate();
 
   const changeHandler = event => {
@@ -24,7 +23,9 @@ const SignIn = () => {
   };
 
   const submitHandler = () => {
-    login(dispatch, user).then(_ => navigate('/shop', { replace: true }));
+    signIn(user.email, user.password).then(_ =>
+      navigate('/shop', { replace: true })
+    );
   };
 
   return (
@@ -59,8 +60,7 @@ const SignIn = () => {
                 Sign In
               </Button>
             </form>
-            {isLoading ? <div>Loading...</div> : ''}
-            {error ? error : ''}
+
             <div className='text-base font-semibold'>
               <span>New to SuperMarket?</span>{' '}
               <span className='text-green-600 cursor-pointer hover:underline'>

@@ -1,15 +1,15 @@
-const CartSummary = () => {
+const CartSummary = ({ total }) => {
   return (
     <div>
       <h2 className='font-bold text-2xl mb-4'>Cart Total</h2>
       <div className='mb-10'>
         <div className='flex justify-between items-center mb-1'>
           <span className='font-semibold'>Subtotal</span>
-          <span className='font-bold'>100$</span>
+          <span className='font-bold'>{total}$</span>
         </div>
         <div className='flex justify-between items-center mb-1'>
           <span className='font-semibold'>Shipping</span>
-          <span className='font-bold'>10$</span>
+          <span className='font-bold'>0$</span>
         </div>
         <div className='mb-2'>
           <span className='font-semibold mb-2 block'>Promo code</span>
@@ -25,11 +25,11 @@ const CartSummary = () => {
         </div>
         <div className='flex justify-between items-center mb-5'>
           <span className='font-semibold mb-2 block'>Discount</span>
-          <span className='font-bold text-green-500'>{'-10$'}</span>
+          <span className='font-bold text-green-500'>{'0$'}</span>
         </div>
         <div className='flex justify-between items-center'>
           <span className='text-lg font-bold'>Total</span>
-          <span className='text-lg font-bold'>110$</span>
+          <span className='text-lg font-bold'>{total}$</span>
         </div>
       </div>
     </div>
