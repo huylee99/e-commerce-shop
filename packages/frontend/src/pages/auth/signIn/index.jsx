@@ -12,7 +12,7 @@ import { signIn } from '../../../features/auth/actions';
 
 const SignIn = () => {
   const [user, setUser] = useState({ email: '', password: '' });
-  const [searchParams, _] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const redirectURL = searchParams.get('redirect');
 
@@ -26,7 +26,7 @@ const SignIn = () => {
   };
 
   const submitHandler = () => {
-    signIn(user.email, user.password).then(_ =>
+    signIn(user.email, user.password).then(() =>
       navigate(`${redirectURL ? redirectURL : '/user'}`, { replace: true })
     );
   };

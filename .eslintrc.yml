@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 env:
   browser: true
   es2021: true
@@ -19,4 +17,7 @@ rules:
   quotes:
     - error
     - single
-
+overrides:
+  - files: ['**/*.jsx']
+    rules:
+      'react/prop-types': 'off'
