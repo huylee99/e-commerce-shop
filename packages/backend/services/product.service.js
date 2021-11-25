@@ -34,4 +34,13 @@ const getAllProducts = async ({ skip = 0, offset = 10, ...rest }) => {
   }
 };
 
-module.exports = { getAllProducts, createProduct };
+const getProductById = async id => {
+  try {
+    const product = await Product.findById(id);
+    return { product, message: commonMessage.GET_SUCCESSFULLY };
+  } catch (error) {
+    throw Error(commonMessage.GET_FAILED);
+  }
+};
+
+module.exports = { getAllProducts, createProduct, getProductById };

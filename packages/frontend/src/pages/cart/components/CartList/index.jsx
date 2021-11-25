@@ -35,8 +35,8 @@ const CartList = ({ cart }) => {
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200 min-h-[1px] max-h-[300px] overflow-y-scroll'>
-            {cart && cart.cart.length !== 0
-              ? cart.cart.map(({ product, quantity }) => (
+            {cart && cart.length !== 0
+              ? cart.map(({ product, quantity }) => (
                   <CartItem
                     key={product._id}
                     product={product}

@@ -1,21 +1,36 @@
 import PropTypes from 'prop-types';
 
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import {
   HeartIcon,
   SearchIcon,
   ShoppingCartIcon,
 } from '@heroicons/react/outline';
-import { increaseQty } from '../../features/cart/actions';
 import { StarIcon } from '@heroicons/react/solid';
 
+import { increaseQty } from '../../features/cart/actions';
+
 const ProductCard = ({ width, product }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuth } = useSelector(state => state.auth);
   const { name, price, categories, images, _id } = product;
 
   const onAddItem = () => {
-    increaseQty('6199ebf535bd35a726c6557c', {
-      id: _id,
-      quantity: 1,
-    });
+    if (isAuth) {
+      increaseQty('6199ebf535bd35a726c6557c', {
+        id: _id,
+        quantity: 1,
+      });
+    } else {
+      navigate(
+        `${
+          location.pathname ? `/login?redirect=${location.pathname}` : '/login'
+        }`
+      );
+    }
   };
 
   return (

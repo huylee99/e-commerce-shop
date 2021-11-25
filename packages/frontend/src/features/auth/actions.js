@@ -23,7 +23,7 @@ const verify = async () => {
   try {
     const response = await authRequest.verify();
     store.dispatch(verifySuccess(response.data.user));
-    store.dispatch(fetchSuccess(response.data.cart.cart));
+    store.dispatch(fetchSuccess(response.data.cart));
   } catch (error) {
     console.log(error);
   }

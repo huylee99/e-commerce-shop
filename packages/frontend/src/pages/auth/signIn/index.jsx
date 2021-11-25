@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
@@ -12,6 +12,9 @@ import { signIn } from '../../../features/auth/actions';
 
 const SignIn = () => {
   const [user, setUser] = useState({ email: '', password: '' });
+  const [searchParams, _] = useSearchParams();
+
+  const redirectURL = searchParams.get('redirect');
 
   const navigate = useNavigate();
 
@@ -24,7 +27,7 @@ const SignIn = () => {
 
   const submitHandler = () => {
     signIn(user.email, user.password).then(_ =>
-      navigate('/shop', { replace: true })
+      navigate(`${redirectURL ? redirectURL : '/user'}`, { replace: true })
     );
   };
 

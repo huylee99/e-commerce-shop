@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import mutations from './mutations';
 
 const initialState = {
-  cart: null,
+  cart: [],
   totalPrice: 0,
   totalQty: 0,
 };
@@ -15,6 +15,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { fetchSuccess } = cartSlice.actions;
+export const { fetchSuccess, decreaseQtyStorage, increaseQtyStorage } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

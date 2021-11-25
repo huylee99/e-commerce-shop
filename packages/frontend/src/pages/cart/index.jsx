@@ -9,20 +9,20 @@ import CartSummary from './components/CartSummary';
 import { useSelector } from 'react-redux';
 
 const Cart = () => {
-  const cart = useSelector(state => state.cart);
+  const { cart, totalPrice } = useSelector(state => state.cart);
 
   return (
     <Container size='md'>
       <SectionDivider size='sm'>
         <>
           <h2 className='text-center text-4xl font-bold mb-10'>Cart</h2>
-          {cart.cart.length !== 0 ? (
+          {cart && cart.length !== 0 ? (
             <div className='flex items-start gap-10'>
               <div className='w-[70%]'>
                 <CartList cart={cart} />
               </div>
               <div className='max-w-[30%] w-[30%]'>
-                <CartSummary total={cart.totalPrice} />
+                <CartSummary total={totalPrice} />
                 <Link
                   className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white block text-center'
                   to='/cart/checkout'

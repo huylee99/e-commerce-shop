@@ -14,9 +14,13 @@ const ProtectedRoute = ({ children, isPrivate }) => {
 
   useEffect(() => {
     if (!isFirstInit) {
-      verifyUser().finally(() => setIsFirstInit(true));
+      if (!auth) {
+        verifyUser().finally(() => setIsFirstInit(true));
+      } else {
+        setIsFirstInit(true);
+      }
     }
-  }, [isFirstInit, setIsFirstInit]);
+  }, [isFirstInit, setIsFirstInit, auth]);
 
   if (!isPrivate && isFirstInit) {
     return <>{children}</>;

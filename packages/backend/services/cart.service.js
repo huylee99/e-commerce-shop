@@ -28,8 +28,8 @@ const addItem = async ({ uid, product }) => {
 
 const removeItem = async ({ uid, product }) => {
   try {
-    const cart = await Cart.removeItem({ uid, product });
-    return cart;
+    const { cart } = await Cart.removeItem({ uid, product });
+    return { cart, message: commonMessage.UPDATE_SUCCESSFULLY };
   } catch (error) {
     throw Error(commonMessage.UPDATE_FAILED);
   }
