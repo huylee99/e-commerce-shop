@@ -1,7 +1,7 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
 
 const VerticalCartItem = ({ product, quantity }) => {
-  const { price, name, images, _id } = product;
+  const { price, name, images } = product;
 
   return (
     <>

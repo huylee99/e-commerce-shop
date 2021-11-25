@@ -12,7 +12,7 @@ const modal = document.getElementById('portal');
 
 const VerticalCart = ({ onClose }) => {
   const elRef = useRef();
-  const { cart, totalQty, totalPrice } = useSelector(state => state.cart);
+  const { cart } = useSelector(state => state.cart);
 
   if (!elRef.current) {
     elRef.current = document.createElement('div');

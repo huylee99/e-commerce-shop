@@ -40,7 +40,7 @@ const Cart = () => {
                 to='/shop'
                 className='text-center text-green-600 hover:underline cursor-pointer'
               >
-                Let's grab some items here!
+                Let&apos;s grab some items here!
               </Link>
             </div>
           )}
