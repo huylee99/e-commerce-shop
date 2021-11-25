@@ -1,44 +1,74 @@
 import {
+  increaseQty,
+  decreaseQty,
+  deleteItem,
+} from '../../../../features/cart/actions';
+import {
   MinusCircleIcon,
   PlusCircleIcon,
   TrashIcon,
 } from '@heroicons/react/outline';
 
-const CartItem = () => {
+const CartItem = ({ product, quantity }) => {
+  const { price, name, images, _id } = product;
+
+  const onDecrease = () => {
+    decreaseQty('6199ebf535bd35a726c6557c', {
+      id: _id,
+      quantity: quantity - 1,
+    });
+  };
+
+  const onIncrease = () => {
+    increaseQty('6199ebf535bd35a726c6557c', {
+      id: _id,
+      quantity: 1,
+    });
+  };
+
+  const onDelete = () => {
+    deleteItem('6199ebf535bd35a726c6557c', _id);
+  };
+
   return (
     <tr>
       <td className='px-6 py-2 whitespace-nowrap flex items-center'>
-        <img
-          src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634703312/fruit/unnamed_rfiaj5.png'
-          alt='watermelon'
-          className='w-36 mr-2'
-        />
+        <img src={`${images[0]}`} alt='watermelon' className='w-36 mr-2' />
         <span className='text-base font-bold text-gray-900 hover:text-blue-500 cursor-pointer'>
-          Watermelon
+          {name}
         </span>
       </td>
       <td className='px-6 py-2 whitespace-nowrap'>
-        <span className='text-base font-bold text-gray-900 hover:text-blue-500 cursor-pointer'>
-          $250
-        </span>
+        <span className='text-base font-bold text-gray-900'>${price}</span>
       </td>
       <td className='px-6 py-2 whitespace-nowrap'>
         <span className='inline-flex items-center p-2 border border-gray-300 rounded-sm'>
-          <MinusCircleIcon className='w-5 text-gray-500 cursor-pointer' />
+          <MinusCircleIcon
+            className='w-5 text-gray-500 cursor-pointer'
+            onClick={onDecrease}
+          />
           <input
             type='text'
-            className='w-6 mx-4 px-1 text-center focus:outline-none'
+            className='w-8 mx-4 px-1 text-center focus:outline-none'
+            value={quantity}
+            onChange={e => console.log(e.target.value)}
           />
-          <PlusCircleIcon className='w-5 text-gray-500 cursor-pointer' />
+          <PlusCircleIcon
+            className='w-5 text-gray-500 cursor-pointer'
+            onClick={onIncrease}
+          />
         </span>
       </td>
       <td className='px-6 py-2 whitespace-nowrap'>
-        <span className='text-base font-bold text-gray-900 hover:text-blue-500 cursor-pointer'>
-          $1000
+        <span className='text-base font-bold text-gray-900'>
+          ${parseFloat(price * quantity).toFixed(2)}
         </span>
       </td>
       <td>
-        <TrashIcon className='w-5 text-red-600' />
+        <TrashIcon
+          className='w-5 text-red-600 cursor-pointer hover:text-red-800'
+          onClick={onDelete}
+        />
       </td>
     </tr>
   );

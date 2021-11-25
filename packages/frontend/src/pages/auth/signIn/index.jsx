@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
@@ -12,7 +12,10 @@ import { signIn } from '../../../features/auth/actions';
 
 const SignIn = () => {
   const [user, setUser] = useState({ email: '', password: '' });
-  const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+
+  const redirectURL = searchParams.get('redirect');
+
   const navigate = useNavigate();
 
   const changeHandler = event => {
@@ -22,13 +25,10 @@ const SignIn = () => {
     }));
   };
 
-  const clickHandler = async () => {
-    setLoading(true);
-    const authenticated = await signIn(user.email, user.password);
-    setLoading(false);
-    if (authenticated) {
-      navigate('/user');
-    }
+  const submitHandler = () => {
+    signIn(user.email, user.password).then(() =>
+      navigate(`${redirectURL ? redirectURL : '/user'}`, { replace: true })
+    );
   };
 
   return (
@@ -59,11 +59,11 @@ const SignIn = () => {
                   onChange={changeHandler}
                 />
               </div>
-              <Button size='full' onClick={clickHandler}>
+              <Button size='full' onClick={submitHandler}>
                 Sign In
               </Button>
             </form>
-            {loading ? <div>Loading...</div> : ''}
+
             <div className='text-base font-semibold'>
               <span>New to SuperMarket?</span>{' '}
               <span className='text-green-600 cursor-pointer hover:underline'>

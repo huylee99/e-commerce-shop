@@ -1,15 +1,34 @@
-import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import authService from '../services/authServices';
+import { verify } from '../features/auth/actions';
+import LoadingSpinner from '../components/LoadingSpinner';
 
-const ProtectedRoute = ({ children }) => {
-  const token = authService.getToken();
+const ProtectedRoute = ({ children, isPrivate }) => {
+  const [isFirstInit, setIsFirstInit] = useState(false);
+  const auth = useSelector(state => state.auth.isAuth);
 
-  return <>{token ? children : <Navigate to='/login' replace />}</>;
-};
+  const verifyUser = async () => {
+    await verify();
+  };
 
-ProtectedRoute.propTypes = {
-  children: PropTypes.any,
+  useEffect(() => {
+    if (!isFirstInit) {
+      if (!auth) {
+        verifyUser().finally(() => setIsFirstInit(true));
+      } else {
+        setIsFirstInit(true);
+      }
+    }
+  }, [isFirstInit, setIsFirstInit, auth]);
+
+  if (!isPrivate && isFirstInit) {
+    return <>{children}</>;
+  } else if (isPrivate && isFirstInit) {
+    return <>{auth ? <>{children}</> : <Navigate to='/login' replace />}</>;
+  } else {
+    return <LoadingSpinner />;
+  }
 };
 
 export default ProtectedRoute;

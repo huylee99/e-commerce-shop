@@ -23,4 +23,15 @@ const createProduct = async (req, res) => {
   }
 };
 
-module.exports = { getAll, createProduct };
+const getProductById = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const { product, message } = await productService.getProductById(id);
+
+    res.status(200).send({ product, message });
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+};
+
+module.exports = { getAll, createProduct, getProductById };

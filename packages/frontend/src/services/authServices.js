@@ -10,6 +10,10 @@ class auth {
   getToken = () => {
     return localStorage.getItem('accessToken');
   };
+  logOut = () => {
+    this.removeToken();
+    window.location.href = '/';
+  };
 }
 
 const authService = new auth();

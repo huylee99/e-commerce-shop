@@ -28,8 +28,7 @@ const LoadingSpinner = ({ size = 10 }) => {
 };
 
 LoadingSpinner.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  size: PropTypes.number,
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default LoadingSpinner;

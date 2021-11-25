@@ -1,7 +1,11 @@
 const mutations = {
   signInSuccess: (state, { payload }) => {
     state.isAuth = true;
-    state.user = payload.user;
+    state.user = payload;
+  },
+  verifySuccess: (state, { payload }) => {
+    state.isAuth = true;
+    state.user = payload;
   },
 };
 

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../database/models/user.model');
+const { Cart } = require('../database/models/cart.model');
 const splitToken = require('../core/helpers/splitToken');
 const authMessage = require('../core/constants/auth.constant');
 
@@ -13,19 +14,20 @@ const authTokenGenerator = userId => {
 };
 
 const verifyToken = async authHeader => {
-  if (!authHeader) {
-    throw Error(authMessage.LOGIN_REQUIRED);
+  try {
+    if (!authHeader) {
+      throw Error(authMessage.LOGIN_REQUIRED);
+    }
+
+    const token = splitToken(authHeader);
+    const result = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ _id: result.userId });
+    const cart = await Cart.getCart(result.userId);
+
+    return { cart, user };
+  } catch (error) {
+    throw Error(authMessage.TOKEN_NOT_VALID);
   }
-
-  const token = splitToken(authHeader);
-  const result = jwt.verify(token, process.env.JWT_SECRET);
-  const user = await User.findOne({ _id: result.userId });
-
-  if (user) {
-    return { verified: true, message: authMessage.TOKEN_VERIFIED };
-  }
-
-  throw Error(authMessage.TOKEN_NOT_VALID);
 };
 
 module.exports = { authTokenGenerator, verifyToken };

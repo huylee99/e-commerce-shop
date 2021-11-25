@@ -78,7 +78,7 @@ userSchema.methods.toJSON = function () {
 
 userSchema.statics.checkEmail = async function (email) {
   const users = this;
-  const user = await users.findOne({ email }).select('+password');
+  const user = await users.findOne({ email });
   return user;
 };
 

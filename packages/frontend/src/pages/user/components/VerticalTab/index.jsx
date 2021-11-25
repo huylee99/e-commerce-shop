@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
+
 import { signOut } from '@/features/auth/actions';
 
 import Button from '@/components/Button';
-
-import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
 
 const VerticalTab = () => {
   const navigate = useNavigate();

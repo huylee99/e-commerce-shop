@@ -11,7 +11,7 @@ const TopBar = ({ containerSize = 'lg' }) => {
           <div className='flex items-center'>
             <div className='flex items-center text-gray-500'>
               <LocationMarkerIcon className='w-5 mr-2' />
-              <span className='text-[13px] font-medium hover:text-green-600 cursor-pointer'>
+              <span className='text-[13px] font-medium hover:text-green-600 cursor-pointer leading-4'>
                 Find Store
               </span>
             </div>

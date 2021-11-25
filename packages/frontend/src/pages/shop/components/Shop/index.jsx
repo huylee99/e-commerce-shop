@@ -27,8 +27,6 @@ const Shop = ({ query, handleChange }) => {
     try {
       const response = await productRequest.getProducts(queries);
       setData(response.data);
-    } catch (error) {
-      console.log(error.message);
     } finally {
       setLoading(false);
     }

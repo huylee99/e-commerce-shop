@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 
 import Backdrop from '../Backdrop';
 
-const modal = document.getElementById('modal');
+const modal = document.getElementById('portal');
 
 const Modal = ({ children, onClose }) => {
   const elRef = useRef();
