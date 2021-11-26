@@ -8,7 +8,7 @@ const register = async (req, res) => {
 
     res.status(201).send({ user, token, message });
   } catch (error) {
-    res.status(401).send({ message: error.message });
+    res.status(400).send({ message: error.message });
   }
 };
 
@@ -21,8 +21,39 @@ const update = async (req, res) => {
 
     res.status(200).send({ user, message });
   } catch (error) {
-    res.status(401).send({ message: error.message });
+    res.status(400).send({ message: error.message });
   }
 };
 
-module.exports = { register, update };
+const updateShippingInfo = async (req, res) => {
+  console.log(req.body.idList);
+  try {
+    const { result: user, message } = await userService.updateShippingInfo(
+      req.body.idList,
+      req.body.data
+    );
+
+    res.status(200).send({ user, message });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
+const addShippingInfo = async (req, res) => {
+  try {
+    const { result: user, message } = await userService.addShippingInfo(
+      req.body.uid,
+      req.body.data
+    );
+    res.status(200).send({ user, message });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
+module.exports = {
+  register,
+  update,
+  updateShippingInfo,
+  addShippingInfo,
+};

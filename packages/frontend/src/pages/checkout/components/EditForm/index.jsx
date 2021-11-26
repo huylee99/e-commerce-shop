@@ -5,14 +5,25 @@ import InputLabel from '@/components/Input/InputLabel';
 import InputField from '@/components/Input/InputField';
 import Button from '@/components/Button';
 
-const EditForm = ({ address }) => {
+import { updateShippingInfo } from '../../../../features/auth/actions';
+
+const EditForm = ({ address, idList, setShow }) => {
   const [information, setInformation] = useState(address);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeHandler = event => {
     setInformation(prevState => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const onSubmitHandler = () => {
+    setIsLoading(true);
+    updateShippingInfo(idList, information).finally(() => {
+      setIsLoading(false);
+      setShow(false);
+    });
   };
 
   return (
@@ -46,7 +57,8 @@ const EditForm = ({ address }) => {
           />
         </div>
       </div>
-      <Button>Save</Button>
+      {isLoading ? '...Updating' : ''}
+      <Button onClick={onSubmitHandler}>Save</Button>
     </div>
   );
 };

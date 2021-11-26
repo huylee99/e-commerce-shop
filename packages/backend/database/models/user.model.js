@@ -27,9 +27,23 @@ const userSchema = new Schema({
         type: Types.ObjectId,
         auto: true,
       },
-      address: {
-        type: String,
-        trim: true,
+      data: {
+        address: {
+          type: String,
+          trim: true,
+        },
+        title: {
+          type: String,
+          trim: true,
+        },
+        name: {
+          type: String,
+          trim: true,
+        },
+        phone: {
+          type: String,
+          trim: true,
+        },
       },
     },
   ],
@@ -89,6 +103,43 @@ userSchema.statics.updateInformation = async function (_id, data) {
     { ...data },
     { new: true }
   );
+
+  return user;
+};
+
+userSchema.statics.addShippingInfo = async function (uid, data) {
+  const users = this;
+  const user = await users.findById(uid);
+
+  if (user) {
+    user.addressList.push({ data });
+  } else {
+    throw Error('Not found');
+  }
+
+  await user.save();
+
+  return user;
+};
+
+userSchema.statics.updateShippingInfo = async function (
+  { uid, addressId },
+  data
+) {
+  const users = this;
+  const user = await users.findById(uid);
+
+  const isFound = user.addressList.find(
+    address => address._id.toString() === addressId
+  );
+
+  if (isFound) {
+    isFound.data = data;
+  } else {
+    throw Error('Not Found');
+  }
+
+  await user.save();
 
   return user;
 };
