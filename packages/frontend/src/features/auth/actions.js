@@ -1,7 +1,8 @@
 import store from '../../store';
-import { signInSuccess, verifySuccess } from './authSlice';
+import { signInSuccess, verifySuccess, updateSuccess } from './authSlice';
 import { fetchSuccess } from '../cart/cartSlice';
 import authRequest from '@/api/authAPI';
+import userRequest from '../../api/userAPI';
 import authServices from '../../services/authServices';
 
 const signIn = async (email, password) => {
@@ -29,4 +30,24 @@ const verify = async () => {
   }
 };
 
-export { signIn, signOut, verify };
+const updateUser = async data => {
+  try {
+    const response = await userRequest.update(data);
+
+    store.dispatch(updateSuccess(response.data.user));
+  } catch (error) {
+    throw Error('Update error');
+  }
+};
+
+const updateShippingInfo = async (idList, data) => {
+  try {
+    const response = await userRequest.updateShippingInfo(idList, data);
+
+    store.dispatch(updateSuccess(response.data.user));
+  } catch (error) {
+    throw Error('Update error');
+  }
+};
+
+export { signIn, signOut, verify, updateUser, updateShippingInfo };

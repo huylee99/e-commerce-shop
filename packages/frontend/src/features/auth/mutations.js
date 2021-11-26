@@ -7,6 +7,9 @@ const mutations = {
     state.isAuth = true;
     state.user = payload;
   },
+  updateSuccess: (state, { payload }) => {
+    state.user = payload;
+  },
 };
 
 export default mutations;

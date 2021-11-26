@@ -18,12 +18,39 @@ const createUser = async data => {
 const updateUser = async (_id, data) => {
   const updatedUser = await User.updateInformation(_id, data);
 
-  const result = updatedUser.toJSON();
   if (updatedUser) {
+    const result = updatedUser.toJSON();
     return { result, message: commonMessage.UPDATE_SUCCESSFULLY };
   }
 
   throw Error(commonMessage.UPDATE_FAILED);
 };
 
-module.exports = { createUser, updateUser };
+const updateShippingInfo = async (idList, data) => {
+  const updatedUser = await User.updateShippingInfo(idList, data);
+
+  if (updatedUser) {
+    const result = updatedUser.toJSON();
+    return { result, message: commonMessage.UPDATE_SUCCESSFULLY };
+  }
+
+  throw Error(commonMessage.UPDATE_FAILED);
+};
+
+const addShippingInfo = async (uid, data) => {
+  const updatedUser = await User.addShippingInfo(uid, data);
+
+  if (updatedUser) {
+    const result = updatedUser.toJSON();
+    return { result, message: commonMessage.UPDATE_SUCCESSFULLY };
+  }
+
+  throw Error(commonMessage.UPDATE_FAILED);
+};
+
+module.exports = {
+  createUser,
+  updateUser,
+  updateShippingInfo,
+  addShippingInfo,
+};
