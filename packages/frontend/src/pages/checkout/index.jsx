@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
 
+import { useCheckout } from './context/checkoutContext';
+
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
 
@@ -33,11 +35,9 @@ const STEPS = [
 const Checkout = () => {
   const [step, setStep] = useState(0);
   const [stepsState, setStepsState] = useState([...STEPS]);
-  const navigate = useNavigate();
+  const [{ shippingAddressId, paymentMethod }] = useCheckout();
 
-  const navigationHandler = () => {
-    navigate('/cart');
-  };
+  const navigate = useNavigate();
 
   const renderStep = () => {
     switch (step) {
@@ -73,6 +73,19 @@ const Checkout = () => {
     setStep(prevStep => --prevStep);
   };
 
+  const disabledButton = () => {
+    switch (step) {
+      case 0: {
+        return !!shippingAddressId;
+      }
+      case 1: {
+        return !shippingAddressId || !!paymentMethod;
+      }
+      default:
+        return false;
+    }
+  };
+
   return (
     <div className='wrapper'>
       <Container size='sm'>
@@ -81,7 +94,7 @@ const Checkout = () => {
             <div className='flex relative items-center justify-center'>
               <div
                 className='absolute left-0 flex items-center text-blue-600 hover:border-b hover:border-blue-600 cursor-pointer'
-                onClick={navigationHandler}
+                onClick={() => navigate('/cart')}
               >
                 <ChevronDoubleLeftIcon className='w-5 mr-2' />
                 Back to Cart
@@ -107,8 +120,9 @@ const Checkout = () => {
                   )}
                   {step === 2 ? null : (
                     <button
-                      className='px-6 text-sm py-2 border border-blue-600 bg-blue-600 rounded-md text-white font-semibold hover:text-blue-600 hover:bg-transparent transition-all ml-auto'
+                      className='px-6 text-sm py-2 border border-blue-600 bg-blue-600 rounded-md text-white font-semibold hover:text-blue-600 hover:bg-transparent transition-all ml-auto disabled:opacity-50 disabled:pointer-events-none'
                       onClick={handleNext}
+                      disabled={!disabledButton()}
                     >
                       Move to {STEPS[step + 1].title}
                     </button>

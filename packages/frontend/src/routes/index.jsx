@@ -24,6 +24,8 @@ import CartLayout from '../components/Layout/CartLayout';
 import UserLayout from '../components/Layout/UserLayout';
 import ShopLayout from '../components/Layout/ShopLayout';
 
+import { CheckoutProvider } from '../pages/checkout/context/checkoutContext';
+
 import ProtectedRoute from './ProtectedRoute';
 
 const AppRouter = () => {
@@ -57,7 +59,14 @@ const AppRouter = () => {
           }
         >
           <Route index element={<Cart />} />
-          <Route path='checkout' element={<Checkout />} />
+          <Route
+            path='checkout'
+            element={
+              <CheckoutProvider>
+                <Checkout />
+              </CheckoutProvider>
+            }
+          />
         </Route>
 
         <Route
