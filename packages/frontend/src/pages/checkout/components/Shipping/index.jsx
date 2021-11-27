@@ -4,15 +4,22 @@ import Modal from '@/components/Modal';
 import EditForm from '../EditForm';
 
 import { useSelector } from 'react-redux';
+import { useCheckout } from '../../context/checkoutContext';
+import types from '../../context/types';
 
 const Shipping = () => {
   const { addressList, _id } = useSelector(state => state.auth.user);
   const [index, setIndex] = useState(null);
   const [show, setShow] = useState(false);
+  const [{ shippingAddressId }, dispatch] = useCheckout();
 
   const clickHandler = index => {
     setIndex(index);
     setShow(true);
+  };
+
+  const onChangeHandler = _id => {
+    dispatch({ type: types.SHIPPING_SELECT, shippingAddressId: _id });
   };
 
   return (
@@ -24,9 +31,11 @@ const Shipping = () => {
               <InputSelect
                 key={_id}
                 name='address'
-                id={`address-${_id}`}
+                id={_id}
                 value={index}
                 className='mb-2 last:mb-0'
+                selectedId={shippingAddressId}
+                onChange={() => onChangeHandler(_id)}
               >
                 <div className='rounded-lg flex items-center justify-between'>
                   <h4 className='font-bold text-base uppercase'>
