@@ -53,7 +53,7 @@ const AppRouter = () => {
         <Route
           path='/cart'
           element={
-            <ProtectedRoute isPrivate={false}>
+            <ProtectedRoute isPrivate={true}>
               <CartLayout />
             </ProtectedRoute>
           }
