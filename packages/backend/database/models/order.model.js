@@ -15,6 +15,9 @@ const orderSchema = new Schema(
         quantity: {
           type: Number,
         },
+        price: {
+          type: Number,
+        },
         _id: false,
       },
     ],
@@ -39,6 +42,15 @@ const orderSchema = new Schema(
       address: {
         type: String,
       },
+      name: {
+        type: String,
+      },
+      title: {
+        type: String,
+      },
+    },
+    status: {
+      type: String,
     },
   },
 
@@ -48,5 +60,11 @@ const orderSchema = new Schema(
 orderSchema.path('_id');
 
 const Order = model('order', orderSchema);
+
+orderSchema.methods.toJSON = function () {
+  const order = this.toObject();
+
+  return { orderId: order.orderId };
+};
 
 module.exports = { Order };

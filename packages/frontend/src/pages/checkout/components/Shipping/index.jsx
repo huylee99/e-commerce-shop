@@ -3,23 +3,28 @@ import InputSelect from '@/components/Input/InputSelect';
 import Modal from '@/components/Modal';
 import EditForm from '../EditForm';
 
-import { useSelector } from 'react-redux';
 import { useCheckout } from '../../context/checkoutContext';
 import types from '../../context/types';
 
-const Shipping = () => {
-  const { addressList, _id } = useSelector(state => state.auth.user);
+const Shipping = ({ userState }) => {
+  const { addressList, _id } = userState;
   const [index, setIndex] = useState(null);
   const [show, setShow] = useState(false);
-  const [{ shippingAddressId }, dispatch] = useCheckout();
+  const [{ shippingInformation }, dispatch] = useCheckout();
 
   const clickHandler = index => {
     setIndex(index);
     setShow(true);
   };
 
-  const onChangeHandler = _id => {
-    dispatch({ type: types.SHIPPING_SELECT, shippingAddressId: _id });
+  const onChangeHandler = (_id, data) => {
+    dispatch({
+      type: types.SHIPPING_SELECT,
+      shippingInformation: {
+        id: _id,
+        data: data,
+      },
+    });
   };
 
   return (
@@ -34,8 +39,8 @@ const Shipping = () => {
                 id={_id}
                 value={index}
                 className='mb-2 last:mb-0'
-                selectedId={shippingAddressId}
-                onChange={() => onChangeHandler(_id)}
+                selectedId={shippingInformation.id}
+                onChange={() => onChangeHandler(_id, data)}
               >
                 <div className='rounded-lg flex items-center justify-between'>
                   <h4 className='font-bold text-base uppercase'>

@@ -55,4 +55,14 @@ const deleteItem = async ({ uid, productId }) => {
   }
 };
 
-module.exports = { deleteItem, removeItem, addItem, getCart };
+const clearCart = async uid => {
+  try {
+    await Cart.deleteOne({ uid });
+
+    return { message: commonMessage.UPDATE_SUCCESSFULLY };
+  } catch (error) {
+    throw Error(commonMessage.UPDATE_FAILED);
+  }
+};
+
+module.exports = { deleteItem, removeItem, addItem, getCart, clearCart };

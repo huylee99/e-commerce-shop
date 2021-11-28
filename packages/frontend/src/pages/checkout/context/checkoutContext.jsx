@@ -5,7 +5,10 @@ const CheckoutContext = createContext();
 CheckoutContext.displayName = 'CheckoutContext';
 
 const initialState = {
-  shippingAddressId: null,
+  shippingInformation: {
+    id: null,
+    data: null,
+  },
   paymentMethod: null,
   items: [],
   totalPrice: 0,
