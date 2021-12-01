@@ -15,7 +15,7 @@ const register = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { result: user, message } = await userService.updateUser(
-      req.body._id,
+      req.uid,
       req.body.data
     );
 
@@ -26,10 +26,10 @@ const update = async (req, res) => {
 };
 
 const updateShippingInfo = async (req, res) => {
-  console.log(req.body.idList);
   try {
     const { result: user, message } = await userService.updateShippingInfo(
-      req.body.idList,
+      req.uid,
+      req.body.addressId,
       req.body.data
     );
 
@@ -42,7 +42,7 @@ const updateShippingInfo = async (req, res) => {
 const addShippingInfo = async (req, res) => {
   try {
     const { result: user, message } = await userService.addShippingInfo(
-      req.body.uid,
+      req.uid,
       req.body.data
     );
     res.status(200).send({ user, message });

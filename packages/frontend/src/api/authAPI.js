@@ -1,15 +1,11 @@
-import { API } from '.';
+import { guestAPI, memberAPI } from '.';
 
 const authRequest = {
   signIn: (email, password) => {
-    return API.post('auth/login', { email, password });
+    return guestAPI.post('auth/login', { email, password });
   },
   verify: () => {
-    return API.get('auth/verify', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    return memberAPI.get('auth/verify');
   },
 };
 

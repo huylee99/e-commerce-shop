@@ -13,21 +13,21 @@ const CartItem = ({ product, quantity }) => {
   const { price, name, images, _id } = product;
 
   const onDecrease = () => {
-    decreaseQty('6199ebf535bd35a726c6557c', {
+    decreaseQty({
       id: _id,
       quantity: quantity - 1,
     });
   };
 
   const onIncrease = () => {
-    increaseQty('6199ebf535bd35a726c6557c', {
+    increaseQty({
       id: _id,
       quantity: 1,
     });
   };
 
   const onDelete = () => {
-    deleteItem('6199ebf535bd35a726c6557c', _id);
+    deleteItem(_id);
   };
 
   return (

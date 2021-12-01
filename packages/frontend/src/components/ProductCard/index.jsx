@@ -20,7 +20,7 @@ const ProductCard = ({ width, product }) => {
 
   const onAddItem = () => {
     if (isAuth) {
-      increaseQty('6199ebf535bd35a726c6557c', {
+      increaseQty({
         id: _id,
         quantity: 1,
       });

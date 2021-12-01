@@ -1,14 +1,14 @@
-import { API } from '.';
+import { memberAPI } from '.';
 
 const userRequest = {
-  update: ({ _id, data }) => {
-    return API.put('user/update', { _id, data });
+  update: data => {
+    return memberAPI.put('user/update', { data });
   },
-  updateShippingInfo: (idList, data) => {
-    return API.put('user/updateShippingInfo', { idList, data });
+  updateShippingInfo: (addressId, data) => {
+    return memberAPI.put('user/updateShippingInfo', { addressId, data });
   },
-  addShippingInfo: (uid, data) => {
-    return API.put('user/addShippingInfo', { uid, data });
+  addShippingInfo: data => {
+    return memberAPI.put('user/addShippingInfo', { data });
   },
 };
 

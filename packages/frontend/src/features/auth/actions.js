@@ -8,8 +8,9 @@ import authServices from '../../services/authServices';
 const signIn = async (email, password) => {
   try {
     const response = await authRequest.signIn(email, password);
+
     store.dispatch(signInSuccess(response.data.user));
-    store.dispatch(fetchSuccess(response.data.userCart));
+    store.dispatch(fetchSuccess(response.data.cart));
     authServices.setToken(response.data.token);
   } catch (error) {
     console.log(error);
@@ -23,6 +24,10 @@ const signOut = () => {
 const verify = async () => {
   try {
     const response = await authRequest.verify();
+    console.log(
+      '🚀 ~ file: actions.js ~ line 11 ~ signIn ~ response',
+      response.data
+    );
     store.dispatch(verifySuccess(response.data.user));
     store.dispatch(fetchSuccess(response.data.cart));
   } catch (error) {
@@ -40,9 +45,9 @@ const updateUser = async data => {
   }
 };
 
-const updateShippingInfo = async (idList, data) => {
+const updateShippingInfo = async (addressId, data) => {
   try {
-    const response = await userRequest.updateShippingInfo(idList, data);
+    const response = await userRequest.updateShippingInfo(addressId, data);
 
     store.dispatch(updateSuccess(response.data.user));
   } catch (error) {

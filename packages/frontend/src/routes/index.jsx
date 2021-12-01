@@ -13,6 +13,7 @@ import Cart from '../pages/cart';
 import SignUp from '../pages/auth/signUp';
 import SignIn from '../pages/auth/signIn';
 import Product from '../pages/product';
+import Order from '../pages/order';
 
 import OrderHistory from '../pages/user/components/OrderHistory';
 import UserInfo from '../pages/user/components/UserInfo';
@@ -83,6 +84,8 @@ const AppRouter = () => {
           <Route path='order-history' element={<OrderHistory />} />
           <Route path='security' element={<ChangePassword />} />
         </Route>
+
+        <Route path='/order' element={<Order />} />
 
         <Route path='/login' element={<SignIn />} />
         <Route path='/register' element={<SignUp />} />

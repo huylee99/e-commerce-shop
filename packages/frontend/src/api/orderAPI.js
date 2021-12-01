@@ -1,8 +1,11 @@
-import { API } from '.';
+import { guestAPI, memberAPI } from '.';
 
 const orderRequest = {
   createOrder: data => {
-    return API.post('/order/create', data);
+    return memberAPI.post('/order/create', data);
+  },
+  getOrder: orderId => {
+    return guestAPI.get(`/order/get?orderId=${orderId}`);
   },
 };
 

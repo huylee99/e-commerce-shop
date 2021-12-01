@@ -7,7 +7,7 @@ import { useCheckout } from '../../context/checkoutContext';
 import types from '../../context/types';
 
 const Shipping = ({ userState }) => {
-  const { addressList, _id } = userState;
+  const { addressList } = userState;
   const [index, setIndex] = useState(null);
   const [show, setShow] = useState(false);
   const [{ shippingInformation }, dispatch] = useCheckout();
@@ -64,7 +64,7 @@ const Shipping = ({ userState }) => {
         <Modal onClose={() => setShow(false)}>
           <EditForm
             address={addressList[index].data}
-            idList={{ uid: _id, addressId: addressList[index]._id }}
+            addressId={addressList[index]._id}
             setShow={setShow}
           />
         </Modal>

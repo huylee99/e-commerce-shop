@@ -7,9 +7,10 @@ const createOrder = async data => {
     newOrder.orderId = `SM${new Date().getTime()}`;
     await newOrder.save();
 
-    const order = newOrder.toJSON();
-
-    return { order, message: commonMessage.CREATE_SUCCESSFULLY };
+    return {
+      order: newOrder.orderId,
+      message: commonMessage.CREATE_SUCCESSFULLY,
+    };
   } catch (error) {
     throw Error(commonMessage.CREATE_FAILED);
   }

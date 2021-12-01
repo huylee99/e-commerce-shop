@@ -1,11 +1,10 @@
 const orderService = require('../services/order.service');
-//const cartService = require('../services/cart.service');
+const cartService = require('../services/cart.service');
 
 const createOrder = async (req, res) => {
-  //const uid = req.uid;
   try {
     const { order, message } = await orderService.createOrder(req.body);
-    //await cartService.clearCart(uid);
+    await cartService.clearCart(req.uid);
     res.status(200).send({ order, message });
   } catch (error) {
     res.status(400).send({ message: error.message });

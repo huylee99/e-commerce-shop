@@ -1,9 +1,30 @@
 import axios from 'axios';
 
-const instanceConfig = {
+const commonInstance = {
   baseURL: import.meta.env.VITE_BASE_URL,
 };
 
-const API = axios.create(instanceConfig);
+const authInstance = {
+  baseURL: import.meta.env.VITE_BASE_URL,
+};
 
-export { API };
+const guestAPI = axios.create(commonInstance);
+const memberAPI = axios.create(authInstance);
+
+memberAPI.interceptors.request.use(
+  request => {
+    if (localStorage.getItem('accessToken')) {
+      request.headers['Authorization'] = `Bearer ${localStorage.getItem(
+        'accessToken'
+      )}`;
+    } else {
+      throw new Error('Unauthorized!');
+    }
+    return request;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+export { guestAPI, memberAPI };

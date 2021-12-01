@@ -26,8 +26,8 @@ const updateUser = async (_id, data) => {
   throw Error(commonMessage.UPDATE_FAILED);
 };
 
-const updateShippingInfo = async (idList, data) => {
-  const updatedUser = await User.updateShippingInfo(idList, data);
+const updateShippingInfo = async (uid, addressId, data) => {
+  const updatedUser = await User.updateShippingInfo(uid, addressId, data);
 
   if (updatedUser) {
     const result = updatedUser.toJSON();

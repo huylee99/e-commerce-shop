@@ -61,10 +61,4 @@ orderSchema.path('_id');
 
 const Order = model('order', orderSchema);
 
-orderSchema.methods.toJSON = function () {
-  const order = this.toObject();
-
-  return { orderId: order.orderId };
-};
-
 module.exports = { Order };

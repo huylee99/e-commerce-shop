@@ -1,14 +1,14 @@
-import { API } from '.';
+import { memberAPI } from '.';
 
 const cartRequest = {
-  addItem: (uid, product) => {
-    return API.put('cart/increase', { uid, product });
+  addItem: product => {
+    return memberAPI.put('cart/increase', { product });
   },
-  removeItem: (uid, product) => {
-    return API.put('cart/decrease', { uid, product });
+  removeItem: product => {
+    return memberAPI.put('cart/decrease', { product });
   },
-  deleteItem: (uid, productId) => {
-    return API.delete(`cart/delete?uid=${uid}&productId=${productId}`);
+  deleteItem: productId => {
+    return memberAPI.delete(`cart/delete?productId=${productId}`);
   },
 };
 
