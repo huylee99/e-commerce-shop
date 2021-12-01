@@ -9,7 +9,9 @@ import CartSummary from './components/CartSummary';
 import { useSelector } from 'react-redux';
 
 const Cart = () => {
-  const { cart, totalPrice } = useSelector(state => state.cart);
+  const { cart, totalPrice, subTotal, discount } = useSelector(
+    state => state.cart
+  );
 
   return (
     <Container size='md'>
@@ -22,7 +24,7 @@ const Cart = () => {
                 <CartList cart={cart} />
               </div>
               <div className='max-w-[30%] w-[30%]'>
-                <CartSummary total={totalPrice} />
+                <CartSummary summary={{ totalPrice, subTotal, discount }} />
                 <Link
                   className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white block text-center'
                   to='/cart/checkout'

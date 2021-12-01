@@ -2,27 +2,28 @@ import store from '../../store';
 import cartRequest from '../../api/cartAPI';
 import { fetchSuccess } from './cartSlice';
 
-const increaseQty = async (uid, product) => {
+const increaseQty = async product => {
   try {
-    const response = await cartRequest.addItem(uid, product);
+    const response = await cartRequest.addItem(product);
+    console.log('🚀 ~ file: actions.js ~ line 8 ~ product', product);
     store.dispatch(fetchSuccess(response.data.cart));
   } catch (error) {
     console.log(error);
   }
 };
 
-const decreaseQty = async (uid, product) => {
+const decreaseQty = async product => {
   try {
-    const response = await cartRequest.removeItem(uid, product);
+    const response = await cartRequest.removeItem(product);
     store.dispatch(fetchSuccess(response.data));
   } catch (error) {
     console.log(error);
   }
 };
 
-const deleteItem = async (uid, productId) => {
+const deleteItem = async productId => {
   try {
-    const response = await cartRequest.deleteItem(uid, productId);
+    const response = await cartRequest.deleteItem(productId);
     store.dispatch(fetchSuccess(response.data.cart));
   } catch (error) {
     console.log(error);

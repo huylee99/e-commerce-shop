@@ -12,7 +12,7 @@ const tokenVerification = (req, res, next) => {
   const token = splitToken(authHeader);
   const result = jwt.verify(token, process.env.JWT_SECRET);
 
-  req.user = { uid: result.userId };
+  req.uid = result.userId;
 
   next();
 };

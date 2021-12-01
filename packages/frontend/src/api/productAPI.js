@@ -1,11 +1,11 @@
-import { API } from '.';
+import { guestAPI } from '.';
 
 const productRequest = {
   getProducts: queries => {
-    return API.get(`product/getProducts/${queries}`);
+    return guestAPI.get(`product/getProducts/${queries}`);
   },
   getProductById: id => {
-    return API.get(`product/get?id=${id}`);
+    return guestAPI.get(`product/get?id=${id}`);
   },
 };
 

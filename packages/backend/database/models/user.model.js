@@ -122,10 +122,7 @@ userSchema.statics.addShippingInfo = async function (uid, data) {
   return user;
 };
 
-userSchema.statics.updateShippingInfo = async function (
-  { uid, addressId },
-  data
-) {
+userSchema.statics.updateShippingInfo = async function (uid, addressId, data) {
   const users = this;
   const user = await users.findById(uid);
 

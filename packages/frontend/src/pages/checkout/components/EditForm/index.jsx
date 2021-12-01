@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 
 import { updateShippingInfo } from '../../../../features/auth/actions';
 
-const EditForm = ({ address, idList, setShow }) => {
+const EditForm = ({ address, addressId, setShow }) => {
   const [information, setInformation] = useState(address);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -20,7 +20,7 @@ const EditForm = ({ address, idList, setShow }) => {
 
   const onSubmitHandler = () => {
     setIsLoading(true);
-    updateShippingInfo(idList, information).finally(() => {
+    updateShippingInfo(addressId, information).finally(() => {
       setIsLoading(false);
       setShow(false);
     });

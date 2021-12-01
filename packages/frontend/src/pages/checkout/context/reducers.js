@@ -5,7 +5,7 @@ const checkoutReducer = (state, action) => {
     case types.SHIPPING_SELECT: {
       return {
         ...state,
-        shippingAddressId: action.shippingAddressId,
+        shippingInformation: action.shippingInformation,
       };
     }
     case types.PAYMENT_SELECT: {

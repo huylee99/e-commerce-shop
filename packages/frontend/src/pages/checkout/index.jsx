@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
 
 import { useCheckout } from './context/checkoutContext';
+import orderRequest from '../../api/orderAPI';
 
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
@@ -33,20 +35,22 @@ const STEPS = [
 ];
 
 const Checkout = () => {
+  const { cart, auth } = useSelector(state => state);
   const [step, setStep] = useState(0);
+  const [, setIsLoading] = useState(false);
   const [stepsState, setStepsState] = useState([...STEPS]);
-  const [{ shippingAddressId, paymentMethod }] = useCheckout();
+  const [{ shippingInformation, paymentMethod }] = useCheckout();
 
   const navigate = useNavigate();
 
   const renderStep = () => {
     switch (step) {
       case 0:
-        return <Shipping />;
+        return <Shipping userState={auth.user} />;
       case 1:
         return <Payment />;
       case 2:
-        return <Confirmation />;
+        return <Confirmation cartState={cart} />;
       default:
         return 'Error';
     }
@@ -76,14 +80,35 @@ const Checkout = () => {
   const disabledButton = () => {
     switch (step) {
       case 0: {
-        return !!shippingAddressId;
+        return !!shippingInformation.id;
       }
       case 1: {
-        return !shippingAddressId || !!paymentMethod;
+        return !shippingInformation.id || !!paymentMethod;
       }
       default:
         return false;
     }
+  };
+
+  const orderSubmitHandler = () => {
+    setIsLoading(true);
+    const items = cart.cart.map(({ product, quantity }) => ({
+      product: product._id,
+      quantity: quantity,
+      price: product.price,
+    }));
+
+    const data = {
+      uid: auth.user._id,
+      items: items,
+      discount: cart.discount,
+      totalPrice: cart.totalPrice,
+      paymentMethod: paymentMethod,
+      shippingInformation: shippingInformation.data,
+      status: 'processing',
+    };
+
+    orderRequest.createOrder(data).finally(() => setIsLoading(false));
   };
 
   return (
@@ -130,9 +155,12 @@ const Checkout = () => {
                 </div>
               </div>
               <div className='max-w-[30%] w-[30%]'>
-                <Summary />
+                <Summary cartState={cart} />
                 {step === 2 ? (
-                  <button className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'>
+                  <button
+                    className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'
+                    onClick={orderSubmitHandler}
+                  >
                     Place Order and Pay
                   </button>
                 ) : null}

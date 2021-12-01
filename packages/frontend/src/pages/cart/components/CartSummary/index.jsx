@@ -1,11 +1,12 @@
-const CartSummary = ({ total }) => {
+const CartSummary = ({ summary }) => {
+  const { totalPrice, subTotal, discount } = summary;
   return (
     <div>
       <h2 className='font-bold text-2xl mb-4'>Cart Total</h2>
       <div className='mb-10'>
         <div className='flex justify-between items-center mb-1'>
           <span className='font-semibold'>Subtotal</span>
-          <span className='font-bold'>{total}$</span>
+          <span className='font-bold'>{subTotal}$</span>
         </div>
         <div className='flex justify-between items-center mb-1'>
           <span className='font-semibold'>Shipping</span>
@@ -25,11 +26,11 @@ const CartSummary = ({ total }) => {
         </div>
         <div className='flex justify-between items-center mb-5'>
           <span className='font-semibold mb-2 block'>Discount</span>
-          <span className='font-bold text-green-500'>{'0$'}</span>
+          <span className='font-bold text-green-500'>{discount}$</span>
         </div>
         <div className='flex justify-between items-center'>
           <span className='text-lg font-bold'>Total</span>
-          <span className='text-lg font-bold'>{total}$</span>
+          <span className='text-lg font-bold'>{totalPrice}$</span>
         </div>
       </div>
     </div>

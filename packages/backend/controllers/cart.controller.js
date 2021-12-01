@@ -1,11 +1,11 @@
 const cartService = require('../services/cart.service');
 
 const add = async (req, res) => {
-  const { uid, product } = req.body;
+  const { product } = req.body;
 
   try {
     const { cart, message } = await cartService.addItem({
-      uid,
+      uid: req.uid,
       product,
     });
 
@@ -16,9 +16,8 @@ const add = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
-  const uid = req.query.uid;
   try {
-    const cart = await cartService.getCart(uid);
+    const cart = await cartService.getCart(req.uid);
     res.status(200).send({ cart });
   } catch (error) {
     res.status(400).send('error');
@@ -26,11 +25,11 @@ const getCart = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const { uid, product } = req.body;
+  const { product } = req.body;
 
   try {
     const { cart, message } = await cartService.removeItem({
-      uid,
+      uid: req.uid,
       product,
     });
 
@@ -41,10 +40,13 @@ const remove = async (req, res) => {
 };
 
 const deleteItem = async (req, res) => {
-  const { uid, productId } = req.query;
+  const { productId } = req.query;
 
   try {
-    const { cart, message } = await cartService.deleteItem({ uid, productId });
+    const { cart, message } = await cartService.deleteItem({
+      uid: req.uid,
+      productId,
+    });
 
     res.status(200).send({ cart, message });
   } catch (error) {
