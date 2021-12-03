@@ -55,4 +55,21 @@ const updateShippingInfo = async (addressId, data) => {
   }
 };
 
-export { signIn, signOut, verify, updateUser, updateShippingInfo };
+const addShippingInfo = async data => {
+  try {
+    const response = await userRequest.addShippingInfo(data);
+
+    store.dispatch(updateSuccess(response.data.user));
+  } catch (error) {
+    throw Error('Update failed');
+  }
+};
+
+export {
+  signIn,
+  signOut,
+  verify,
+  updateUser,
+  updateShippingInfo,
+  addShippingInfo,
+};
