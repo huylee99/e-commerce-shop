@@ -4,12 +4,12 @@ const { orderSuccessMail } = require('../core/utils/email');
 
 const createOrder = async (req, res) => {
   try {
-    const { order, message } = await orderService.createOrder(
+    const { order, email, message } = await orderService.createOrder(
       req.body,
       req.uid
     );
     await cartService.clearCart(req.uid);
-    await orderSuccessMail('nhathuyle9938@gmail.com', order);
+    await orderSuccessMail(email, order);
     res.status(200).send({ order, message });
   } catch (error) {
     res.status(400).send({ message: error.message });
