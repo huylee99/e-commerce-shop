@@ -31,40 +31,44 @@ const Shipping = ({ userState }) => {
     <div>
       <h2 className='font-bold text-2xl mb-4'>Choose shipping address</h2>
       <div>
-        {addressList && addressList.length > 0
-          ? addressList.map(({ _id, data }, index) => (
-              <InputSelect
-                key={_id}
-                name='address'
-                id={_id}
-                value={index}
-                className='mb-2 last:mb-0'
-                selectedId={shippingInformation.id}
-                onChange={() => onChangeHandler(_id, data)}
-              >
-                <div className='rounded-lg flex items-center justify-between'>
-                  <h4 className='font-bold text-base uppercase'>
-                    {data.title}
-                  </h4>
-                  <span className='block text-sm text-gray-500 font-semibold'>
-                    {data.address}
-                  </span>
-                  <span
-                    className='text-blue-600 font-medium hover:text-gray-500'
-                    onClick={() => clickHandler(index)}
-                  >
-                    Edit
-                  </span>
-                </div>
-              </InputSelect>
-            ))
-          : 'No address'}
+        {addressList && addressList.length > 0 ? (
+          addressList.map(({ _id, data }, index) => (
+            <InputSelect
+              key={_id}
+              name='address'
+              id={_id}
+              value={index}
+              className='mb-2 last:mb-0'
+              selectedId={shippingInformation.id}
+              onChange={() => onChangeHandler(_id, data)}
+            >
+              <div className='rounded-lg flex items-center justify-between'>
+                <h4 className='font-bold text-base uppercase'>{data.title}</h4>
+                <span className='block text-sm text-gray-500 font-semibold'>
+                  {data.address}
+                </span>
+                <span
+                  className='text-blue-600 font-medium hover:text-gray-500'
+                  onClick={() => clickHandler(index)}
+                >
+                  Edit
+                </span>
+              </div>
+            </InputSelect>
+          ))
+        ) : (
+          <div onClick={() => setShow(true)}>Add an address</div>
+        )}
       </div>
       {show ? (
         <Modal onClose={() => setShow(false)}>
           <EditForm
-            address={addressList[index].data}
-            addressId={addressList[index]._id}
+            address={
+              addressList[index]
+                ? addressList[index].data
+                : { address: '', title: '', name: '', phone: '' }
+            }
+            addressId={addressList[index] ? addressList[index]._id : null}
             setShow={setShow}
           />
         </Modal>
