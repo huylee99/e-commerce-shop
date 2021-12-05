@@ -13,7 +13,9 @@ import Cart from '../pages/cart';
 import SignUp from '../pages/auth/signUp';
 import SignIn from '../pages/auth/signIn';
 import Product from '../pages/product';
-import Order from '../pages/order';
+import Tracking from '../pages/tracking';
+import OrderSuccess from '../pages/orderSuccess';
+import ErrorPage from '../pages/404';
 
 import OrderHistory from '../pages/user/components/OrderHistory';
 import UserInfo from '../pages/user/components/UserInfo';
@@ -85,8 +87,18 @@ const AppRouter = () => {
           <Route path='security' element={<ChangePassword />} />
         </Route>
 
-        <Route path='/order' element={<Order />} />
-
+        <Route
+          path='/order'
+          element={
+            <ProtectedRoute isPrivate={true}>
+              <ShopLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path='success' element={<OrderSuccess />} />
+        </Route>
+        <Route path='/tracking' element={<Tracking />} />
+        <Route path='/404' element={<ErrorPage />} />
         <Route path='/login' element={<SignIn />} />
         <Route path='/register' element={<SignUp />} />
       </Routes>

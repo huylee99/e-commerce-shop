@@ -24,10 +24,6 @@ const signOut = () => {
 const verify = async () => {
   try {
     const response = await authRequest.verify();
-    console.log(
-      '🚀 ~ file: actions.js ~ line 11 ~ signIn ~ response',
-      response.data
-    );
     store.dispatch(verifySuccess(response.data.user));
     store.dispatch(fetchSuccess(response.data.cart));
   } catch (error) {

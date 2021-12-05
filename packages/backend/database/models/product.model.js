@@ -20,6 +20,10 @@ const productSchema = new Schema({
     required: true,
     trim: true,
   },
+  discount: {
+    type: Number,
+    default: 0,
+  },
   categories: [
     {
       type: String,

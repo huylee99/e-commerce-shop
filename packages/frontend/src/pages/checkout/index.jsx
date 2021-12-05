@@ -90,7 +90,7 @@ const Checkout = () => {
     }
   };
 
-  const orderSubmitHandler = () => {
+  const orderSubmitHandler = async () => {
     setIsLoading(true);
     const items = cart.cart.map(({ product, quantity }) => ({
       product: product._id,
@@ -103,12 +103,21 @@ const Checkout = () => {
       items: items,
       discount: cart.discount,
       totalPrice: cart.totalPrice,
+      shippingFee: cart.shippingFee,
+      subTotal: cart.subTotal,
       paymentMethod: paymentMethod,
       shippingInformation: shippingInformation.data,
-      status: 'processing',
+      status: 'placed',
     };
 
-    orderRequest.createOrder(data).finally(() => setIsLoading(false));
+    try {
+      const response = await orderRequest.createOrder(data);
+      window.location.href = `/order/success?id=${response.data.order}`;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

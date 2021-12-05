@@ -7,6 +7,7 @@ const initialState = {
   totalPrice: 0,
   totalQty: 0,
   discount: 0,
+  shippingFee: 10,
 };
 
 const cartSlice = createSlice({

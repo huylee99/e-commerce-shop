@@ -1,19 +1,17 @@
 const { Cart } = require('../database/models/cart.model');
-const { User } = require('../database/models/user.model');
 const commonMessage = require('../core/constants/common.constant');
 
 const addItem = async ({ uid, product }) => {
   try {
-    const user = await Cart.findOne({ uid });
+    const cartIsFound = await Cart.findOne({ uid });
 
-    if (!user) {
+    if (!cartIsFound) {
       const newCart = new Cart({
         uid,
         cart: [{ product: product.id, quantity: product.quantity }],
       });
 
       await newCart.save();
-      await User.findByIdAndUpdate(uid, { cart: newCart._id });
 
       const cart = await Cart.getCart(uid);
       return { cart, message: commonMessage.CREATE_SUCCESSFULLY };

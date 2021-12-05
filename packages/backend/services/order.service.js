@@ -35,4 +35,14 @@ const getOrder = async orderId => {
   }
 };
 
-module.exports = { createOrder, getOrder };
+const checkOrder = async orderId => {
+  try {
+    const order = await Order.findOne({ orderId: orderId });
+
+    return { order, message: commonMessage.GET_SUCCESSFULLY };
+  } catch (error) {
+    throw Error(commonMessage.GET_FAILED);
+  }
+};
+
+module.exports = { createOrder, getOrder, checkOrder };

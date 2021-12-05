@@ -7,6 +7,9 @@ const orderRequest = {
   getOrder: orderId => {
     return guestAPI.get(`/order/get?orderId=${orderId}`);
   },
+  checkOrder: orderId => {
+    return memberAPI.get(`/order/verifyOrder?orderId=${orderId}`);
+  },
 };
 
 export default orderRequest;

@@ -43,7 +43,12 @@ const Shipping = ({ userState }) => {
               onChange={() => onChangeHandler(_id, data)}
             >
               <div className='rounded-lg flex items-center justify-between'>
-                <h4 className='font-bold text-base uppercase'>{data.title}</h4>
+                {data.title && (
+                  <h4 className='font-bold text-base uppercase'>
+                    {data.title}
+                  </h4>
+                )}
+
                 <span className='block text-sm text-gray-500 font-semibold'>
                   {data.address}
                 </span>
