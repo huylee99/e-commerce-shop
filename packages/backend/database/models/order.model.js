@@ -25,6 +25,14 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
+    subTotal: {
+      type: Number,
+      default: 0,
+    },
+    shippingFee: {
+      type: Number,
+      default: 5,
+    },
     totalPrice: {
       type: Number,
       required: true,

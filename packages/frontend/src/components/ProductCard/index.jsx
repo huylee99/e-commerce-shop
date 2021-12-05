@@ -80,11 +80,11 @@ const ProductCard = ({ width, product }) => {
       </div>
       <div className='absolute right-[5px] top-1/2 transform translate-x-[150%] group-hover:translate-x-0 transition-transform duration-200 z-20'>
         <ul>
-          <li className='w-8 h-8 border border-gray-200 rounded-full leading-[28px] text-center text-gray-500 mb-1 cursor-pointer hover:bg-primary hover:text-white'>
-            <ShoppingCartIcon
-              className='w-4 inline-block'
-              onClick={onAddItem}
-            />
+          <li
+            className='w-8 h-8 border border-gray-200 rounded-full leading-[28px] text-center text-gray-500 mb-1 cursor-pointer hover:bg-primary hover:text-white'
+            onClick={onAddItem}
+          >
+            <ShoppingCartIcon className='w-4 inline-block' />
           </li>
           <li className='w-8 h-8 border border-gray-200 rounded-full leading-[28px] text-center text-gray-500 cursor-pointer hover:bg-primary hover:text-white'>
             <SearchIcon className='w-4 inline-block' />

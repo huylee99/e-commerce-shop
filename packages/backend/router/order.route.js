@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post('/create', tokenVerification, orderController.createOrder);
 router.get('/get', orderController.getOrder);
+router.get('/verifyOrder', tokenVerification, orderController.checkOrder);
 
 module.exports = router;

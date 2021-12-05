@@ -27,7 +27,7 @@ const STEPS = [
   },
 ];
 
-const Order = () => {
+const Tracking = () => {
   const { search } = useLocation();
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,10 @@ const Order = () => {
       <div className='py-10'>
         <Container size='sm'>
           <div>
-            <h1 className='text-center text-4xl text-primary font-bold mb-5'>
+            <h1
+              onClick={() => (window.location.href = '/')}
+              className='text-center text-4xl text-primary font-bold mb-5 cursor-pointer'
+            >
               SuperMarket
             </h1>
             {isLoading ? (
@@ -141,15 +144,19 @@ const Order = () => {
                     <div className='ml-auto w-1/3'>
                       <div className='flex justify-between'>
                         <span className='font-bold'>Subtotal: </span>
-                        <span>$41.94</span>
+                        <span>${data.subTotal}</span>
                       </div>
                       <div className='text-primary flex justify-between'>
                         <span>Discount: </span>
-                        <span>$0</span>
+                        <span>${data.discount}</span>
+                      </div>
+                      <div className='text-primary flex justify-between'>
+                        <span>Shipping Fee: </span>
+                        <span>${data.shippingFee}</span>
                       </div>
                       <span className='font-bold flex justify-between text-lg'>
                         <span>Total:</span>
-                        <span>$41.94</span>
+                        <span>${data.totalPrice}</span>
                       </span>
                     </div>
                   </div>
@@ -187,4 +194,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Tracking;

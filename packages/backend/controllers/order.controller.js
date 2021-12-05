@@ -28,4 +28,15 @@ const getOrder = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, getOrder };
+const checkOrder = async (req, res) => {
+  const { orderId } = req.query;
+
+  try {
+    const { order, message } = await orderService.checkOrder(orderId);
+    res.status(200).send({ order, message });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
+module.exports = { createOrder, getOrder, checkOrder };

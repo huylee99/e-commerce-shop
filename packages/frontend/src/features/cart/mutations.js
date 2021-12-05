@@ -7,7 +7,13 @@ const mutations = {
 
       state.subTotal = totalCalculate('price', state.cart);
       state.totalQty = totalCalculate('quantity', state.cart);
-      state.totalPrice = state.subTotal - state.discount;
+
+      if (state.subTotal > 35) {
+        state.shippingFee = 0;
+      }
+      state.totalPrice = parseFloat(
+        state.subTotal - state.discount + state.shippingFee
+      ).toFixed(2);
     }
   },
 };

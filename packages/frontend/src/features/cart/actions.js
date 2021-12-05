@@ -5,7 +5,6 @@ import { fetchSuccess } from './cartSlice';
 const increaseQty = async product => {
   try {
     const response = await cartRequest.addItem(product);
-    console.log('🚀 ~ file: actions.js ~ line 8 ~ product', product);
     store.dispatch(fetchSuccess(response.data.cart));
   } catch (error) {
     console.log(error);
