@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import { StarIcon } from '@heroicons/react/solid';
 
-const RatingFilter = ({ handleChange }) => {
+const RatingFilter = ({ queryRating, handleChange }) => {
   return (
     <div className='px-8 py-6 rounded-xl border border-gray-200'>
       <h3 className='text-dark font-bold text-2xl'>Rating</h3>
       <div className='w-full h-[1px] bg-gray-300 mt-2 mb-5'></div>
       <div>
         {[
-          ...new Array(5).fill(0).map((_, index) => (
+          ...new Array(6).fill(0).map((_, index) => (
             <div key={index} className='flex items-center mb-2 last:mb-0'>
               <label htmlFor={`rating-${index + 1}`}>
                 <input
@@ -18,6 +18,7 @@ const RatingFilter = ({ handleChange }) => {
                   className='mr-2 cursor-pointer inline-block align-middle'
                   value={5 - index}
                   onChange={handleChange}
+                  checked={+queryRating === 5 - index}
                 />
                 <div className='inline-flex items-center align-middle'>
                   {[

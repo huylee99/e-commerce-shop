@@ -36,7 +36,10 @@ const MainShop = () => {
               setQueryHandler={setQueryHandler}
               queryPrice={query.price}
             />
-            <RatingFilter handleChange={handleChange} />
+            <RatingFilter
+              queryRating={query.rating}
+              handleChange={handleChange}
+            />
           </div>
           <div className='max-w-[75%] w-[75%]'>
             <Shop query={query} handleChange={handleChange} />

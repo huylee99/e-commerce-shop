@@ -19,7 +19,7 @@ const CATEGORIES = [
   {
     title: 'Fruits',
     icon: 'https://wpbingosite.com/wordpress/econis/wp-content/uploads/2021/06/soy.svg',
-    query: 'fruit',
+    query: 'fruits',
   },
 ];
 

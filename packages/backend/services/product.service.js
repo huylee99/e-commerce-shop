@@ -14,13 +14,17 @@ const createProduct = async data => {
   }
 };
 
-const getAllProducts = async ({ skip = 0, offset = 10, ...rest }) => {
+const getAllProducts = async ({ skip = 0, limit = 12, ...rest }) => {
   try {
-    const products = await Product.find({ ...rest })
+    const products = await Product.find({
+      ...rest,
+      price: { $lte: rest.price || 100 },
+      rating: rest.rating || { $lte: 5 },
+    })
       .skip(skip)
-      .limit(offset);
+      .limit(limit);
     const totalItems = products.length;
-    const { currentPage, totalPages } = paginate(totalItems, skip, offset);
+    const { currentPage, totalPages } = paginate(totalItems, skip, limit);
 
     return {
       message: commonMessage.GET_SUCCESSFULLY,

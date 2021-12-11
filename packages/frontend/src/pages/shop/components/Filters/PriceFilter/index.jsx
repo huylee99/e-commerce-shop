@@ -28,7 +28,7 @@ const PriceFilter = ({ setQueryHandler, queryPrice = 0 }) => {
           id='price'
           min='0'
           max='100'
-          step={`${100 - price <= 10 ? 100 - price - 1 : 10}`}
+          step={`${100 - price <= 10 ? 100 - price - 1 : 5}`}
           value={price === 0 ? 100 : price}
           onChange={handleChange}
           className='w-full mb-2'
