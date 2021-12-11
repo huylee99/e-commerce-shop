@@ -3,13 +3,19 @@ import SectionDivider from '@/components/SectionDivider';
 import SectionHeader from '@/components/SectionHeader';
 import ProductList from '@/components/ProductList';
 
-const PromotionSection = () => {
+const PromotionSection = ({ products, isLoading }) => {
   return (
     <SectionDivider size='lg'>
       <Container size='lg'>
         <>
           <SectionHeader title='Deal of the days.' />
-          <ProductList />
+          {isLoading ? (
+            '...Loading'
+          ) : products && products.length > 0 ? (
+            <ProductList products={products} />
+          ) : (
+            'Not found'
+          )}
         </>
       </Container>
     </SectionDivider>

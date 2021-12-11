@@ -10,7 +10,7 @@ const productSchema = new Schema({
     type: String,
     trim: true,
   },
-  newPrice: {
+  price: {
     type: Number,
     required: true,
     trim: true,
@@ -39,6 +39,15 @@ const productSchema = new Schema({
   tags: [{ type: String }],
   rating: {
     type: Number,
+    default: 0,
+  },
+  sold: {
+    type: Number,
+    default: 0,
+  },
+  unit: {
+    type: String,
+    required: true,
   },
 });
 

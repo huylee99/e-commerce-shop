@@ -1,7 +1,7 @@
-const paginate = (total, skip, offset) => {
+const paginate = (total, skip, limit) => {
   return {
-    currentPage: skip / offset + 1,
-    totalPages: Math.ceil(total / offset),
+    currentPage: skip / limit + 1,
+    totalPages: Math.ceil(total / limit),
   };
 };
 

@@ -1,7 +1,7 @@
 import { guestAPI } from '.';
 
 const productRequest = {
-  getProducts: queries => {
+  getProducts: (queries = '') => {
     return guestAPI.get(`product/getProducts/${queries}`);
   },
   getProductById: id => {

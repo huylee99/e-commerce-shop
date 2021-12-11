@@ -1,14 +1,15 @@
 import ProductCard from '../ProductCard';
 
-const ProductList = () => {
+const ProductList = ({ products }) => {
   return (
-    <div className='flex items-stretch justify-between gap-5'>
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
+    <div className='flex items-stretch gap-5 flex-wrap'>
+      {products.map(product => (
+        <ProductCard
+          width='w-[calc(20%-25px)]'
+          key={product._id}
+          product={product}
+        />
+      ))}
     </div>
   );
 };
