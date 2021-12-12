@@ -9,7 +9,7 @@ const { tokenVerification } = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.use('/user', tokenVerification, userRouter);
+router.use('/user', userRouter);
 router.use('/auth', authRouter);
 router.use('/product', productRouter);
 router.use('/cart', tokenVerification, cartRouter);

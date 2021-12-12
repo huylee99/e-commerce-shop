@@ -5,13 +5,27 @@ import authRequest from '@/api/authAPI';
 import userRequest from '../../api/userAPI';
 import authServices from '../../services/authServices';
 
-const signIn = async (email, password) => {
+const signIn = async ({ email, password }) => {
   try {
     const response = await authRequest.signIn(email, password);
 
     store.dispatch(signInSuccess(response.data.user));
     store.dispatch(fetchSuccess(response.data.cart));
     authServices.setToken(response.data.token);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const signUp = async data => {
+  try {
+    const response = await userRequest.signUp(data);
+
+    store.dispatch(signInSuccess(response.data.user));
+    store.dispatch(fetchSuccess(response.data.cart));
+    authServices.setToken(response.data.token);
+
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -64,6 +78,7 @@ const addShippingInfo = async data => {
 export {
   signIn,
   signOut,
+  signUp,
   verify,
   updateUser,
   updateShippingInfo,
