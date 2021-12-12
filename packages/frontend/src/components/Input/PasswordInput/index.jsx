@@ -1,13 +1,8 @@
 import { useState } from 'react';
+import { usePassword, useSetPassword } from '@/context/passwordContext';
 
-const InputField = ({
-  type = 'text',
-  name,
-  placeholder,
-  validation,
-  isSubmitted,
-}) => {
-  const [value, setValue] = useState('');
+const PasswordInput = ({ name, placeholder, validation, isSubmitted }) => {
+  const [value, setValue] = [usePassword(), useSetPassword()];
   const [touched, setTouched] = useState(false);
   const errorMessage = validation(value);
   const displayError = (touched || isSubmitted) && errorMessage;
@@ -15,7 +10,7 @@ const InputField = ({
   return (
     <div>
       <input
-        type={type}
+        type='password'
         name={name}
         className='px-2 py-1 block focus:outline-none border border-gray-300 rounded-md font-semibold w-full'
         onChange={event => setValue(event.target.value)}
@@ -32,4 +27,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default PasswordInput;

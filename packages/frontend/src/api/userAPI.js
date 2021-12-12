@@ -1,4 +1,4 @@
-import { memberAPI } from '.';
+import { guestAPI, memberAPI } from '.';
 
 const userRequest = {
   update: data => {
@@ -9,6 +9,12 @@ const userRequest = {
   },
   addShippingInfo: data => {
     return memberAPI.put('user/addShippingInfo', { data });
+  },
+  signUp: data => {
+    return guestAPI.post('user/register', { ...data });
+  },
+  updatePassword: data => {
+    return memberAPI.put('user/updatePassword', { ...data });
   },
 };
 

@@ -1,34 +1,39 @@
-import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
 
+import { validation } from '../../../services/formServices/fieldValidation';
+
 import InputLabel from '@/components/Input/InputLabel';
 import InputField from '@/components/Input/InputField';
+
 import Button from '@/components/Button';
 
 import { signIn } from '../../../features/auth/actions';
+import { formValidation } from '../../../services/formServices/formValidation';
 
 const SignIn = () => {
-  const [user, setUser] = useState({ email: '', password: '' });
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const redirectURL = searchParams.get('redirect');
 
-  const navigate = useNavigate();
+  const handleSubmit = event => {
+    event.preventDefault();
 
-  const changeHandler = event => {
-    setUser(prevState => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
+    const formData = new FormData(event.currentTarget);
 
-  const submitHandler = () => {
-    signIn(user.email, user.password).then(() =>
-      navigate(`${redirectURL ? redirectURL : '/user'}`, { replace: true })
+    const fieldObj = Object.fromEntries(formData.entries());
+    const isFormValid = Object.keys(fieldObj).every(key =>
+      formValidation(fieldObj, key)
     );
+
+    if (isFormValid) {
+      signIn(fieldObj).then(() =>
+        navigate(`${redirectURL ? redirectURL : '/user'}`, { replace: true })
+      );
+    }
   };
 
   return (
@@ -40,14 +45,13 @@ const SignIn = () => {
               SuperMarket
             </span>
             <h1 className='font-bold text-4xl mb-5'>Login</h1>
-            <form className='mb-5'>
+            <form className='mb-5' onSubmit={handleSubmit}>
               <div className='mb-2'>
                 <InputLabel htmlFor='email' title='Email Address' />
                 <InputField
                   name='email'
                   type='email'
-                  value={user.email}
-                  onChange={changeHandler}
+                  validation={validation.email}
                 />
               </div>
               <div className='mb-5'>
@@ -55,11 +59,10 @@ const SignIn = () => {
                 <InputField
                   name='password'
                   type='password'
-                  value={user.password}
-                  onChange={changeHandler}
+                  validation={validation.password}
                 />
               </div>
-              <Button size='full' onClick={submitHandler}>
+              <Button type='submit' size='full'>
                 Sign In
               </Button>
             </form>

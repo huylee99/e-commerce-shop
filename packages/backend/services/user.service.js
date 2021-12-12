@@ -26,6 +26,23 @@ const updateUser = async (_id, data) => {
   throw Error(commonMessage.UPDATE_FAILED);
 };
 
+const updatePassword = async (_id, data) => {
+  try {
+    const user = await User.findById(_id);
+
+    const isMatched = await user.isPasswordMatched(data.currentPassword);
+
+    if (isMatched) {
+      user.password = data.newPassword;
+      await user.save();
+    }
+
+    return { message: commonMessage.UPDATE_SUCCESSFULLY };
+  } catch (error) {
+    throw Error(commonMessage.UPDATE_FAILED);
+  }
+};
+
 const updateShippingInfo = async (uid, addressId, data) => {
   const updatedUser = await User.updateShippingInfo(uid, addressId, data);
 
@@ -53,4 +70,5 @@ module.exports = {
   updateUser,
   updateShippingInfo,
   addShippingInfo,
+  updatePassword,
 };

@@ -12,6 +12,17 @@ const register = async (req, res) => {
   }
 };
 
+const updatePassword = async (req, res) => {
+  try {
+    const { message } = await userService.updatePassword(req.uid, req.body);
+    const token = tokenService.authTokenGenerator(req.uid);
+
+    res.status(200).send({ token, message });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
 const update = async (req, res) => {
   try {
     const { result: user, message } = await userService.updateUser(
@@ -56,4 +67,5 @@ module.exports = {
   update,
   updateShippingInfo,
   addShippingInfo,
+  updatePassword,
 };
