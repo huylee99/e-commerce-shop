@@ -2,6 +2,7 @@ import { useState } from 'react';
 import InputSelect from '@/components/Input/InputSelect';
 import Modal from '@/components/Modal';
 import EditForm from '../EditForm';
+import Button from '../../../../components/Button';
 
 import { useCheckout } from '../../context/checkoutContext';
 import types from '../../context/types';
@@ -29,10 +30,16 @@ const Shipping = ({ userState }) => {
 
   return (
     <div>
-      <h2 className='font-bold text-2xl mb-4'>Choose shipping address</h2>
-      <div>
-        {addressList && addressList.length > 0 ? (
-          addressList.map(({ _id, data }, index) => (
+      <div className='flex justify-between items-center'>
+        <h2 className='font-bold text-2xl'>Choose shipping address</h2>
+        <Button type='button' onClick={() => setShow(true)}>
+          Add an address
+        </Button>
+      </div>
+
+      {addressList && addressList.length > 0 ? (
+        <div className='mt-4'>
+          {addressList.map(({ _id, data }, index) => (
             <InputSelect
               key={_id}
               name='address'
@@ -42,36 +49,33 @@ const Shipping = ({ userState }) => {
               selectedId={shippingInformation.id}
               onChange={() => onChangeHandler(_id, data)}
             >
-              <div className='rounded-lg flex items-center justify-between'>
-                {data.title && (
-                  <h4 className='font-bold text-base uppercase'>
-                    {data.title}
-                  </h4>
-                )}
-
+              <div className='rounded-lg flex items-center'>
+                <h4 className='font-bold mr-10 text-base uppercase'>
+                  {data.fullName}
+                </h4>
                 <span className='block text-sm text-gray-500 font-semibold'>
                   {data.address}
                 </span>
-                <span
-                  className='text-blue-600 font-medium hover:text-gray-500'
+                <button
+                  type='button'
+                  className='text-blue-600 font-medium hover:text-gray-500 ml-auto'
                   onClick={() => clickHandler(index)}
                 >
                   Edit
-                </span>
+                </button>
               </div>
             </InputSelect>
-          ))
-        ) : (
-          <div onClick={() => setShow(true)}>Add an address</div>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : null}
+
       {show ? (
         <Modal onClose={() => setShow(false)}>
           <EditForm
-            address={
+            data={
               addressList[index]
                 ? addressList[index].data
-                : { address: '', title: '', name: '', phone: '' }
+                : { address: '', fullName: '', phone: '' }
             }
             addressId={addressList[index] ? addressList[index]._id : null}
             setShow={setShow}

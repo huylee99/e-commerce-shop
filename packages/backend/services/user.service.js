@@ -27,20 +27,17 @@ const updateUser = async (_id, data) => {
 };
 
 const updatePassword = async (_id, data) => {
-  try {
-    const user = await User.findById(_id);
+  const user = await User.findById(_id);
 
-    const isMatched = await user.isPasswordMatched(data.currentPassword);
+  const isMatched = await user.isPasswordMatched(data.currentPassword);
 
-    if (isMatched) {
-      user.password = data.newPassword;
-      await user.save();
-    }
-
+  if (isMatched) {
+    user.password = data.newPassword;
+    await user.save();
     return { message: commonMessage.UPDATE_SUCCESSFULLY };
-  } catch (error) {
-    throw Error(commonMessage.UPDATE_FAILED);
   }
+
+  throw Error(commonMessage.UPDATE_FAILED);
 };
 
 const updateShippingInfo = async (uid, addressId, data) => {

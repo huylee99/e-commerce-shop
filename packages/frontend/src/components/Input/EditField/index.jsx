@@ -1,25 +1,27 @@
 import { useState } from 'react';
-import { usePassword, useSetPassword } from '@/context/passwordContext';
 
-const PasswordInput = ({
+const EditField = ({
+  type = 'text',
   name,
   placeholder,
   validation,
   isSubmitted,
   isLoading = false,
+  value = '',
 }) => {
-  const [value, setValue] = [usePassword(), useSetPassword()];
+  const [inputValue, setInputValue] = useState(value);
   const [touched, setTouched] = useState(false);
-  const errorMessage = validation(value);
+  const errorMessage = validation(inputValue);
   const displayError = (touched || isSubmitted) && errorMessage;
 
   return (
     <div>
       <input
-        type='password'
+        type={type}
         name={name}
+        value={inputValue}
         className='px-2 py-1 block focus:outline-none border border-gray-300 rounded-md font-semibold w-full disabled:bg-gray-100 disabled:pointer-events-none'
-        onChange={event => setValue(event.target.value)}
+        onChange={event => setInputValue(event.target.value)}
         onBlur={() => setTouched(true)}
         placeholder={placeholder}
         autoComplete='off'
@@ -34,4 +36,4 @@ const PasswordInput = ({
   );
 };
 
-export default PasswordInput;
+export default EditField;

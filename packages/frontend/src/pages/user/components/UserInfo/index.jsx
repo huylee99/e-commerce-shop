@@ -1,30 +1,25 @@
-import { useState } from 'react';
 import InputLabel from '@/components/Input/InputLabel';
-import InputField from '@/components/Input/InputField';
 import Button from '@/components/Button';
+import EditField from '../../../../components/Input/EditField';
+import { useSelector } from 'react-redux';
 
-import { formValidation } from '../../../../services/formServices/formValidation';
+import { useForm } from '../../../../hooks/useForm';
 import { validation } from '../../../../services/formServices/fieldValidation';
-
 import { updateUser } from '../../../../features/auth/actions';
 
 const UserInfo = () => {
-  const [, setIsLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { isLoading, isSubmitted, setIsLoading, validate } = useForm();
+  const { user } = useSelector(state => state.auth);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
     setIsLoading(true);
 
-    const formData = new FormData(event.currentTarget);
-    const fieldObj = Object.fromEntries(formData.entries());
-    const isFormValid = Object.keys(fieldObj).every(key =>
-      formValidation(fieldObj, key)
-    );
+    const { fieldObj, isFormValid } = validate(event.currentTarget);
 
-    setIsSubmitted(true);
-
-    if (isFormValid) updateUser(fieldObj).finally(() => setIsLoading(false));
+    if (isFormValid) {
+      updateUser(fieldObj).finally(() => setIsLoading(false));
+    }
   };
 
   return (
@@ -35,10 +30,12 @@ const UserInfo = () => {
           <div className='flex gap-5'>
             <div>
               <InputLabel title='Full Name' htmlFor='fullName' />
-              <InputField
+              <EditField
                 name='fullName'
                 validation={validation.fullName}
                 isSubmitted={isSubmitted}
+                isLoading={isLoading}
+                value={user.fullName}
               />
             </div>
           </div>
@@ -48,16 +45,20 @@ const UserInfo = () => {
           <div className='flex gap-5 items-end'>
             <div>
               <InputLabel title='Email Address' htmlFor='email' />
-              <InputField
+              <EditField
                 name='email'
                 type='email'
                 validation={validation.email}
                 isSubmitted={isSubmitted}
+                isLoading={isLoading}
+                value={user.email}
               />
             </div>
           </div>
         </div>
-        <Button type='submit'>Save</Button>
+        <Button type='submit' disabled={isLoading} isLoading={isLoading}>
+          Save
+        </Button>
       </form>
     </div>
   );

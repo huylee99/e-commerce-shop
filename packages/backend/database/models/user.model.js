@@ -17,9 +17,11 @@ const userSchema = new Schema({
   fullName: {
     type: String,
     required: true,
+    trim: true,
   },
   phoneNumber: {
     type: String,
+    trim: true,
   },
   addressList: [
     {
@@ -32,11 +34,7 @@ const userSchema = new Schema({
           type: String,
           trim: true,
         },
-        title: {
-          type: String,
-          trim: true,
-        },
-        name: {
+        fullName: {
           type: String,
           trim: true,
         },

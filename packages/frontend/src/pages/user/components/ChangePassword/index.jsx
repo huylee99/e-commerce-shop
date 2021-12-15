@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import InputLabel from '@/components/Input/InputLabel';
 import InputField from '@/components/Input/InputField';
 import Button from '@/components/Button';
@@ -7,45 +6,43 @@ import PasswordConfirmInput from '@/components/Input/PasswordConfirmInput';
 import PasswordInput from '@/components/Input/PasswordInput';
 
 import { PasswordProvider } from '@/context/passwordContext';
-import { validation } from '@/services/formServices/fieldValidation';
-import { formValidation } from '@/services/formServices/formValidation';
 import authService from '@/services/authServices';
 import userRequest from '@/api/userAPI';
 
+import { useForm } from '../../../../hooks/useForm';
+import { validation } from '@/services/formServices/fieldValidation';
+
 const ChangePassword = () => {
-  const [, setIsLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { isLoading, setIsLoading, isSubmitted, validate } = useForm();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault();
+    setErrorMessage('');
+    const { fieldObj, isFormValid } = validate(event.currentTarget);
 
-    setIsLoading(true);
-    const formData = new FormData(event.currentTarget);
-
-    const fieldObj = Object.fromEntries(formData.entries());
-    const isFormValid = Object.keys(fieldObj).every(key =>
-      formValidation(fieldObj, key)
-    );
-
-    setIsSubmitted(true);
     if (
       isFormValid &&
-      fieldObj['newPassword'] === fieldObj['passwordConfirm']
+      fieldObj['newPassword'] === fieldObj['confirmPassword']
     ) {
       delete fieldObj['confirmPassword'];
-
+      setIsLoading(true);
       userRequest
         .updatePassword(fieldObj)
         .then(response => {
           authService.setToken(response.data.token);
+          event.target.reset();
         })
+        .catch(() =>
+          setErrorMessage('Your current password does not match our record')
+        )
         .finally(() => setIsLoading(false));
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form noValidate onSubmit={handleSubmit} className='mb-5'>
         <div className='mb-5'>
           <h2 className='font-bold text-2xl mb-4'>Change Password</h2>
           <div className='max-w-xs'>
@@ -56,6 +53,7 @@ const ChangePassword = () => {
                 name='currentPassword'
                 validation={validation.currentPassword}
                 isSubmitted={isSubmitted}
+                isLoading={isLoading}
               />
             </div>
             <PasswordProvider>
@@ -65,24 +63,42 @@ const ChangePassword = () => {
                   name='newPassword'
                   validation={validation.newPassword}
                   isSubmitted={isSubmitted}
+                  isLoading={isLoading}
                 />
               </div>
               <div>
                 <InputLabel
-                  title='Password Confirm'
-                  htmlFor='passwordConfirm'
+                  title='Re-type New Password'
+                  htmlFor='confirmPassword'
                 />
                 <PasswordConfirmInput
-                  name='passwordConfirm'
-                  validation={validation.passwordConfirm}
+                  name='confirmPassword'
+                  validation={validation.confirmPassword}
                   isSubmitted={isSubmitted}
+                  isLoading={isLoading}
                 />
               </div>
             </PasswordProvider>
           </div>
         </div>
-        <Button type='submit'>Save</Button>
+        <div className='relative inline-flex justify-center items-center'>
+          <Button
+            type='submit'
+            isLoading={isLoading}
+            disabled={isLoading}
+            size='w-[100px]'
+          >
+            Save
+          </Button>
+        </div>
       </form>
+      {errorMessage ? (
+        <div className='inline-block px-4 py-2 bg-red-500 bg-opacity-10 rounded-md'>
+          <span className='text-sm font-semibold text-red-500'>
+            {errorMessage}
+          </span>
+        </div>
+      ) : null}
     </div>
   );
 };
