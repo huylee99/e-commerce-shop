@@ -169,7 +169,7 @@ const Tracking = () => {
                     <div className='flex mb-4'>
                       <div className='w-1/2'>
                         <span className='font-bold'>Name: </span>
-                        <span>{data.shippingInformation.name}</span>
+                        <span>{data.shippingInformation.fullName}</span>
                       </div>
                       <div className='w-1/2'>
                         <span className='font-bold'>Phone Number: </span>

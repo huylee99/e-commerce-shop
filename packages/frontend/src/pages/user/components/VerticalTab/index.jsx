@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
+import { useSelector } from 'react-redux';
 
 import { signOut } from '@/features/auth/actions';
 
 import Button from '@/components/Button';
 
 const VerticalTab = () => {
-  const navigate = useNavigate();
+  const { fullName } = useSelector(state => state.auth.user);
 
   const clickHandler = () => {
     signOut();
-    navigate('/login', { replace: true });
+    window.location.reload();
   };
 
   return (
@@ -28,7 +28,9 @@ const VerticalTab = () => {
             <span className='text-sm font-bold text-gray-400'>
               Welcome back,
             </span>
-            <span className='font-bold text-base uppercase block'>Huy Le</span>
+            <span className='font-bold text-base uppercase block'>
+              {fullName}
+            </span>
           </div>
           <Button onClick={clickHandler}>Log out</Button>
         </div>

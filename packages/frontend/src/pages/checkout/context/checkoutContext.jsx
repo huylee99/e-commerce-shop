@@ -29,7 +29,7 @@ const CheckoutProvider = ({ children }) => {
 const useCheckout = () => {
   const context = useContext(CheckoutContext);
 
-  if (!context) {
+  if (context === null) {
     throw Error('Context is not valid!');
   }
 

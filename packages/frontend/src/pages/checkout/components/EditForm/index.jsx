@@ -5,71 +5,84 @@ import InputLabel from '@/components/Input/InputLabel';
 import InputField from '@/components/Input/InputField';
 import Button from '@/components/Button';
 
+import { validation } from '../../../../services/formServices/fieldValidation';
+import { formValidation } from '../../../../services/formServices/formValidation';
+
 import {
   updateShippingInfo,
   addShippingInfo,
 } from '../../../../features/auth/actions';
 
-const EditForm = ({ address, addressId, setShow }) => {
-  const [information, setInformation] = useState(address);
+const EditForm = ({ data, addressId, setShow }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onChangeHandler = event => {
-    setInformation(prevState => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
+  const handleSubmit = event => {
+    event.preventDefault();
 
-  const onSubmitHandler = () => {
-    setIsLoading(true);
+    const formData = new FormData(event.currentTarget);
 
-    if (addressId) {
-      updateShippingInfo(addressId, information).finally(() => {
-        setIsLoading(false);
-        setShow(false);
-      });
-    } else {
-      addShippingInfo(information).finally(() => {
-        setIsLoading(false);
-        setShow(false);
-      });
+    const fieldObj = Object.fromEntries(formData.entries());
+
+    const isFormValid = Object.keys(fieldObj).every(key =>
+      formValidation(fieldObj, key)
+    );
+
+    setIsSubmitted(true);
+
+    if (isFormValid) {
+      if (addressId) {
+        updateShippingInfo(addressId, fieldObj).finally(() => {
+          setIsLoading(false);
+          setShow(false);
+        });
+      } else {
+        addShippingInfo(fieldObj).finally(() => {
+          setIsLoading(false);
+          setShow(false);
+        });
+      }
     }
   };
 
   return (
     <div>
-      <div className='mb-5'>
-        <div className='flex items-start gap-5 mb-5'>
-          <div>
-            <InputLabel htmlFor='name' title='Name' />
-            <InputField
-              name='name'
-              value={information.name}
-              onChange={onChangeHandler}
-            />
+      <form onSubmit={handleSubmit}>
+        <div className='mb-5'>
+          <div className='flex items-start gap-5 mb-5'>
+            <div>
+              <InputLabel htmlFor='fullName' title='Full name' />
+              <InputField
+                name='fullName'
+                value={data.fullName}
+                validation={validation.fullName}
+                isSubmitted={isSubmitted}
+              />
+            </div>
+            <div>
+              <InputLabel htmlFor='phone' title='Phone number' />
+              <InputField
+                name='phone'
+                value={data.phone}
+                validation={validation.phone}
+                isSubmitted={isSubmitted}
+              />
+            </div>
           </div>
-          <div>
-            <InputLabel htmlFor='phone' title='Phone number' />
-            <InputField
-              name='phone'
-              value={information.phone}
-              onChange={onChangeHandler}
-            />
-          </div>
-        </div>
 
-        <div>
-          <InputLabel htmlFor='address' title='Home address' />
-          <InputField
-            name='address'
-            value={information.address}
-            onChange={onChangeHandler}
-          />
+          <div>
+            <InputLabel htmlFor='address' title='Home address' />
+            <InputField
+              name='address'
+              value={data.address}
+              validation={validation.address}
+              isSubmitted={isSubmitted}
+            />
+          </div>
         </div>
-      </div>
-      {isLoading ? '...Updating' : ''}
-      <Button onClick={onSubmitHandler}>Save</Button>
+        {isLoading ? '...Updating' : ''}
+        <Button type='submit'>Save</Button>
+      </form>
     </div>
   );
 };

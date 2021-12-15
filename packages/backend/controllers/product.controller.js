@@ -9,7 +9,7 @@ const getAll = async (req, res) => {
 
     res.status(200).send(result);
   } catch (error) {
-    res.status(200).send({ message: error.message });
+    res.status(400).send({ message: error.message });
   }
 };
 
@@ -19,7 +19,7 @@ const createProduct = async (req, res) => {
 
     res.status(200).send(product);
   } catch (error) {
-    res.status(200).send({ message: error.message });
+    res.status(400).send({ message: error.message });
   }
 };
 
@@ -30,7 +30,7 @@ const getProductById = async (req, res) => {
 
     res.status(200).send({ product, message });
   } catch (error) {
-    res.status(404).send({ message: error.message });
+    res.status(400).send({ message: error.message });
   }
 };
 

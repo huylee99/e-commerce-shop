@@ -5,6 +5,9 @@ import authRequest from '@/api/authAPI';
 import userRequest from '../../api/userAPI';
 import authServices from '../../services/authServices';
 
+import { notify } from '../../helpers/toastify';
+import { UPDATE_SUCCESSFULLY } from '../../constant/responseMessage';
+
 const signIn = async ({ email, password }) => {
   try {
     const response = await authRequest.signIn(email, password);
@@ -49,19 +52,24 @@ const updateUser = async data => {
   try {
     const response = await userRequest.update(data);
 
-    store.dispatch(updateSuccess(response.data.user));
+    if (response.data.message === UPDATE_SUCCESSFULLY) {
+      store.dispatch(updateSuccess(response.data.user));
+      notify('Update successfully!', 'success');
+    }
   } catch (error) {
-    throw Error('Update error');
+    notify('Update failed! Please try again!', 'error');
   }
 };
 
 const updateShippingInfo = async (addressId, data) => {
   try {
     const response = await userRequest.updateShippingInfo(addressId, data);
-
-    store.dispatch(updateSuccess(response.data.user));
+    if (response.data.message === UPDATE_SUCCESSFULLY) {
+      store.dispatch(updateSuccess(response.data.user));
+      notify('Shipping address is updated!', 'success');
+    }
   } catch (error) {
-    throw Error('Update error');
+    notify('Error! Please try again!', 'error');
   }
 };
 
@@ -69,9 +77,12 @@ const addShippingInfo = async data => {
   try {
     const response = await userRequest.addShippingInfo(data);
 
-    store.dispatch(updateSuccess(response.data.user));
+    if (response.data.message === UPDATE_SUCCESSFULLY) {
+      store.dispatch(updateSuccess(response.data.user));
+      notify('Shipping address is added!', 'success');
+    }
   } catch (error) {
-    throw Error('Update failed');
+    notify('Error! Please try again!', 'error');
   }
 };
 

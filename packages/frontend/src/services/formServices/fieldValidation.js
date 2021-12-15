@@ -29,13 +29,23 @@ const validation = {
 
     return false;
   },
-  passwordConfirm: value => {
+  confirmPassword: value => {
     if (!value) return 'This field is required';
     if (value.length < 8) return 'Password must be longer than 8 characters';
 
     return false;
   },
   fullName: value => {
+    if (!value) return 'This field is required';
+
+    return false;
+  },
+  phone: value => {
+    if (!value) return 'This field is required';
+
+    return false;
+  },
+  address: value => {
     if (!value) return 'This field is required';
 
     return false;
