@@ -40,12 +40,27 @@ const validation = {
 
     return false;
   },
-  phone: value => {
+  phoneNumber: value => {
     if (!value) return 'This field is required';
 
     return false;
   },
   address: value => {
+    if (!value) return 'This field is required';
+
+    return false;
+  },
+  state: value => {
+    if (!value) return 'This field is required';
+
+    return false;
+  },
+  city: value => {
+    if (!value) return 'This field is required';
+
+    return false;
+  },
+  zipCode: value => {
     if (!value) return 'This field is required';
 
     return false;

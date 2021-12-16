@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../database/models/user.model');
 const { Cart } = require('../database/models/cart.model');
+const { Address } = require('../database/models/address.model');
 const splitToken = require('../core/helpers/splitToken');
 const authMessage = require('../core/constants/auth.constant');
 
@@ -21,10 +22,13 @@ const verifyToken = async authHeader => {
 
     const token = splitToken(authHeader);
     const result = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ _id: result.userId });
+    const user = await User.findOne({ _id: result.userId }).select('-__v');
     const cart = await Cart.getCart(result.userId);
+    const addresses = await Address.find({ uid: result.userId }).select(
+      '-uid -__v'
+    );
 
-    return { cart, user };
+    return { cart, user, addresses };
   } catch (error) {
     throw Error(authMessage.TOKEN_NOT_VALID);
   }

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { validation } from '../../../services/formServices/fieldValidation';
 import { formValidation } from '../../../services/formServices/formValidation';
 import { PasswordProvider } from '@/context/passwordContext';
-import { signUp } from '@/features/auth/actions';
+import { signUp } from '@/features/user/actions';
 
 import InputLabel from '@/components/Input/InputLabel';
 import InputField from '@/components/Input/InputField';

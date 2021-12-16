@@ -51,11 +51,23 @@ const orderSchema = new Schema(
       required: true,
     },
     shippingInformation: {
-      phone: {
+      address: {
         type: String,
         required: true,
       },
-      address: {
+      city: {
+        type: String,
+        required: true,
+      },
+      state: {
+        type: String,
+        required: true,
+      },
+      phoneNumber: {
+        type: String,
+        required: true,
+      },
+      zipCode: {
         type: String,
         required: true,
       },
