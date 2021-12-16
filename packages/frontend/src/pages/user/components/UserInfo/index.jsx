@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { useForm } from '../../../../hooks/useForm';
 import { validation } from '../../../../services/formServices/fieldValidation';
-import { updateUser } from '../../../../features/auth/actions';
+import { updateUser } from '../../../../features/user/actions';
 
 const UserInfo = () => {
   const { isLoading, isSubmitted, setIsLoading, validate } = useForm();
@@ -56,7 +56,7 @@ const UserInfo = () => {
             </div>
           </div>
         </div>
-        <Button type='submit' disabled={isLoading} isLoading={isLoading}>
+        <Button type='submit' isLoading={isLoading}>
           Save
         </Button>
       </form>

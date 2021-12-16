@@ -3,7 +3,6 @@ import cartRequest from '../../api/cartAPI';
 import { fetchSuccess } from './cartSlice';
 
 const increaseQty = async product => {
-  console.log('🚀 ~ file: actions.js ~ line 6 ~ product', product);
   try {
     const response = await cartRequest.addItem(product);
     store.dispatch(fetchSuccess(response.data.cart));

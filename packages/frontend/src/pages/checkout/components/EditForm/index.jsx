@@ -1,46 +1,38 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 import InputLabel from '@/components/Input/InputLabel';
-import InputField from '@/components/Input/InputField';
+import EditField from '@/components/Input/EditField';
 import Button from '@/components/Button';
 
 import { validation } from '../../../../services/formServices/fieldValidation';
-import { formValidation } from '../../../../services/formServices/formValidation';
-
-import {
-  updateShippingInfo,
-  addShippingInfo,
-} from '../../../../features/auth/actions';
+import { updateAddress, addAddress } from '../../../../features/user/actions';
+import { useForm } from '../../../../hooks/useForm';
 
 const EditForm = ({ data, addressId, setShow }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { isLoading, isSubmitted, validate, setIsLoading } = useForm();
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-
-    const fieldObj = Object.fromEntries(formData.entries());
-
-    const isFormValid = Object.keys(fieldObj).every(key =>
-      formValidation(fieldObj, key)
-    );
-
-    setIsSubmitted(true);
+    const { fieldObj, isFormValid } = validate(event.currentTarget);
 
     if (isFormValid) {
       if (addressId) {
-        updateShippingInfo(addressId, fieldObj).finally(() => {
-          setIsLoading(false);
-          setShow(false);
-        });
+        updateAddress(addressId, fieldObj)
+          .then(() => {
+            setShow(false);
+          })
+          .catch(() => {
+            setIsLoading(false);
+          });
       } else {
-        addShippingInfo(fieldObj).finally(() => {
-          setIsLoading(false);
-          setShow(false);
-        });
+        addAddress(fieldObj)
+          .then(() => {
+            setShow(false);
+          })
+          .catch(() => {
+            setIsLoading(false);
+          });
       }
     }
   };
@@ -52,36 +44,73 @@ const EditForm = ({ data, addressId, setShow }) => {
           <div className='flex items-start gap-5 mb-5'>
             <div>
               <InputLabel htmlFor='fullName' title='Full name' />
-              <InputField
+              <EditField
                 name='fullName'
                 value={data.fullName}
                 validation={validation.fullName}
                 isSubmitted={isSubmitted}
+                isLoading={isLoading}
               />
             </div>
             <div>
-              <InputLabel htmlFor='phone' title='Phone number' />
-              <InputField
-                name='phone'
-                value={data.phone}
-                validation={validation.phone}
+              <InputLabel htmlFor='phoneNumber' title='Phone number' />
+              <EditField
+                name='phoneNumber'
+                value={data.phoneNumber}
+                validation={validation.phoneNumber}
                 isSubmitted={isSubmitted}
+                isLoading={isLoading}
               />
             </div>
           </div>
 
-          <div>
+          <div className='mb-5'>
             <InputLabel htmlFor='address' title='Home address' />
-            <InputField
+            <EditField
               name='address'
               value={data.address}
               validation={validation.address}
               isSubmitted={isSubmitted}
+              isLoading={isLoading}
             />
+          </div>
+          <div className='flex items-start gap-5 mb-5'>
+            <div>
+              <InputLabel htmlFor='city' title='City' />
+              <EditField
+                name='city'
+                value={data.city}
+                validation={validation.city}
+                isSubmitted={isSubmitted}
+                isLoading={isLoading}
+              />
+            </div>
+            <div>
+              <InputLabel htmlFor='state' title='State' />
+              <EditField
+                name='state'
+                value={data.state}
+                validation={validation.state}
+                isSubmitted={isSubmitted}
+                isLoading={isLoading}
+              />
+            </div>
+            <div>
+              <InputLabel htmlFor='zipCode' title='Zip code' />
+              <EditField
+                name='zipCode'
+                value={data.zipCode}
+                validation={validation.zipCode}
+                isSubmitted={isSubmitted}
+                isLoading={isLoading}
+              />
+            </div>
           </div>
         </div>
         {isLoading ? '...Updating' : ''}
-        <Button type='submit'>Save</Button>
+        <Button type='submit' isLoading={isLoading}>
+          Save
+        </Button>
       </form>
     </div>
   );

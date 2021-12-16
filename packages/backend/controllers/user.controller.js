@@ -36,27 +36,26 @@ const update = async (req, res) => {
   }
 };
 
-const updateShippingInfo = async (req, res) => {
+const updateAddress = async (req, res) => {
   try {
-    const { result: user, message } = await userService.updateShippingInfo(
-      req.uid,
+    const { updatedAddress, message } = await userService.updateAddress(
       req.body.addressId,
       req.body.data
     );
 
-    res.status(200).send({ user, message });
+    res.status(200).send({ updatedAddress, message });
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
 };
 
-const addShippingInfo = async (req, res) => {
+const addAddress = async (req, res) => {
   try {
-    const { result: user, message } = await userService.addShippingInfo(
+    const { newAddress, message } = await userService.addAddress(
       req.uid,
-      req.body.data
+      req.body
     );
-    res.status(200).send({ user, message });
+    res.status(200).send({ newAddress, message });
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
@@ -65,7 +64,7 @@ const addShippingInfo = async (req, res) => {
 module.exports = {
   register,
   update,
-  updateShippingInfo,
-  addShippingInfo,
+  updateAddress,
+  addAddress,
   updatePassword,
 };

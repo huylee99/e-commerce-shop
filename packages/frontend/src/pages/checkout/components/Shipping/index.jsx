@@ -7,24 +7,30 @@ import Button from '../../../../components/Button';
 import { useCheckout } from '../../context/checkoutContext';
 import types from '../../context/types';
 
+const initialValues = {
+  address: '',
+  fullName: '',
+  phoneNumber: '',
+  zipCode: '',
+  state: '',
+  city: '',
+};
+
 const Shipping = ({ userState }) => {
-  const { addressList } = userState;
   const [index, setIndex] = useState(null);
   const [show, setShow] = useState(false);
+  const { addresses } = userState;
   const [{ shippingInformation }, dispatch] = useCheckout();
 
-  const clickHandler = index => {
+  const handleClick = index => {
     setIndex(index);
     setShow(true);
   };
 
-  const onChangeHandler = (_id, data) => {
+  const handleOnChange = data => {
     dispatch({
       type: types.SHIPPING_SELECT,
-      shippingInformation: {
-        id: _id,
-        data: data,
-      },
+      shippingInformation: data,
     });
   };
 
@@ -37,29 +43,29 @@ const Shipping = ({ userState }) => {
         </Button>
       </div>
 
-      {addressList && addressList.length > 0 ? (
+      {addresses && addresses.length > 0 ? (
         <div className='mt-4'>
-          {addressList.map(({ _id, data }, index) => (
+          {addresses.map(({ _id, ...rest }, index) => (
             <InputSelect
               key={_id}
               name='address'
               id={_id}
               value={index}
               className='mb-2 last:mb-0'
-              selectedId={shippingInformation.id}
-              onChange={() => onChangeHandler(_id, data)}
+              selectedId={shippingInformation && shippingInformation._id}
+              onChange={() => handleOnChange({ ...rest })}
             >
               <div className='rounded-lg flex items-center'>
                 <h4 className='font-bold mr-10 text-base uppercase'>
-                  {data.fullName}
+                  {rest.fullName}
                 </h4>
                 <span className='block text-sm text-gray-500 font-semibold'>
-                  {data.address}
+                  {`${rest.address}, ${rest.city}, ${rest.state} ${rest.zipCode}`}
                 </span>
                 <button
                   type='button'
                   className='text-blue-600 font-medium hover:text-gray-500 ml-auto'
-                  onClick={() => clickHandler(index)}
+                  onClick={() => handleClick(index)}
                 >
                   Edit
                 </button>
@@ -72,12 +78,8 @@ const Shipping = ({ userState }) => {
       {show ? (
         <Modal onClose={() => setShow(false)}>
           <EditForm
-            data={
-              addressList[index]
-                ? addressList[index].data
-                : { address: '', fullName: '', phone: '' }
-            }
-            addressId={addressList[index] ? addressList[index]._id : null}
+            data={addresses[index] ? addresses[index] : initialValues}
+            addressId={addresses[index] ? addresses[index]._id : null}
             setShow={setShow}
           />
         </Modal>

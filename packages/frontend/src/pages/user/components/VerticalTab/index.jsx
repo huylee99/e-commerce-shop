@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { UserIcon, ShoppingBagIcon, FolderIcon } from '@heroicons/react/solid';
 import { useSelector } from 'react-redux';
 
-import { signOut } from '@/features/auth/actions';
+import { signOut } from '@/features/user/actions';
 
 import Button from '@/components/Button';
 

@@ -96,13 +96,16 @@ cartSchema.methods.deleteItem = async function (id) {
 
 cartSchema.statics.getCart = async function (uid) {
   const carts = this;
-  const cart = await carts.findOne({ uid }).populate({
-    path: 'cart',
-    populate: {
-      path: 'product',
-      model: 'products',
-    },
-  });
+  const cart = await carts
+    .findOne({ uid })
+    .populate({
+      path: 'cart',
+      populate: {
+        path: 'product',
+        model: 'products',
+      },
+    })
+    .select('-__v');
 
   return cart;
 };

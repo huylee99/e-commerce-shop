@@ -1,5 +1,10 @@
 import store from '../../store';
-import { signInSuccess, verifySuccess, updateSuccess } from './authSlice';
+import {
+  signInSuccess,
+  updateUserSuccess,
+  addAddressSuccess,
+  updateAddressSuccess,
+} from './userSlice';
 import { fetchSuccess } from '../cart/cartSlice';
 import authRequest from '@/api/authAPI';
 import userRequest from '../../api/userAPI';
@@ -12,9 +17,11 @@ const signIn = async ({ email, password }) => {
   try {
     const response = await authRequest.signIn(email, password);
 
-    store.dispatch(signInSuccess(response.data.user));
-    store.dispatch(fetchSuccess(response.data.cart));
-    authServices.setToken(response.data.token);
+    const { user, cart, addresses, token } = response.data;
+
+    store.dispatch(signInSuccess({ ...user, addresses }));
+    store.dispatch(fetchSuccess(cart));
+    authServices.setToken(token);
   } catch (error) {
     console.log(error);
   }
@@ -41,8 +48,10 @@ const signOut = () => {
 const verify = async () => {
   try {
     const response = await authRequest.verify();
-    store.dispatch(verifySuccess(response.data.user));
-    store.dispatch(fetchSuccess(response.data.cart));
+
+    const { user, cart, addresses } = response.data;
+    store.dispatch(signInSuccess({ ...user, addresses }));
+    store.dispatch(fetchSuccess(cart));
   } catch (error) {
     console.log(error);
   }
@@ -52,8 +61,10 @@ const updateUser = async data => {
   try {
     const response = await userRequest.update(data);
 
-    if (response.data.message === UPDATE_SUCCESSFULLY) {
-      store.dispatch(updateSuccess(response.data.user));
+    const { message, user } = response.data;
+
+    if (message === UPDATE_SUCCESSFULLY) {
+      store.dispatch(updateUserSuccess(user));
       notify('Update successfully!', 'success');
     }
   } catch (error) {
@@ -61,11 +72,17 @@ const updateUser = async data => {
   }
 };
 
-const updateShippingInfo = async (addressId, data) => {
+const updateAddress = async (addressId, data) => {
   try {
-    const response = await userRequest.updateShippingInfo(addressId, data);
+    const response = await userRequest.updateAddress(addressId, data);
+
     if (response.data.message === UPDATE_SUCCESSFULLY) {
-      store.dispatch(updateSuccess(response.data.user));
+      store.dispatch(
+        updateAddressSuccess({
+          updatedAddress: response.data.updatedAddress,
+          addressId,
+        })
+      );
       notify('Shipping address is updated!', 'success');
     }
   } catch (error) {
@@ -73,12 +90,14 @@ const updateShippingInfo = async (addressId, data) => {
   }
 };
 
-const addShippingInfo = async data => {
+const addAddress = async data => {
   try {
-    const response = await userRequest.addShippingInfo(data);
+    const response = await userRequest.addAddress(data);
 
-    if (response.data.message === UPDATE_SUCCESSFULLY) {
-      store.dispatch(updateSuccess(response.data.user));
+    const { newAddress, message } = response.data;
+
+    if (message === UPDATE_SUCCESSFULLY) {
+      store.dispatch(addAddressSuccess(newAddress));
       notify('Shipping address is added!', 'success');
     }
   } catch (error) {
@@ -92,6 +111,6 @@ export {
   signUp,
   verify,
   updateUser,
-  updateShippingInfo,
-  addShippingInfo,
+  updateAddress,
+  addAddress,
 };

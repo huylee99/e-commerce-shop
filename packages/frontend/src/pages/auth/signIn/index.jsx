@@ -10,7 +10,7 @@ import InputField from '@/components/Input/InputField';
 
 import Button from '@/components/Button';
 
-import { signIn } from '../../../features/auth/actions';
+import { signIn } from '../../../features/user/actions';
 import { formValidation } from '../../../services/formServices/formValidation';
 
 const SignIn = () => {

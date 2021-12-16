@@ -4,14 +4,14 @@ const userRequest = {
   update: data => {
     return memberAPI.put('user/update', { data });
   },
-  updateShippingInfo: (addressId, data) => {
-    return memberAPI.put('user/updateShippingInfo', { addressId, data });
+  updateAddress: (addressId, data) => {
+    return memberAPI.put('user/updateAddress', { addressId, data });
   },
-  addShippingInfo: data => {
-    return memberAPI.put('user/addShippingInfo', { data });
+  addAddress: data => {
+    return memberAPI.post('user/addAddress', data);
   },
   signUp: data => {
-    return guestAPI.post('user/register', { ...data });
+    return guestAPI.post('user/register', data);
   },
   updatePassword: data => {
     return memberAPI.put('user/updatePassword', { ...data });

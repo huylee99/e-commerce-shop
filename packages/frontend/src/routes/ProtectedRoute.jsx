@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { verify } from '../features/auth/actions';
+import { verify } from '../features/user/actions';
 import authService from '../services/authServices';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -15,12 +15,12 @@ const ProtectedRoute = ({ children, isPrivate }) => {
   };
 
   useEffect(() => {
-    if (!isFirstInit && token) {
+    if (!auth && !isFirstInit && token) {
       verifyUser().finally(() => setIsFirstInit(true));
     } else {
       setIsFirstInit(true);
     }
-  }, [isFirstInit, setIsFirstInit, auth]);
+  }, [isFirstInit, setIsFirstInit, auth, token]);
 
   if (!isPrivate && isFirstInit) {
     return <>{children}</>;

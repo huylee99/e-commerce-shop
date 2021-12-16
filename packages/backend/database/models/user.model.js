@@ -1,4 +1,4 @@
-const { model, Schema, Types } = require('mongoose');
+const { model, Schema } = require('mongoose');
 const {
   hashGenerator,
   comparePassword,
@@ -23,28 +23,6 @@ const userSchema = new Schema({
     type: String,
     trim: true,
   },
-  addressList: [
-    {
-      _id: {
-        type: Types.ObjectId,
-        auto: true,
-      },
-      data: {
-        address: {
-          type: String,
-          trim: true,
-        },
-        fullName: {
-          type: String,
-          trim: true,
-        },
-        phone: {
-          type: String,
-          trim: true,
-        },
-      },
-    },
-  ],
   coupons: [
     {
       id: {
@@ -101,40 +79,6 @@ userSchema.statics.updateInformation = async function (_id, data) {
     { ...data },
     { new: true }
   );
-
-  return user;
-};
-
-userSchema.statics.addShippingInfo = async function (uid, data) {
-  const users = this;
-  const user = await users.findById(uid);
-
-  if (user) {
-    user.addressList.push({ data });
-  } else {
-    throw Error('Not found');
-  }
-
-  await user.save();
-
-  return user;
-};
-
-userSchema.statics.updateShippingInfo = async function (uid, addressId, data) {
-  const users = this;
-  const user = await users.findById(uid);
-
-  const isFound = user.addressList.find(
-    address => address._id.toString() === addressId
-  );
-
-  if (isFound) {
-    isFound.data = data;
-  } else {
-    throw Error('Not Found');
-  }
-
-  await user.save();
 
   return user;
 };

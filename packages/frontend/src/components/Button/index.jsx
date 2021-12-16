@@ -6,7 +6,6 @@ const Button = ({
   onClick,
   size,
   type = 'button',
-  disabled = false,
   isLoading = false,
 }) => {
   return (
@@ -15,7 +14,7 @@ const Button = ({
         className={`${size} bg-blue-500 border relative border-blue-500 py-1 px-4 font-bold text-white cursor-pointer rounded-md hover:bg-transparent hover:text-blue-500 disabled:opacity-40 disabled:pointer-events-none`}
         onClick={onClick}
         type={type}
-        disabled={disabled}
+        disabled={isLoading}
       >
         {children}
       </button>

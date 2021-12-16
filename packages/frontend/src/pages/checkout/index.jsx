@@ -80,17 +80,17 @@ const Checkout = () => {
   const disabledButton = () => {
     switch (step) {
       case 0: {
-        return !!shippingInformation.id;
+        return !shippingInformation;
       }
       case 1: {
-        return !shippingInformation.id || !!paymentMethod;
+        return !shippingInformation || !paymentMethod;
       }
       default:
         return false;
     }
   };
 
-  const orderSubmitHandler = async () => {
+  const handleSubmit = async () => {
     setIsLoading(true);
     const items = cart.cart.map(({ product, quantity }) => ({
       product: product._id,
@@ -107,7 +107,7 @@ const Checkout = () => {
       subTotal: cart.subTotal,
       paymentMethod: paymentMethod,
       shippingInformation: shippingInformation.data,
-      status: 'placed',
+      status: 'CONFIRMED',
     };
 
     try {
@@ -168,7 +168,7 @@ const Checkout = () => {
                 {step === 2 ? (
                   <button
                     className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'
-                    onClick={orderSubmitHandler}
+                    onClick={handleSubmit}
                   >
                     Place Order and Pay
                   </button>

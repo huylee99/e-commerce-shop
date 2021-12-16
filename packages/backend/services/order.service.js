@@ -5,7 +5,7 @@ const commonMessage = require('../core/constants/common.constant');
 const createOrder = async (data, uid) => {
   try {
     const newOrder = new Order(data);
-    newOrder.orderId = `SM${new Date().getTime()}`;
+    newOrder.orderId = Math.random().toString(32).slice(2).toUpperCase();
     const user = await User.findById(uid);
     await newOrder.save();
 
@@ -26,6 +26,7 @@ const getOrder = async orderId => {
       populate: {
         path: 'product',
         model: 'products',
+        select: '-desc -categories -rating -sold -tags -price -oldPrice',
       },
     });
 

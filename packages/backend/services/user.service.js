@@ -1,4 +1,6 @@
 const { User } = require('../database/models/user.model');
+const { Address } = require('../database/models/address.model');
+
 const commonMessage = require('../core/constants/common.constant');
 
 const createUser = async data => {
@@ -40,32 +42,39 @@ const updatePassword = async (_id, data) => {
   throw Error(commonMessage.UPDATE_FAILED);
 };
 
-const updateShippingInfo = async (uid, addressId, data) => {
-  const updatedUser = await User.updateShippingInfo(uid, addressId, data);
+const updateAddress = async (addressId, data) => {
+  const updatedAddress = await Address.findByIdAndUpdate(
+    addressId,
+    { ...data },
+    { new: true }
+  ).select('-uid');
 
-  if (updatedUser) {
-    const result = updatedUser.toJSON();
-    return { result, message: commonMessage.UPDATE_SUCCESSFULLY };
+  if (updatedAddress) {
+    return { updatedAddress, message: commonMessage.UPDATE_SUCCESSFULLY };
   }
 
   throw Error(commonMessage.UPDATE_FAILED);
 };
 
-const addShippingInfo = async (uid, data) => {
-  const updatedUser = await User.addShippingInfo(uid, data);
+const addAddress = async (uid, data) => {
+  try {
+    const newAddress = new Address({ uid, ...data });
+    await newAddress.save();
 
-  if (updatedUser) {
-    const result = updatedUser.toJSON();
-    return { result, message: commonMessage.UPDATE_SUCCESSFULLY };
+    const newObj = newAddress.toObject();
+
+    console.log(newObj);
+
+    return { newAddress, message: commonMessage.CREATE_SUCCESSFULLY };
+  } catch (error) {
+    throw Error(commonMessage.CREATE_FAILED);
   }
-
-  throw Error(commonMessage.UPDATE_FAILED);
 };
 
 module.exports = {
   createUser,
   updateUser,
-  updateShippingInfo,
-  addShippingInfo,
+  updateAddress,
+  addAddress,
   updatePassword,
 };
