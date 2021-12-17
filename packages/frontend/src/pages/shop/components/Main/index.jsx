@@ -12,7 +12,7 @@ const MainShop = () => {
   let [query, setQuery] = useQuery();
 
   if (!query) {
-    query = { limit: 12 };
+    query = { limit: 12, page: 1 };
   }
 
   const handleChange = event => {
@@ -21,6 +21,10 @@ const MainShop = () => {
 
   const setQueryHandler = newFilter => {
     setQuery({ ...query, ...newFilter });
+  };
+
+  const setPage = page => {
+    setQuery({ ...query, page });
   };
 
   return (
@@ -42,7 +46,7 @@ const MainShop = () => {
             />
           </div>
           <div className='max-w-[75%] w-[75%]'>
-            <Shop query={query} handleChange={handleChange} />
+            <Shop query={query} handleChange={handleChange} setPage={setPage} />
           </div>
         </div>
       </Container>
