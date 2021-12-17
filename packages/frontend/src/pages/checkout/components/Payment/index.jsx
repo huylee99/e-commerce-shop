@@ -1,5 +1,4 @@
 import { CashIcon, CreditCardIcon } from '@heroicons/react/outline';
-
 import InputSelect from '@/components/Input/InputSelect';
 
 import { useCheckout } from '../../context/checkoutContext';

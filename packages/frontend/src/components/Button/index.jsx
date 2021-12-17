@@ -4,7 +4,7 @@ import LoadingSpinner from '../LoadingSpinner';
 const Button = ({
   children,
   onClick,
-  size,
+  size = '',
   type = 'button',
   isLoading = false,
 }) => {

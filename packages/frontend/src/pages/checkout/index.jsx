@@ -15,6 +15,7 @@ import Shipping from './components/Shipping';
 import Confirmation from './components/Confirmation';
 import Summary from './components/Summary';
 import Payment from './components/Payment';
+import Button from '../../components/Button';
 
 const STEPS = [
   {
@@ -37,9 +38,13 @@ const STEPS = [
 const Checkout = () => {
   const { cart, auth } = useSelector(state => state);
   const [step, setStep] = useState(0);
-  const [, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [stepsState, setStepsState] = useState([...STEPS]);
   const [{ shippingInformation, paymentMethod }] = useCheckout();
+  console.log(
+    '🚀 ~ file: index.jsx ~ line 43 ~ Checkout ~ shippingInformation',
+    shippingInformation
+  );
 
   const navigate = useNavigate();
 
@@ -99,20 +104,19 @@ const Checkout = () => {
     }));
 
     const data = {
-      uid: auth.user._id,
+      email: auth.user.email,
       items: items,
       discount: cart.discount,
       totalPrice: cart.totalPrice,
       shippingFee: cart.shippingFee,
       subTotal: cart.subTotal,
       paymentMethod: paymentMethod,
-      shippingInformation: shippingInformation.data,
-      status: 'CONFIRMED',
+      shippingInformation: shippingInformation,
     };
 
     try {
       const response = await orderRequest.createOrder(data);
-      window.location.href = `/order/success?id=${response.data.order}`;
+      window.location.href = `/order/success?id=${response.data.orderId}`;
     } catch (error) {
       console.log(error);
     } finally {
@@ -156,22 +160,23 @@ const Checkout = () => {
                     <button
                       className='px-6 text-sm py-2 border border-blue-600 bg-blue-600 rounded-md text-white font-semibold hover:text-blue-600 hover:bg-transparent transition-all ml-auto disabled:opacity-50 disabled:pointer-events-none'
                       onClick={handleNext}
-                      disabled={!disabledButton()}
+                      disabled={disabledButton()}
                     >
                       Move to {STEPS[step + 1].title}
                     </button>
                   )}
                 </div>
               </div>
-              <div className='max-w-[30%] w-[30%]'>
+              <div className='w-[30%]'>
                 <Summary cartState={cart} />
                 {step === 2 ? (
-                  <button
+                  <Button
                     className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'
                     onClick={handleSubmit}
+                    isLoading={isLoading}
                   >
                     Place Order and Pay
-                  </button>
+                  </Button>
                 ) : null}
               </div>
             </div>

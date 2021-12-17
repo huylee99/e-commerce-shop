@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { CheckCircleIcon } from '@heroicons/react/outline';
-
 import Container from '../../components/Container';
 
 import orderRequest from '../../api/orderAPI';
@@ -25,11 +24,10 @@ const OrderSuccess = () => {
 
       if (response.data.order) {
         setIsPlaced(true);
+        setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+      window.location.href = '/404';
     }
   };
 

@@ -10,6 +10,8 @@ const mutations = {
 
       if (state.subTotal > 35) {
         state.shippingFee = 0;
+      } else {
+        state.shippingFee = 5;
       }
       state.totalPrice = parseFloat(
         state.subTotal - state.discount + state.shippingFee

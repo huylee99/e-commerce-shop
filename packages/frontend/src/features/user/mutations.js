@@ -14,7 +14,7 @@ const mutations = {
     );
   },
   addAddressSuccess: (state, { payload }) => {
-    state.addresses.push(payload);
+    state.user.addresses.push(payload);
   },
 };
 

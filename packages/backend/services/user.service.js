@@ -47,7 +47,7 @@ const updateAddress = async (addressId, data) => {
     addressId,
     { ...data },
     { new: true }
-  ).select('-uid');
+  ).select('-uid -__v');
 
   if (updatedAddress) {
     return { updatedAddress, message: commonMessage.UPDATE_SUCCESSFULLY };
@@ -63,9 +63,10 @@ const addAddress = async (uid, data) => {
 
     const newObj = newAddress.toObject();
 
-    console.log(newObj);
+    delete newObj.__v;
+    delete newObj.uid;
 
-    return { newAddress, message: commonMessage.CREATE_SUCCESSFULLY };
+    return { newAddress: newObj, message: commonMessage.CREATE_SUCCESSFULLY };
   } catch (error) {
     throw Error(commonMessage.CREATE_FAILED);
   }
