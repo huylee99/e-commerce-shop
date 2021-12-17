@@ -1,17 +1,18 @@
 const { Order } = require('../database/models/order.model');
-const { User } = require('../database/models/user.model');
 const commonMessage = require('../core/constants/common.constant');
+const { orderSuccessMail } = require('../core/utils/email');
+const cartService = require('../services/cart.service');
 
-const createOrder = async (data, uid) => {
+const createOrder = async ({ email, ...rest }, uid) => {
   try {
-    const newOrder = new Order(data);
+    const newOrder = new Order({ ...rest, uid });
     newOrder.orderId = Math.random().toString(32).slice(2).toUpperCase();
-    const user = await User.findById(uid);
     await newOrder.save();
+    await cartService.clearCart(uid);
+    await orderSuccessMail(email, newOrder.orderId);
 
     return {
-      order: newOrder.orderId,
-      email: user.email,
+      orderId: newOrder.orderId,
       message: commonMessage.CREATE_SUCCESSFULLY,
     };
   } catch (error) {
@@ -21,14 +22,17 @@ const createOrder = async (data, uid) => {
 
 const getOrder = async orderId => {
   try {
-    const order = await Order.findOne({ orderId: orderId }).populate({
-      path: 'items',
-      populate: {
-        path: 'product',
-        model: 'products',
-        select: '-desc -categories -rating -sold -tags -price -oldPrice',
-      },
-    });
+    const order = await Order.findOne({ orderId: orderId })
+      .populate({
+        path: 'items',
+        populate: {
+          path: 'product',
+          model: 'products',
+          select:
+            '-desc -categories -rating -sold -tags -price -oldPrice -discount -images -__v',
+        },
+      })
+      .select('-__v -uid -_id');
 
     return { order, message: commonMessage.GET_SUCCESSFULLY };
   } catch (error) {
@@ -38,9 +42,11 @@ const getOrder = async orderId => {
 
 const checkOrder = async orderId => {
   try {
-    const order = await Order.findOne({ orderId: orderId });
+    const isFound = await Order.findOne({ orderId });
 
-    return { order, message: commonMessage.GET_SUCCESSFULLY };
+    if (isFound) {
+      return { order: true, message: commonMessage.GET_SUCCESSFULLY };
+    }
   } catch (error) {
     throw Error(commonMessage.GET_FAILED);
   }

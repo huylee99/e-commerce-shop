@@ -11,7 +11,7 @@ import userRequest from '../../api/userAPI';
 import authServices from '../../services/authServices';
 
 import { notify } from '../../helpers/toastify';
-import { UPDATE_SUCCESSFULLY } from '../../constant/responseMessage';
+import responseMessage from '../../constant/responseMessage';
 
 const signIn = async ({ email, password }) => {
   try {
@@ -63,7 +63,7 @@ const updateUser = async data => {
 
     const { message, user } = response.data;
 
-    if (message === UPDATE_SUCCESSFULLY) {
+    if (message === message.UPDATE_SUCCESSFULLY) {
       store.dispatch(updateUserSuccess(user));
       notify('Update successfully!', 'success');
     }
@@ -76,10 +76,11 @@ const updateAddress = async (addressId, data) => {
   try {
     const response = await userRequest.updateAddress(addressId, data);
 
-    if (response.data.message === UPDATE_SUCCESSFULLY) {
+    const { updatedAddress, message } = response.data;
+    if (message === responseMessage.UPDATE_SUCCESSFULLY) {
       store.dispatch(
         updateAddressSuccess({
-          updatedAddress: response.data.updatedAddress,
+          updatedAddress,
           addressId,
         })
       );
@@ -96,7 +97,7 @@ const addAddress = async data => {
 
     const { newAddress, message } = response.data;
 
-    if (message === UPDATE_SUCCESSFULLY) {
+    if (message === responseMessage.CREATE_SUCCESSFULLY) {
       store.dispatch(addAddressSuccess(newAddress));
       notify('Shipping address is added!', 'success');
     }

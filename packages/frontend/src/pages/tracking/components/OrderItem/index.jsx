@@ -1,5 +1,5 @@
 const OrderItem = ({ product }) => {
-  const { name, quantity, price } = product;
+  const { name, quantity, price, unit } = product;
   return (
     <tr>
       <td className='px-6 py-2 whitespace-nowrap'>
@@ -9,6 +9,9 @@ const OrderItem = ({ product }) => {
       </td>
       <td className='px-6 py-2 whitespace-nowrap'>
         <div className='text-base font-medium text-gray-900'>{quantity}</div>
+      </td>
+      <td className='px-6 py-2 whitespace-nowrap'>
+        <div className='text-base font-medium text-gray-900'>{unit}</div>
       </td>
       <td className='px-6 py-2 whitespace-nowrap'>
         <div className='text-base font-medium text-gray-900'>${price}</div>

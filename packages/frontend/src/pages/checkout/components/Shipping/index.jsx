@@ -20,17 +20,21 @@ const Shipping = ({ userState }) => {
   const [index, setIndex] = useState(null);
   const [show, setShow] = useState(false);
   const { addresses } = userState;
-  const [{ shippingInformation }, dispatch] = useCheckout();
+  const [{ selectedAddress }, dispatch] = useCheckout();
 
-  const handleClick = index => {
-    setIndex(index);
+  const handleClick = (index = null) => {
     setShow(true);
+    setIndex(index);
   };
 
   const handleOnChange = data => {
+    const { _id, ...rest } = data;
     dispatch({
       type: types.SHIPPING_SELECT,
-      shippingInformation: data,
+      payload: {
+        shippingInformation: rest,
+        selectedAddress: _id,
+      },
     });
   };
 
@@ -38,7 +42,7 @@ const Shipping = ({ userState }) => {
     <div>
       <div className='flex justify-between items-center'>
         <h2 className='font-bold text-2xl'>Choose shipping address</h2>
-        <Button type='button' onClick={() => setShow(true)}>
+        <Button type='button' onClick={handleClick}>
           Add an address
         </Button>
       </div>
@@ -52,8 +56,8 @@ const Shipping = ({ userState }) => {
               id={_id}
               value={index}
               className='mb-2 last:mb-0'
-              selectedId={shippingInformation && shippingInformation._id}
-              onChange={() => handleOnChange({ ...rest })}
+              selectedId={selectedAddress}
+              onChange={() => handleOnChange({ _id, ...rest })}
             >
               <div className='rounded-lg flex items-center'>
                 <h4 className='font-bold mr-10 text-base uppercase'>

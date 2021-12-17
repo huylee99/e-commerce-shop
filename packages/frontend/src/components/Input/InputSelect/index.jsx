@@ -18,7 +18,7 @@ const InputSelect = ({
         value={value}
         className='peer sr-only'
         onChange={onChange}
-        defaultChecked={id === selectedId}
+        checked={id === selectedId}
       />
       <div className='px-4 py-2 border-2 border-gray-200 rounded-md peer-checked:border-blue-600 transition-all'>
         {children}

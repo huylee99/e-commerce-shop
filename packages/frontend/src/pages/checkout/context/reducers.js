@@ -3,9 +3,11 @@ import types from './types';
 const checkoutReducer = (state, action) => {
   switch (action.type) {
     case types.SHIPPING_SELECT: {
+      const { shippingInformation, selectedAddress } = action.payload;
       return {
         ...state,
-        shippingInformation: action.shippingInformation,
+        shippingInformation,
+        selectedAddress,
       };
     }
     case types.PAYMENT_SELECT: {

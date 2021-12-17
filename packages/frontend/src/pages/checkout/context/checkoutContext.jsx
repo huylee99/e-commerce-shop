@@ -6,6 +6,7 @@ CheckoutContext.displayName = 'CheckoutContext';
 
 const initialState = {
   shippingInformation: null,
+  selectedAddress: null,
   paymentMethod: null,
   items: [],
   totalPrice: 0,
@@ -27,7 +28,9 @@ const useCheckout = () => {
   const context = useContext(CheckoutContext);
 
   if (context === null) {
-    throw Error('Context must be used as a descendant of CheckoutContextProvider');
+    throw Error(
+      'Context must be used as a descendant of CheckoutContextProvider'
+    );
   }
 
   return context;

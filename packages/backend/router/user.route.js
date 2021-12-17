@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/register', userController.register);
 router.put('/update', tokenVerification, userController.update);
 router.put('/updateAddress', tokenVerification, userController.updateAddress);
-router.put('/addAddress', tokenVerification, userController.addAddress);
+router.post('/addAddress', tokenVerification, userController.addAddress);
 router.put('/updatePassword', tokenVerification, userController.updatePassword);
 
 module.exports = router;
