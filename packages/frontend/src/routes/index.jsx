@@ -27,6 +27,7 @@ import UserInfo from '../pages/user/components/UserInfo';
 import Coupons from '../pages/user/components/Coupons';
 import ChangePassword from '../pages/user/components/ChangePassword';
 import Welcome from '../pages/user/components/Welcome';
+import AddressManagement from '../pages/user/components/AddressManagement';
 
 // Layout
 import MainLayout from '../components/Layout/MainLayout';
@@ -97,6 +98,7 @@ const AppRouter = () => {
           <Route path='coupons' element={<Coupons />} />
           <Route path='order-history' element={<OrderHistory />} />
           <Route path='security' element={<ChangePassword />} />
+          <Route path='addresses' element={<AddressManagement />} />
         </Route>
 
         <Route

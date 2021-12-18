@@ -7,7 +7,7 @@ import { signOut } from '@/features/user/actions';
 
 import Button from '@/components/Button';
 
-const VerticalTab = () => {
+const VerticalMenu = () => {
   const { fullName } = useSelector(state => state.auth.user);
 
   const clickHandler = () => {
@@ -38,18 +38,18 @@ const VerticalTab = () => {
       <div className='rounded-md border border-gray-200'>
         <div className='border-b border-gray-200'>
           <div className='p-4'>
-            <div className='flex items-center cursor-pointer'>
+            <div className='flex items-center cursor-pointer py-2'>
               <UserIcon className='w-5 text-primary mr-4' />
               <span className='text-gray-500 font-bold text-sm uppercase'>
                 Account Settings
               </span>
             </div>
-            <div className='h-full mt-2 px-9'>
+            <div className='mt-2 px-9'>
               <ul>
                 <NavLink
                   to='/user/information'
                   className={link =>
-                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary block ${
+                    `font-bold capitalize text-base py-1 cursor-pointer hover:text-primary block ${
                       link.isActive ? 'text-primary' : 'text-dark'
                     }`
                   }
@@ -59,12 +59,22 @@ const VerticalTab = () => {
                 <NavLink
                   to='/user/security'
                   className={link =>
-                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary ${
+                    `font-bold capitalize text-base py-1 block cursor-pointer hover:text-primary ${
                       link.isActive ? 'text-primary' : 'text-dark'
                     }`
                   }
                 >
                   Change Password
+                </NavLink>
+                <NavLink
+                  to='/user/addresses'
+                  className={link =>
+                    `font-bold capitalize text-base py-1 block cursor-pointer hover:text-primary ${
+                      link.isActive ? 'text-primary' : 'text-dark'
+                    }`
+                  }
+                >
+                  Manage Addresses
                 </NavLink>
               </ul>
             </div>
@@ -78,7 +88,7 @@ const VerticalTab = () => {
                 Orders
               </span>
             </div>
-            <div className='h-full mt-2 px-9'>
+            <div className='mt-2 px-9'>
               <ul>
                 <li className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'>
                   Current Order
@@ -86,7 +96,7 @@ const VerticalTab = () => {
                 <NavLink
                   to='/user/order-history'
                   className={link =>
-                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary ${
+                    `font-bold capitalize text-base py-1 cursor-pointer block hover:text-primary ${
                       link.isActive ? 'text-primary' : 'text-dark'
                     }`
                   }
@@ -105,19 +115,19 @@ const VerticalTab = () => {
                 My Stuff
               </span>
             </div>
-            <div className='h-full mt-2 px-9'>
+            <div className='mt-2 px-9'>
               <ul>
                 <NavLink
                   to='/user/coupons'
                   className={link =>
-                    `font-bold capitalize text-base py-2 cursor-pointer hover:text-primary ${
+                    `font-bold capitalize text-base py-1 block cursor-pointer hover:text-primary ${
                       link.isActive ? 'text-primary' : 'text-dark'
                     }`
                   }
                 >
                   Coupons
                 </NavLink>
-                <li className='font-bold capitalize text-base py-2 cursor-pointer hover:text-primary'>
+                <li className='font-bold capitalize text-base py-1 block cursor-pointer hover:text-primary'>
                   Wishlist
                 </li>
               </ul>
@@ -129,8 +139,8 @@ const VerticalTab = () => {
   );
 };
 
-VerticalTab.propTypes = {
+VerticalMenu.propTypes = {
   setTab: PropTypes.func,
 };
 
-export default VerticalTab;
+export default VerticalMenu;

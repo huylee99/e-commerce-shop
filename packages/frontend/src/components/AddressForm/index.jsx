@@ -4,21 +4,22 @@ import InputLabel from '@/components/Input/InputLabel';
 import EditField from '@/components/Input/EditField';
 import Button from '@/components/Button';
 
-import { validation } from '../../../../services/formServices/fieldValidation';
-import { updateAddress, addAddress } from '../../../../features/user/actions';
-import { useForm } from '../../../../hooks/useForm';
+import { validation } from '../../services/formServices/fieldValidation';
+import { updateAddress, addAddress } from '../../features/user/actions';
+import { useForm } from '../../hooks/useForm';
 
-const EditForm = ({ data, addressId, setShow }) => {
+const AddressForm = ({ data, setShow }) => {
   const { isLoading, isSubmitted, validate, setIsLoading } = useForm();
-
+  const { fullName, phoneNumber, address, city, state, zipCode, _id } =
+    data || {};
   const handleSubmit = event => {
     event.preventDefault();
 
     const { fieldObj, isFormValid } = validate(event.currentTarget);
 
     if (isFormValid) {
-      if (addressId) {
-        updateAddress(addressId, fieldObj)
+      if (_id) {
+        updateAddress(_id, fieldObj)
           .then(() => {
             setShow(false);
           })
@@ -46,7 +47,7 @@ const EditForm = ({ data, addressId, setShow }) => {
               <InputLabel htmlFor='fullName' title='Full name' />
               <EditField
                 name='fullName'
-                value={data.fullName}
+                value={fullName}
                 validation={validation.fullName}
                 isSubmitted={isSubmitted}
                 isLoading={isLoading}
@@ -56,7 +57,7 @@ const EditForm = ({ data, addressId, setShow }) => {
               <InputLabel htmlFor='phoneNumber' title='Phone number' />
               <EditField
                 name='phoneNumber'
-                value={data.phoneNumber}
+                value={phoneNumber}
                 validation={validation.phoneNumber}
                 isSubmitted={isSubmitted}
                 isLoading={isLoading}
@@ -68,7 +69,7 @@ const EditForm = ({ data, addressId, setShow }) => {
             <InputLabel htmlFor='address' title='Home address' />
             <EditField
               name='address'
-              value={data.address}
+              value={address}
               validation={validation.address}
               isSubmitted={isSubmitted}
               isLoading={isLoading}
@@ -79,7 +80,7 @@ const EditForm = ({ data, addressId, setShow }) => {
               <InputLabel htmlFor='city' title='City' />
               <EditField
                 name='city'
-                value={data.city}
+                value={city}
                 validation={validation.city}
                 isSubmitted={isSubmitted}
                 isLoading={isLoading}
@@ -89,7 +90,7 @@ const EditForm = ({ data, addressId, setShow }) => {
               <InputLabel htmlFor='state' title='State' />
               <EditField
                 name='state'
-                value={data.state}
+                value={state}
                 validation={validation.state}
                 isSubmitted={isSubmitted}
                 isLoading={isLoading}
@@ -99,7 +100,7 @@ const EditForm = ({ data, addressId, setShow }) => {
               <InputLabel htmlFor='zipCode' title='Zip code' />
               <EditField
                 name='zipCode'
-                value={data.zipCode}
+                value={zipCode}
                 validation={validation.zipCode}
                 isSubmitted={isSubmitted}
                 isLoading={isLoading}
@@ -116,8 +117,8 @@ const EditForm = ({ data, addressId, setShow }) => {
   );
 };
 
-EditForm.propTypes = {
+AddressForm.propTypes = {
   address: PropTypes.object,
 };
 
-export default EditForm;
+export default AddressForm;

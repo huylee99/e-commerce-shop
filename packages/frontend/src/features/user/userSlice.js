@@ -19,6 +19,7 @@ export const {
   updateUserSuccess,
   updateAddressSuccess,
   addAddressSuccess,
+  deleteAddressSuccess,
 } = authSlice.actions;
 
 export default authSlice.reducer;

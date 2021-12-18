@@ -61,10 +61,22 @@ const addAddress = async (req, res) => {
   }
 };
 
+const deleteAddress = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const { addressId, message } = await userService.deleteAddress(id);
+
+    res.status(200).send({ addressId, message });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
 module.exports = {
   register,
   update,
   updateAddress,
   addAddress,
   updatePassword,
+  deleteAddress,
 };

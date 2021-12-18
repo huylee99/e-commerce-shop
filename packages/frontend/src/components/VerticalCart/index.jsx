@@ -40,15 +40,28 @@ const VerticalCart = ({ onClose }) => {
         <div className='h-full flex flex-col bg-white w-[400px] p-4'>
           <h2 className='font-bold text-3xl mb-5 text-center'>Cart</h2>
           <div className='min-h-0 py-4 max-h-[80%] overflow-auto list-scroll px-2'>
-            {cart && cart.length !== 0
-              ? cart.map(({ product, quantity }) => (
-                  <VerticalCartItem
-                    key={product._id}
-                    product={product}
-                    quantity={quantity}
-                  />
-                ))
-              : ''}
+            {cart && cart.length !== 0 ? (
+              cart.map(({ product, quantity }) => (
+                <VerticalCartItem
+                  key={product._id}
+                  product={product}
+                  quantity={quantity}
+                />
+              ))
+            ) : (
+              <div className='text-center my-5'>
+                <span className='text-center font-semibold text-2xl block'>
+                  Your cart is empty...
+                </span>
+                <Link
+                  to='/shop'
+                  className='text-center text-green-600 hover:underline cursor-pointer'
+                  onClick={onClose}
+                >
+                  Let&apos;s grab some items here!
+                </Link>
+              </div>
+            )}
           </div>
           <Link
             to='/cart'
