@@ -16,6 +16,11 @@ const mutations = {
   addAddressSuccess: (state, { payload }) => {
     state.user.addresses.push(payload);
   },
+  deleteAddressSuccess: (state, { payload }) => {
+    state.user.addresses = state.user.addresses.filter(
+      ({ _id }) => payload._id !== _id
+    );
+  },
 };
 
 export default mutations;

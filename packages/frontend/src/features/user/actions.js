@@ -4,6 +4,7 @@ import {
   updateUserSuccess,
   addAddressSuccess,
   updateAddressSuccess,
+  deleteAddressSuccess,
 } from './userSlice';
 import { fetchSuccess } from '../cart/cartSlice';
 import authRequest from '@/api/authAPI';
@@ -106,6 +107,23 @@ const addAddress = async data => {
   }
 };
 
+const deleteAddress = async _id => {
+  try {
+    const response = await userRequest.deleteAddress(_id);
+
+    const { addressId, message } = response.data;
+
+    if (message === responseMessage.UPDATE_SUCCESSFULLY) {
+      store.dispatch(deleteAddressSuccess({ _id: addressId }));
+      notify('Address removed', 'success');
+    }
+
+    return true;
+  } catch (error) {
+    notify('Error! Please try again!', 'error');
+  }
+};
+
 export {
   signIn,
   signOut,
@@ -114,4 +132,5 @@ export {
   updateUser,
   updateAddress,
   addAddress,
+  deleteAddress,
 };

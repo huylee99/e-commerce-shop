@@ -16,6 +16,9 @@ const userRequest = {
   updatePassword: data => {
     return memberAPI.put('user/updatePassword', { ...data });
   },
+  deleteAddress: addressId => {
+    return memberAPI.delete(`user/deleteAddress?id=${addressId}`);
+  },
 };
 
 export default userRequest;

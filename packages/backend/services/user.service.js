@@ -72,10 +72,26 @@ const addAddress = async (uid, data) => {
   }
 };
 
+const deleteAddress = async addressId => {
+  try {
+    const deletedAddress = await Address.findOneAndDelete({
+      _id: addressId,
+    }).select('_id');
+
+    return {
+      addressId: deletedAddress._id,
+      message: commonMessage.UPDATE_SUCCESSFULLY,
+    };
+  } catch (error) {
+    throw Error(commonMessage.UPDATE_FAILED);
+  }
+};
+
 module.exports = {
   createUser,
   updateUser,
   updateAddress,
   addAddress,
   updatePassword,
+  deleteAddress,
 };
