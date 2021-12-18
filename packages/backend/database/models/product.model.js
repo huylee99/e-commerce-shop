@@ -49,6 +49,16 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  slug: {
+    code: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
 });
 
 productSchema.path('_id');

@@ -3,7 +3,18 @@ const commonMessage = require('../core/constants/common.constant');
 const paginate = require('../core/helpers/paginate');
 
 const createProduct = async data => {
-  const product = new Product(data);
+  const { name } = data;
+  const nameSlug = name.toLowerCase().split(' ').join('-');
+  const code = Math.random().toString(16).slice(-6);
+  const productSlug = `${nameSlug}-${code}`;
+
+  const product = new Product({
+    ...data,
+    slug: {
+      code,
+      url: productSlug,
+    },
+  });
 
   try {
     await product.save();
@@ -39,13 +50,13 @@ const getAllProducts = async ({ page = 1, limit = 12, ...rest }) => {
   }
 };
 
-const getProductById = async id => {
+const getProductByCode = async code => {
   try {
-    const product = await Product.findById(id);
+    const product = await Product.findOne({ 'slug.code': code });
     return { product, message: commonMessage.GET_SUCCESSFULLY };
   } catch (error) {
     throw Error(commonMessage.GET_FAILED);
   }
 };
 
-module.exports = { getAllProducts, createProduct, getProductById };
+module.exports = { getAllProducts, createProduct, getProductByCode };

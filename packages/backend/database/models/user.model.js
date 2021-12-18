@@ -42,6 +42,11 @@ const userSchema = new Schema({
     default:
       'https://res.cloudinary.com/dlbkvfo8l/image/upload/v1636572915/img_avatar_faar3c.png',
   },
+  role: {
+    type: String,
+    default: 'user',
+    required: true,
+  },
 });
 
 userSchema.path('_id');

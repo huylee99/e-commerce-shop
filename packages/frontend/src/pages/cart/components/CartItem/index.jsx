@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   increaseQty,
   decreaseQty,
@@ -10,24 +11,28 @@ import {
 } from '@heroicons/react/outline';
 
 const CartItem = ({ product, quantity }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { price, name, images, _id } = product;
 
-  const onDecrease = () => {
+  const handleDecrease = () => {
+    setIsLoading(true);
     decreaseQty({
       id: _id,
       quantity: quantity - 1,
-    });
+    }).finally(() => setIsLoading(false));
   };
 
-  const onIncrease = () => {
+  const handleIncrease = () => {
+    setIsLoading(true);
     increaseQty({
       id: _id,
       quantity: 1,
-    });
+    }).finally(() => setIsLoading(false));
   };
 
-  const onDelete = () => {
-    deleteItem(_id);
+  const handleDelete = () => {
+    setIsLoading(true);
+    deleteItem(_id).finally(() => setIsLoading(false));
   };
 
   return (
@@ -42,21 +47,22 @@ const CartItem = ({ product, quantity }) => {
         <span className='text-base font-bold text-gray-900'>${price}</span>
       </td>
       <td className='px-6 py-2 whitespace-nowrap'>
-        <span className='inline-flex items-center p-2 border border-gray-300 rounded-sm'>
-          <MinusCircleIcon
-            className='w-5 text-gray-500 cursor-pointer'
-            onClick={onDecrease}
-          />
+        <span
+          className={`inline-flex items-center p-2 border border-gray-300 rounded-sm ${
+            isLoading ? 'opacity-40 pointer-events-none' : ''
+          }`}
+        >
+          <button type='button' onClick={handleDecrease} disabled={isLoading}>
+            <MinusCircleIcon className='w-5 text-gray-500 cursor-pointer' />
+          </button>
           <input
             type='text'
             className='w-8 mx-4 px-1 text-center focus:outline-none'
             value={quantity}
-            onChange={e => console.log(e.target.value)}
           />
-          <PlusCircleIcon
-            className='w-5 text-gray-500 cursor-pointer'
-            onClick={onIncrease}
-          />
+          <button type='button' onClick={handleIncrease} disabled={isLoading}>
+            <PlusCircleIcon className='w-5 text-gray-500 cursor-pointer' />
+          </button>
         </span>
       </td>
       <td className='px-6 py-2 whitespace-nowrap'>
@@ -65,10 +71,12 @@ const CartItem = ({ product, quantity }) => {
         </span>
       </td>
       <td>
-        <TrashIcon
-          className='w-5 text-red-600 cursor-pointer hover:text-red-800'
-          onClick={onDelete}
-        />
+        <button type='button' disabled={isLoading}>
+          <TrashIcon
+            className='w-5 text-red-600 cursor-pointer hover:text-red-800'
+            onClick={handleDelete}
+          />
+        </button>
       </td>
     </tr>
   );
