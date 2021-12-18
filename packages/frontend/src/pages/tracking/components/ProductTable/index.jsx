@@ -48,10 +48,9 @@ const ProductTable = ({ data }) => {
                 <OrderItem
                   key={product._id}
                   product={{
-                    name: product.name,
                     price: price,
                     quantity: quantity,
-                    unit: product.unit,
+                    ...product,
                   }}
                 />
               ))}

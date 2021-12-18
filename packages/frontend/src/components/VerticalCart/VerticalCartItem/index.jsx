@@ -12,7 +12,7 @@ const VerticalCartItem = ({ product, quantity }) => {
           </div>
           <div className='flex flex-col'>
             <div>
-              <h3 className='text-lg font-bold'>{name}</h3>
+              <h3 className='text-lg font-bold truncate w-[80%]'>{name}</h3>
               <h4 className='text-gray-500 text-sm'>Price: ${price}</h4>
               <h4 className='text-gray-500 text-sm'>Qty: {quantity}</h4>
             </div>

@@ -1,29 +1,36 @@
-const ProductImgs = () => {
+import { useState } from 'react';
+
+const ProductImgs = ({ imgs, name }) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleClick = index => {
+    if (index === selectedIndex) {
+      return;
+    }
+    setSelectedIndex(index);
+  };
+
   return (
     <>
-      <div className='flex flex-col w-[100px] gap-2'>
-        <div className='border border-gray-200 rounded-md'>
-          <img
-            src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634703312/fruit/unnamed_rfiaj5.png'
-            alt='water'
-          />
+      {imgs.length > 0 ? (
+        <div className='flex flex-col w-[100px] gap-2'>
+          {imgs.map((image, index) => (
+            <button
+              key={index}
+              className={`${
+                selectedIndex === index ? 'border-primary' : 'border-gray-200'
+              } border rounded-md overflow-hidden hover:cursor-pointer`}
+              onClick={() => handleClick(index)}
+            >
+              <img src={image} alt={`${name}-${index + 1}`} />
+            </button>
+          ))}
         </div>
-        <div className='border border-gray-200 rounded-md'>
-          <img
-            src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634703312/fruit/unnamed_rfiaj5.png'
-            alt='water'
-          />
-        </div>
-        <div className='border border-gray-200 rounded-md'>
-          <img
-            src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634703312/fruit/unnamed_rfiaj5.png'
-            alt='water'
-          />
-        </div>
-      </div>
+      ) : null}
+
       <div className='w-[600px] max-h-[600px] rounded-lg overflow-hidden border border-gray-200'>
         <img
-          src='https://res.cloudinary.com/dlbkvfo8l/image/upload/v1634703312/fruit/unnamed_rfiaj5.png'
+          src={imgs[selectedIndex]}
           alt='water'
           className='h-full w-full object-cover'
         />

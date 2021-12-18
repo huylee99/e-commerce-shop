@@ -51,8 +51,7 @@ const AppRouter = () => {
           }
         >
           <Route index element={<Home />} />
-          <Route path='shop' element={<Shop />} />
-          <Route path='product/:id' element={<Product />} />
+          <Route path='product/:slug' element={<Product />} />
         </Route>
 
         <Route

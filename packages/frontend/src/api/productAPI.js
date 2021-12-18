@@ -4,8 +4,8 @@ const productRequest = {
   getProducts: (queries = '') => {
     return guestAPI.get(`product/getProducts/${queries}`);
   },
-  getProductById: id => {
-    return guestAPI.get(`product/get?id=${id}`);
+  getProductByCode: code => {
+    return guestAPI.get(`product/getByCode?code=${code}`);
   },
 };
 
