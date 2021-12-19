@@ -7,6 +7,7 @@ import {
   deleteAddressSuccess,
 } from './userSlice';
 import { fetchSuccess } from '../cart/cartSlice';
+import { fetchWishListSuccess } from '../wishlist/wishListSlice';
 import authRequest from '@/api/authAPI';
 import userRequest from '../../api/userAPI';
 import authServices from '../../services/authServices';
@@ -18,10 +19,11 @@ const signIn = async ({ email, password }) => {
   try {
     const response = await authRequest.signIn(email, password);
 
-    const { user, cart, addresses, token } = response.data;
+    const { user, cart, addresses, wishList, token } = response.data;
 
     store.dispatch(signInSuccess({ ...user, addresses }));
     store.dispatch(fetchSuccess(cart));
+    store.dispatch(fetchWishListSuccess(wishList));
     authServices.setToken(token);
   } catch (error) {
     console.log(error);
@@ -32,9 +34,10 @@ const signUp = async data => {
   try {
     const response = await userRequest.signUp(data);
 
-    store.dispatch(signInSuccess(response.data.user));
-    store.dispatch(fetchSuccess(response.data.cart));
-    authServices.setToken(response.data.token);
+    const { user, cart, token } = response.data;
+    store.dispatch(signInSuccess(user));
+    store.dispatch(fetchSuccess(cart));
+    authServices.setToken(token);
 
     return response;
   } catch (error) {
@@ -50,9 +53,10 @@ const verify = async () => {
   try {
     const response = await authRequest.verify();
 
-    const { user, cart, addresses } = response.data;
+    const { user, cart, addresses, wishList } = response.data;
     store.dispatch(signInSuccess({ ...user, addresses }));
     store.dispatch(fetchSuccess(cart));
+    store.dispatch(fetchWishListSuccess(wishList));
   } catch (error) {
     console.log(error);
   }

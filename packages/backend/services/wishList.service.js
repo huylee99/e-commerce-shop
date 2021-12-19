@@ -8,7 +8,7 @@ const toggleWishList = async (uid, productId) => {
     if (!isFound) {
       const newWishList = new WishList({
         uid,
-        wishList: [productId],
+        products: [productId],
       });
 
       await newWishList.save();
@@ -18,8 +18,8 @@ const toggleWishList = async (uid, productId) => {
         message: commonMessage.CREATE_SUCCESSFULLY,
       };
     } else {
-      if (isFound.wishList.includes(productId)) {
-        isFound.wishList = isFound.wishList.filter(
+      if (isFound.products.includes(productId)) {
+        isFound.products = isFound.products.filter(
           id => id.toString() !== productId
         );
         await isFound.save();
@@ -29,7 +29,7 @@ const toggleWishList = async (uid, productId) => {
           message: commonMessage.DELETE_SUCCESSFULLY,
         };
       } else {
-        isFound.wishList.push(productId);
+        isFound.products.push(productId);
         await isFound.save();
 
         return {

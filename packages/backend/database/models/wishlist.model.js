@@ -6,7 +6,7 @@ const wishListSchema = new Schema({
     ref: 'user',
     required: true,
   },
-  wishList: [
+  products: [
     {
       type: Types.ObjectId,
       ref: 'products',
