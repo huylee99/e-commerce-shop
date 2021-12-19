@@ -17,10 +17,13 @@ import VerticalCart from '../VerticalCart';
 import authService from '../../services/authServices';
 
 import { useClickOutside } from '../../hooks/useClickOutside';
+import { selectWishListLength } from '../../features/wishlist/wishListSlice';
 
 const Header = ({ containerSize = 'lg' }) => {
   const { totalQty } = useSelector(state => state.cart);
   const { isAuth, user } = useSelector(state => state.auth);
+  const wishListLength = useSelector(selectWishListLength);
+
   const [isShow, setIsShow] = useState(false);
   const [profileShow, setProfileShow] = useState(false);
   const profileMenuRef = useRef();
@@ -81,7 +84,7 @@ const Header = ({ containerSize = 'lg' }) => {
               <div className='w-11 h-11 border-2 border-gray-200 rounded-lg leading-[38px] text-center relative group hover:bg-primary hover:border-primary cursor-pointer transition-all'>
                 <HeartIcon className='w-5 text-gray-400 group-hover:text-white inline-block' />
                 <div className='w-5 h-5 leading-[20px] bg-blue-600 text-white text-xs font-bold rounded-full absolute -top-2 -right-2 text-center'>
-                  <span>0</span>
+                  <span>{wishListLength}</span>
                 </div>
               </div>
               <div

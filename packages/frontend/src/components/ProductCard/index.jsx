@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -8,14 +9,19 @@ import {
   SearchIcon,
   ShoppingCartIcon,
 } from '@heroicons/react/outline';
-import { StarIcon } from '@heroicons/react/solid';
+
+import { StarIcon, HeartIcon as HeartSolid } from '@heroicons/react/solid';
 
 import { increaseQty } from '../../features/cart/actions';
+import { toggleWishItem } from '../../features/wishlist/actions';
+import { _isIncluded } from '../../helpers/_isIncluded';
 
 const ProductCard = ({ width, product }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuth } = useSelector(state => state.auth);
+  const { wishList } = useSelector(state => state.wishList);
+  const [isLoading, setIsLoading] = useState(false);
   const { name, price, categories, images, _id, rating } = product;
 
   const onAddItem = () => {
@@ -33,6 +39,11 @@ const ProductCard = ({ width, product }) => {
     }
   };
 
+  const handleWishToggle = () => {
+    setIsLoading(false);
+    toggleWishItem(_id).finally(() => setIsLoading(false));
+  };
+
   return (
     <div
       className={`${width} shadow-md rounded-xl p-4 group relative overflow-hidden`}
@@ -45,7 +56,13 @@ const ProductCard = ({ width, product }) => {
           <span className='px-2 py-1 inline-flex text-sm leading-5 font-bold rounded-lg bg-red-100 text-red-600 mr-auto'>
             {'-10%'}
           </span>
-          <HeartIcon className='w-6 inline-block text-gray-400 hover:text-red-600 cursor-pointer' />
+          <button type='button' onClick={handleWishToggle} disabled={isLoading}>
+            {wishList && _isIncluded(wishList.products, _id) ? (
+              <HeartSolid className='w-6 inline-block text-red-500 hover:text-gray-400 cursor-pointer' />
+            ) : (
+              <HeartIcon className='w-6 inline-block text-gray-400 hover:text-red-600 cursor-pointer' />
+            )}
+          </button>
         </div>
         <div className='w-full'>
           <img
