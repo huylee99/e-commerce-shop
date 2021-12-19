@@ -34,9 +34,13 @@ const getOrder = async orderId => {
       })
       .select('-__v -uid -_id');
 
+    if (!order) {
+      throw Error(commonMessage.GET_FAILED);
+    }
+
     return { order, message: commonMessage.GET_SUCCESSFULLY };
   } catch (error) {
-    throw Error(commonMessage.GET_FAILED);
+    throw Error(error.message);
   }
 };
 
@@ -52,4 +56,30 @@ const checkOrder = async orderId => {
   }
 };
 
-module.exports = { createOrder, getOrder, checkOrder };
+const getAllOrder = async (uid, page) => {
+  const skip = (+page - 1) * 5;
+  const limit = 5;
+  try {
+    const isFound = await Order.find({ uid })
+      .select('createdAt orderId status')
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(skip);
+    const itemsCount = await Order.find({ uid }).countDocuments();
+
+    if (isFound) {
+      const totalItems = itemsCount;
+      const currentPage = +page;
+      const totalPages = Math.ceil(totalItems / limit);
+
+      return {
+        data: { orders: isFound, totalItems, currentPage, totalPages },
+        message: commonMessage.GET_SUCCESSFULLY,
+      };
+    }
+  } catch (error) {
+    throw Error(commonMessage.GET_FAILED);
+  }
+};
+
+module.exports = { createOrder, getOrder, checkOrder, getAllOrder };

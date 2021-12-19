@@ -36,4 +36,15 @@ const checkOrder = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, getOrder, checkOrder };
+const getAllOrder = async (req, res) => {
+  const { page } = req.query;
+  try {
+    const { data, message } = await orderService.getAllOrder(req.uid, page);
+
+    res.status(200).send({ data, message });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
+module.exports = { createOrder, getOrder, checkOrder, getAllOrder };

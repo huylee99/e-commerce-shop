@@ -10,6 +10,9 @@ const orderRequest = {
   checkOrder: orderId => {
     return memberAPI.get(`/order/verifyOrder?orderId=${orderId}`);
   },
+  getAllOrders: pageNumber => {
+    return memberAPI.get(`/order/getAllOrders?page=${pageNumber}`);
+  },
 };
 
 export default orderRequest;
