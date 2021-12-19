@@ -6,6 +6,7 @@ const commonMessage = {
   UPDATE_FAILED: 'UPDATE_FAILED',
   GET_SUCCESSFULLY: 'GET_SUCCESSFULLY',
   GET_FAILED: 'GET_FAILED',
+  DELETE_SUCCESSFULLY: 'DELETE_SUCCESSFULLY',
 };
 
 module.exports = commonMessage;

@@ -4,6 +4,7 @@ const authRouter = require('./auth.route');
 const productRouter = require('./product.route');
 const cartRouter = require('./cart.route');
 const orderRouter = require('./order.route');
+const wishListRouter = require('./wishList.route');
 
 const { tokenVerification } = require('../middlewares/auth');
 
@@ -14,5 +15,6 @@ router.use('/auth', authRouter);
 router.use('/product', productRouter);
 router.use('/cart', tokenVerification, cartRouter);
 router.use('/order', orderRouter);
+router.use('/wishlist', wishListRouter);
 
 module.exports = router;
