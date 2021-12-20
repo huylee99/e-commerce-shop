@@ -5,12 +5,16 @@ import {
   ShoppingBagIcon,
   HeartIcon,
 } from '@heroicons/react/outline';
+import { useSelector } from 'react-redux';
 
 import { increaseQty } from '../../../../features/cart/actions';
+import { _isIncluded } from '../../../../helpers/_isIncluded';
+import { toggleWishItem } from '../../../../features/wishlist/actions';
 
 const ProductDetail = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const { wishList } = useSelector(state => state.wishList);
 
   const { name, discount, price, unit, _id } = product;
 
@@ -25,6 +29,11 @@ const ProductDetail = ({ product }) => {
 
   const handleIncrease = () => {
     setQuantity(prev => (prev + 1 > 10 ? 10 : prev + 1));
+  };
+
+  const handleWishClick = () => {
+    setIsLoading(true);
+    toggleWishItem(_id).finally(() => setIsLoading(false));
   };
 
   return (
@@ -83,12 +92,21 @@ const ProductDetail = ({ product }) => {
             <span className='text-white'>Add to Cart</span>
           </button>
         </div>
-        <div className='inline-flex items-center group cursor-pointer'>
+        <button
+          className='inline-flex items-center group cursor-pointer'
+          disabled={isLoading}
+          onClick={handleWishClick}
+        >
           <div className='w-12 h-12 leading-[46px] text-center border border-gray-200 rounded-full group-hover:bg-primary mr-4 '>
             <HeartIcon className='inline-block w-6 group-hover:text-white' />
           </div>
-          <span className='group-hover:text-primary'>Add to Wishlist</span>
-        </div>
+          <span className='group-hover:text-primary'>
+            {wishList && _isIncluded(wishList.products, _id)
+              ? 'Remove from'
+              : 'Add to'}{' '}
+            Wishlist
+          </span>
+        </button>
       </div>
     </div>
   );

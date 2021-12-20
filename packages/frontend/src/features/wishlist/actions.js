@@ -3,7 +3,7 @@ import store from '../../store';
 import wishListAPI from '../../api/wishListAPI';
 import { notify } from '../../helpers/toastify';
 import responseMessage from '../../constant/responseMessage';
-import { fetchWishListSuccess } from './wishListSlice';
+import { fetchWishListSuccess, deleteItemFromWishList } from './wishListSlice';
 
 const toggleWishItem = async productId => {
   try {
@@ -25,4 +25,22 @@ const toggleWishItem = async productId => {
   }
 };
 
-export { toggleWishItem };
+const deleteFromWishList = async _id => {
+  try {
+    const response = await wishListAPI.deleteItemFromWishList(_id);
+
+    const { message, productId } = response.data;
+
+    if (message === responseMessage.DELETE_SUCCESSFULLY) {
+      console.log(productId);
+      store.dispatch(deleteItemFromWishList(productId));
+      notify('Item is removed from wish list', 'success');
+
+      return response;
+    }
+  } catch (error) {
+    notify('Error, please try again!', 'error');
+  }
+};
+
+export { toggleWishItem, deleteFromWishList };

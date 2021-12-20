@@ -13,7 +13,8 @@ const wishListSlice = createSlice({
   },
 });
 
-export const { fetchWishListSuccess } = wishListSlice.actions;
+export const { fetchWishListSuccess, deleteItemFromWishList } =
+  wishListSlice.actions;
 
 const selectWishList = state => state.wishList.wishList;
 const selectWishListLength = createSelector(
