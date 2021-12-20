@@ -15,9 +15,9 @@ const AddressForm = ({ data, setShow }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const { fieldObj, isFormValid } = validate(event.currentTarget);
+    const { fieldObj, isFormValid, _isEqual } = validate(event.currentTarget);
 
-    if (isFormValid) {
+    if (isFormValid && !_isEqual(data)) {
       if (_id) {
         updateAddress(_id, fieldObj)
           .then(() => {
@@ -35,6 +35,8 @@ const AddressForm = ({ data, setShow }) => {
             setIsLoading(false);
           });
       }
+    } else {
+      setShow(false);
     }
   };
 

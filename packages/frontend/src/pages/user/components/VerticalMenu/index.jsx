@@ -127,9 +127,16 @@ const VerticalMenu = () => {
                 >
                   Coupons
                 </NavLink>
-                <li className='font-bold capitalize text-base py-1 block cursor-pointer hover:text-primary'>
-                  Wishlist
-                </li>
+                <NavLink
+                  to='/user/wish-list'
+                  className={link =>
+                    `font-bold capitalize text-base py-1 block cursor-pointer hover:text-primary ${
+                      link.isActive ? 'text-primary' : 'text-dark'
+                    }`
+                  }
+                >
+                  Wish List
+                </NavLink>
               </ul>
             </div>
           </div>

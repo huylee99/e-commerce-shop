@@ -15,9 +15,14 @@ const useForm = () => {
     const isFormValid = Object.keys(fieldObj).every(key =>
       formValidation(fieldObj, key)
     );
+
+    const _isEqual = data =>
+      isFormValid &&
+      Object.keys(fieldObj).every(key => fieldObj[key] === data[key]);
+
     setIsSubmitted(true);
 
-    return { fieldObj, isFormValid };
+    return { fieldObj, isFormValid, _isEqual };
   };
 
   return {
