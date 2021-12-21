@@ -23,28 +23,6 @@ const verifyToken = async authHeader => {
 
     const token = splitToken(authHeader);
     const result = jwt.verify(token, process.env.JWT_SECRET);
-    // const user = async () => {
-    //   return await User.findOne({ _id: result.userId }).select('-__v');
-    // };
-
-    // const getCart = async () => {
-    //   return await Cart.getCart(result.userId);
-    // };
-
-    // const getAddresses = async () => {
-    //   return await Address.find({ uid: result.userId }).select('-uid -__v');
-    // };
-
-    // const getWishList = async () => {
-    //   return await WishList.findOne({ uid: result.userId }).select('-uid -__v');
-    // };
-
-    // const alo = await Promise.all([
-    //   user(),
-    //   getWishList(),
-    //   getAddresses(),
-    //   getCart(),
-    // ]);
 
     const user = await User.findOne({ _id: result.userId }).select('-__v');
     const cart = await Cart.getCart(result.userId);
