@@ -41,10 +41,6 @@ const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [stepsState, setStepsState] = useState([...STEPS]);
   const [{ shippingInformation, paymentMethod }] = useCheckout();
-  console.log(
-    '🚀 ~ file: index.jsx ~ line 43 ~ Checkout ~ shippingInformation',
-    shippingInformation
-  );
 
   const navigate = useNavigate();
 

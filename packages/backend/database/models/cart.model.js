@@ -78,22 +78,6 @@ cartSchema.statics.removeItem = async function ({ uid, product }) {
   });
 };
 
-cartSchema.methods.deleteItem = async function (id) {
-  const userCart = this;
-
-  userCart.cart = userCart.cart.filter(item => item.product.toString() !== id);
-
-  await userCart.save();
-
-  return await userCart.populate({
-    path: 'cart',
-    populate: {
-      path: 'product',
-      model: 'products',
-    },
-  });
-};
-
 cartSchema.statics.getCart = async function (uid) {
   const carts = this;
   const cart = await carts

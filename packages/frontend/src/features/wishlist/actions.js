@@ -32,7 +32,6 @@ const deleteFromWishList = async _id => {
     const { message, productId } = response.data;
 
     if (message === responseMessage.DELETE_SUCCESSFULLY) {
-      console.log(productId);
       store.dispatch(deleteItemFromWishList(productId));
       notify('Item is removed from wish list', 'success');
 

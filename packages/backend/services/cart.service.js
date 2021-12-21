@@ -34,23 +34,32 @@ const removeItem = async ({ uid, product }) => {
 };
 
 const getCart = async uid => {
-  try {
-    const cart = await Cart.getCart(uid);
+  const cart = await Cart.getCart(uid);
+  if (cart) {
     return cart;
-  } catch (error) {
-    throw Error(commonMessage.GET_FAILED);
   }
+
+  throw Error(commonMessage.GET_FAILED);
 };
 
 const deleteItem = async ({ uid, productId }) => {
-  try {
-    const isFound = await Cart.findOne({ uid });
-    const cart = await isFound.deleteItem(productId);
+  const cart = await Cart.findOneAndUpdate(
+    { uid },
+    {
+      $pull: {
+        cart: {
+          product: productId,
+        },
+      },
+    },
+    { new: true }
+  );
 
+  if (cart) {
     return { cart, message: commonMessage.UPDATE_SUCCESSFULLY };
-  } catch (error) {
-    throw Error(commonMessage.UPDATE_FAILED);
   }
+
+  throw Error(commonMessage.UPDATE_FAILED);
 };
 
 const clearCart = async uid => {

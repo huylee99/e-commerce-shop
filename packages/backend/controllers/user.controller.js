@@ -3,7 +3,7 @@ const tokenService = require('../services/token.service');
 
 const register = async (req, res) => {
   try {
-    const { result: user, message } = await userService.createUser(req.body);
+    const { user, message } = await userService.createUser(req.body);
     const token = tokenService.authTokenGenerator(user._id);
 
     res.status(201).send({ user, token, message });
@@ -25,7 +25,7 @@ const updatePassword = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { result: user, message } = await userService.updateUser(
+    const { updatedUser: user, message } = await userService.updateUser(
       req.uid,
       req.body.data
     );

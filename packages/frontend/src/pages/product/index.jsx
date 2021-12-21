@@ -15,10 +15,11 @@ const Product = () => {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { slug } = useParams();
-  console.log(slug);
+
   const fetchProduct = async slug => {
     const code = slug.split('-').pop();
 
+    setIsLoading(true);
     productRequest
       .getProductByCode(code)
       .then(response => setProduct(response.data.product))
@@ -26,11 +27,8 @@ const Product = () => {
       .finally(() => setIsLoading(false));
   };
   useEffect(() => {
-    setIsLoading(true);
     if (slug) {
       fetchProduct(slug);
-    } else {
-      setIsLoading(false);
     }
   }, [slug]);
 

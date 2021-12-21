@@ -14,14 +14,13 @@ const loginService = async (email, password) => {
       throw Error(authMessage.WRONG_PASSWORD);
     }
 
-    const user = isFound.toJSON();
     const cart = await Cart.getCart(isFound._id);
     const addresses = await Address.find({ uid: isFound._id }).select('-uid');
     const wishList = await WishList.findOne({ uid: isFound._id }).select(
       '-uid -__v'
     );
     return {
-      user,
+      user: isFound,
       cart,
       addresses,
       wishList,

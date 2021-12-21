@@ -17,9 +17,8 @@ export const { fetchWishListSuccess, deleteItemFromWishList } =
   wishListSlice.actions;
 
 const selectWishList = state => state.wishList.wishList;
-const selectWishListLength = createSelector(
-  selectWishList,
-  wishList => wishList.products.length || 0
+const selectWishListLength = createSelector(selectWishList, wishList =>
+  wishList && wishList.products ? wishList.products.length : 0
 );
 
 export default wishListSlice.reducer;
