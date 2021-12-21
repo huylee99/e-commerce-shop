@@ -10,19 +10,21 @@ const createUser = async data => {
     const user = new User(data);
     await user.save();
 
-    const result = user.toJSON();
-    return { result, message: commonMessage.CREATE_SUCCESSFULLY };
+    return { user, message: commonMessage.CREATE_SUCCESSFULLY };
   } else {
     throw Error(commonMessage.INFO_NOT_VALID);
   }
 };
 
 const updateUser = async (_id, data) => {
+  if ('password' in data) {
+    throw Error(commonMessage.INFO_NOT_VALID);
+  }
+
   const updatedUser = await User.updateInformation(_id, data);
 
   if (updatedUser) {
-    const result = updatedUser.toJSON();
-    return { result, message: commonMessage.UPDATE_SUCCESSFULLY };
+    return { updatedUser, message: commonMessage.UPDATE_SUCCESSFULLY };
   }
 
   throw Error(commonMessage.UPDATE_FAILED);

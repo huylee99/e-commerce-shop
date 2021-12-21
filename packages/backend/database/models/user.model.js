@@ -51,6 +51,16 @@ const userSchema = new Schema({
 
 userSchema.path('_id');
 
+userSchema.set('toJSON', {
+  virtuals: true,
+  transform: function (_, ret) {
+    delete ret.password;
+    delete ret.__v;
+    delete ret.id;
+    return ret;
+  },
+});
+
 userSchema.pre('save', async function (next) {
   const user = this;
   if (user.isModified('password')) {
@@ -63,12 +73,6 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isPasswordMatched = async function (rawPassword) {
   const user = this;
   return await comparePassword(rawPassword, user.password);
-};
-
-userSchema.methods.toJSON = function () {
-  const user = this.toObject();
-  delete user.password;
-  return user;
 };
 
 userSchema.statics.checkEmail = async function (email) {

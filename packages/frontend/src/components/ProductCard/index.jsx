@@ -57,7 +57,9 @@ const ProductCard = ({ width, product }) => {
             {'-10%'}
           </span>
           <button type='button' onClick={handleWishToggle} disabled={isLoading}>
-            {wishList && _isIncluded(wishList.products, _id) ? (
+            {wishList &&
+            wishList.products.length > 0 &&
+            _isIncluded(wishList.products, _id) ? (
               <HeartSolid className='w-6 inline-block text-red-500 hover:text-gray-400 cursor-pointer' />
             ) : (
               <HeartIcon className='w-6 inline-block text-gray-400 hover:text-red-600 cursor-pointer' />

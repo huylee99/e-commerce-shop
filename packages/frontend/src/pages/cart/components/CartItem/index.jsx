@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   increaseQty,
   decreaseQty,
@@ -14,12 +14,18 @@ const CartItem = ({ product, quantity }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { price, name, images, _id } = product;
 
+  useEffect(() => {
+    return setIsLoading(false);
+  }, []);
+
   const handleDecrease = () => {
     setIsLoading(true);
     decreaseQty({
       id: _id,
       quantity: quantity - 1,
-    }).finally(() => setIsLoading(false));
+    })
+      .then(() => setIsLoading(false))
+      .catch(() => setIsLoading(false));
   };
 
   const handleIncrease = () => {
@@ -32,7 +38,7 @@ const CartItem = ({ product, quantity }) => {
 
   const handleDelete = () => {
     setIsLoading(true);
-    deleteItem(_id).finally(() => setIsLoading(false));
+    deleteItem(_id).catch(() => setIsLoading(false));
   };
 
   return (
