@@ -27,17 +27,19 @@ const createProduct = async data => {
 
 const getAllProducts = async ({ page = 1, limit = 12, ...rest }) => {
   const skip = (+page - 1) * limit;
-  try {
-    const products = await Product.find({
-      ...rest,
-      price: { $lte: rest.price || 100 },
-      rating: rest.rating || { $lte: 5 },
-    })
-      .skip(skip)
-      .limit(+limit);
-    const totalItems = await Product.countDocuments();
-    const { currentPage, totalPages } = paginate(totalItems, skip, limit);
 
+  const products = await Product.find({
+    ...rest,
+    price: { $lte: rest.price || 100 },
+    rating: rest.rating || { $lte: 5 },
+  })
+    .skip(skip)
+    .limit(+limit);
+
+  const totalItems = await Product.countDocuments();
+  const { currentPage, totalPages } = paginate(totalItems, skip, limit);
+
+  if (products) {
     return {
       message: commonMessage.GET_SUCCESSFULLY,
       products,
@@ -45,9 +47,9 @@ const getAllProducts = async ({ page = 1, limit = 12, ...rest }) => {
       totalItems,
       totalPages,
     };
-  } catch (error) {
-    throw Error(commonMessage.GET_FAILED);
   }
+
+  throw Error(commonMessage.GET_FAILED);
 };
 
 const getProductByCode = async code => {

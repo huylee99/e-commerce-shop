@@ -99,10 +99,12 @@ const Checkout = () => {
       price: product.price,
     }));
 
+    const { _id, isApplied, amount } = cart.discount;
+
     const data = {
       email: auth.user.email,
       items: items,
-      discount: cart.discount,
+      discount: { appliedDiscount: _id, isApplied, amount: +amount },
       totalPrice: cart.totalPrice,
       shippingFee: cart.shippingFee,
       subTotal: cart.subTotal,

@@ -22,7 +22,11 @@ const ProductCard = ({ width, product }) => {
   const { isAuth } = useSelector(state => state.auth);
   const { wishList } = useSelector(state => state.wishList);
   const [isLoading, setIsLoading] = useState(false);
-  const { name, price, categories, images, _id, rating } = product;
+  const { name, price, categories, images, _id, rating, discount } = product;
+
+  const discountPrice = discount
+    ? parseFloat(price - (price * discount.discountValue) / 100).toFixed(2)
+    : null;
 
   const onAddItem = () => {
     if (isAuth) {
@@ -92,11 +96,14 @@ const ProductCard = ({ width, product }) => {
           </span>
           <span className='block text-lg font-bold text-dark mb-1'>{name}</span>
           <div>
-            {/* <span className='text-base font-bold line-through text-gray-500 inline-block mr-2'>
-            {price}
-          </span> */}
+            {discountPrice && (
+              <span className='text-base font-bold line-through text-gray-500 inline-block mr-2'>
+                ${price}
+              </span>
+            )}
+
             <span className='text-xl font-extrabold text-red-600 inline-block'>
-              ${price}
+              ${discountPrice ? discountPrice : price}
             </span>
           </div>
         </div>

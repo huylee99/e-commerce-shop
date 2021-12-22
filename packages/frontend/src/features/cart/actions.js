@@ -1,6 +1,7 @@
 import store from '../../store';
 import cartRequest from '../../api/cartAPI';
-import { fetchSuccess } from './cartSlice';
+import discountRequest from '../../api/discountAPI';
+import { fetchSuccess, applyDiscountSuccess } from './cartSlice';
 
 import { notify } from '../../helpers/toastify';
 
@@ -35,4 +36,21 @@ const deleteItem = async productId => {
   }
 };
 
-export { increaseQty, decreaseQty, deleteItem };
+const applyDiscount = async code => {
+  try {
+    const response = await discountRequest.applyDiscount(code);
+    const { discount } = response.data;
+    const { discountCode, discountValue, _id } = discount;
+    store.dispatch(
+      applyDiscountSuccess({
+        code: discountCode,
+        _id,
+        percentage: discountValue,
+      })
+    );
+  } catch (error) {
+    notify('Error, code is invalid or expired', 'error');
+  }
+};
+
+export { increaseQty, decreaseQty, deleteItem, applyDiscount };

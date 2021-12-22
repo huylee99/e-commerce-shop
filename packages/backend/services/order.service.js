@@ -32,6 +32,14 @@ const getOrder = async orderId => {
             '-desc -categories -rating -sold -tags -price -oldPrice -discount -images -__v',
         },
       })
+      .populate({
+        path: 'discount',
+        populate: {
+          path: 'discountId',
+          model: 'discount',
+          match: { isApplied: true },
+        },
+      })
       .select('-__v -uid -_id');
 
     if (!order) {

@@ -14,7 +14,7 @@ const Summary = ({ cartState }) => {
         </div>
         <div className='flex justify-between items-center mb-5'>
           <span className='font-semibold mb-2 block'>Discount</span>
-          <span className='font-bold text-green-500'>{discount}$</span>
+          <span className='font-bold text-green-500'>{discount.amount}$</span>
         </div>
         <div className='flex justify-between items-center'>
           <span className='text-lg font-bold'>Total</span>
