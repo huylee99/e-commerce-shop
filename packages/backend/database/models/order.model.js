@@ -26,8 +26,18 @@ const orderSchema = new Schema(
       },
     ],
     discount: {
-      type: Number,
-      required: true,
+      isApplied: {
+        type: Boolean,
+        default: false,
+      },
+      appliedDiscount: {
+        type: String,
+        default: '',
+      },
+      amount: {
+        type: Number,
+        default: 0,
+      },
     },
     subTotal: {
       type: Number,

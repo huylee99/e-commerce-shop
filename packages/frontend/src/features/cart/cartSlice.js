@@ -6,7 +6,13 @@ const initialState = {
   subTotal: 0,
   totalPrice: 0,
   totalQty: 0,
-  discount: 0,
+  discount: {
+    amount: 0,
+    percentage: 0,
+    code: null,
+    isApplied: false,
+    _id: null,
+  },
   shippingFee: 10,
 };
 
@@ -18,7 +24,11 @@ const cartSlice = createSlice({
   },
 });
 
-export const { fetchSuccess, decreaseQtyStorage, increaseQtyStorage } =
-  cartSlice.actions;
+export const {
+  fetchSuccess,
+  decreaseQtyStorage,
+  increaseQtyStorage,
+  applyDiscountSuccess,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

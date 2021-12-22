@@ -1,6 +1,7 @@
 import OrderItem from '../OrderItem';
 
 const ProductTable = ({ data }) => {
+  const { amount } = data.discount;
   return (
     <>
       <div className='bg-gray-100 text-lg px-4 py-2 font-bold rounded-md text-dark'>
@@ -63,7 +64,7 @@ const ProductTable = ({ data }) => {
           </div>
           <div className='text-primary flex justify-between'>
             <span>Discount: </span>
-            <span>${data.discount}</span>
+            <span>${amount}</span>
           </div>
           <div className='text-primary flex justify-between'>
             <span>Shipping Fee: </span>

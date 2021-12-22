@@ -65,6 +65,7 @@ const CartItem = ({ product, quantity }) => {
             type='text'
             className='w-8 mx-4 px-1 text-center focus:outline-none'
             value={quantity}
+            readOnly
           />
           <button type='button' onClick={handleIncrease} disabled={isLoading}>
             <PlusCircleIcon className='w-5 text-gray-500 cursor-pointer' />
