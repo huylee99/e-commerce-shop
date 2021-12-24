@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.4",
+    "@paypal/react-paypal-js": "^7.5.0",
     "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.24.0",
     "history": "5",

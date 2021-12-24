@@ -31,6 +31,16 @@ const addressSchema = new Schema({
   },
 });
 
+addressSchema.set('toJSON', {
+  virtuals: true,
+  transform: function (_, ret) {
+    delete ret.__v;
+    delete ret.id;
+    delete ret.uid;
+    return ret;
+  },
+});
+
 addressSchema.path('_id');
 
 const Address = model('address', addressSchema);

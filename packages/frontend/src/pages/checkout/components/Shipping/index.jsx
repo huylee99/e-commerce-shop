@@ -54,7 +54,7 @@ const Shipping = ({ userState }) => {
                 <h4 className='font-bold mr-10 text-base uppercase'>
                   {rest.fullName}
                 </h4>
-                <span className='block text-sm text-gray-500 font-semibold'>
+                <span className='block max-w-[60%] truncate text-sm text-gray-500 font-semibold'>
                   {`${rest.address}, ${rest.city}, ${rest.state} ${rest.zipCode}`}
                 </span>
                 <button

@@ -33,8 +33,16 @@ const Stepper = ({ steps }) => {
         <div key={index} className='flex items-center'>
           {statusRender(step.status, ++index)}
           <span>{step.title}</span>
-
-          {index === 3 ? null : <ChevronRightIcon className='mx-10 w-6' />}
+          {steps.length === 3 ? (
+            index === 3 ? null : (
+              <ChevronRightIcon className='mx-10 w-6' />
+            )
+          ) : null}
+          {steps.length === 2 ? (
+            index === 2 ? null : (
+              <ChevronRightIcon className='mx-10 w-6' />
+            )
+          ) : null}
         </div>
       ))}
     </div>
