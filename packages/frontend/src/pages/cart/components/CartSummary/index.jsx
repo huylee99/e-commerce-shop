@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { applyDiscount } from '../../../../features/cart/actions';
+import { applyDiscount, removeDiscount } from '@/features/cart/actions';
+import { TagIcon } from '@heroicons/react/outline';
+import { XCircleIcon } from '@heroicons/react/solid';
 
 const CartSummary = ({ summary }) => {
   const [value, setValue] = useState('');
@@ -16,6 +18,10 @@ const CartSummary = ({ summary }) => {
     setValue('');
   };
 
+  const handleRemove = () => {
+    removeDiscount();
+  };
+
   return (
     <div>
       <h2 className='font-bold text-2xl mb-4'>Cart Total</h2>
@@ -30,7 +36,16 @@ const CartSummary = ({ summary }) => {
         </div>
         <div className='mb-2'>
           <span className='font-semibold mb-2 block'>Promo code</span>
-          {code && <span className='px-4 bg-gray-100'>{code}</span>}
+          {code && (
+            <span className='inline-flex items-center font-bold text-sm px-4 py-2 rounded-md bg-gray-100 leading-none mb-2 relative'>
+              <TagIcon className='w-5 mr-2' />
+              {code}
+              <XCircleIcon
+                className='w-4 text-red-500 absolute -right-1 -top-1 cursor-pointer'
+                onClick={handleRemove}
+              />
+            </span>
+          )}
           <div className='flex items-center justify-between border border-gray-200 rounded-md overflow-hidden p-1'>
             <input
               type='text'

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
 
 import { useCheckout } from './context/checkoutContext';
-import orderRequest from '../../api/orderAPI';
+import orderRequest from '@/api/orderAPI';
 
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
@@ -33,10 +33,10 @@ const STEPS = [
 ];
 
 const Checkout = () => {
-  const { cart, auth } = useSelector(state => state);
   const [step, setStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [stepsState, setStepsState] = useState([...STEPS]);
+  const { cart, auth } = useSelector(state => state);
   const [{ shippingInformation }] = useCheckout();
 
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ const Checkout = () => {
 
     const { _id, isApplied, amount } = cart.discount;
 
-    const data = {
+    const orderData = {
       email: auth.user.email,
       items: items,
       discount: { appliedDiscount: _id ?? '', isApplied, amount: +amount },
@@ -104,7 +104,7 @@ const Checkout = () => {
     };
 
     try {
-      const response = await orderRequest.createOrder(data);
+      const response = await orderRequest.createOrder(orderData);
       window.location.href = `/order/success?id=${response.data.orderId}`;
     } catch (error) {
       console.log(error);
@@ -159,27 +159,28 @@ const Checkout = () => {
               <div className='w-[30%]'>
                 <Summary cartState={cart} />
                 {step === 1 ? (
-                  // <Button
-                  //   className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'
-                  //   onClick={handleSubmit}
-                  //   isLoading={isLoading}
-                  // >
-                  //   Place Order and Pay
-                  // </Button>
-                  <PayPalScriptProvider
-                    options={{
-                      'client-id': 'test',
-                      components: 'buttons',
-                      currency: 'USD',
-                    }}
-                  >
-                    <PayButton
-                      isLoading={isLoading}
-                      callback={handleSubmit}
-                      amount={cart.totalPrice}
-                      showSpinner={false}
-                    />
-                  </PayPalScriptProvider>
+                  <>
+                    <div className='relative flex justify-center before:w-full before:bg-black before:absolute before:left-0 before:h-1 before:top-1/2 before:transform before:-translate-y-1/2 text-center mb-2'>
+                      <h2 className='inline-block relative bg-white px-2 font-bold'>
+                        Checkout with Paypal
+                      </h2>
+                    </div>
+
+                    <PayPalScriptProvider
+                      options={{
+                        'client-id': 'test',
+                        components: 'buttons',
+                        currency: 'USD',
+                      }}
+                    >
+                      <PayButton
+                        isLoading={isLoading}
+                        callback={handleSubmit}
+                        amount={cart.totalPrice}
+                        showSpinner={false}
+                      />
+                    </PayPalScriptProvider>
+                  </>
                 ) : null}
               </div>
             </div>

@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import AddressForm from '../../../../../../components/AddressForm';
-import Modal from '../../../../../../components/Modal';
+import AddressForm from '@/components/AddressForm';
+import Modal from '@/components/Modal';
+import { addressInitialValues } from '@/constant/initialValues';
 
 const EditDialog = ({ selectedAddress, setSelectedIndex }) => {
   const [isShow, setIsShow] = useState(false);
-  const data = selectedAddress || {};
+  const data = selectedAddress || addressInitialValues;
 
   const handleClick = () => {
     setSelectedIndex();

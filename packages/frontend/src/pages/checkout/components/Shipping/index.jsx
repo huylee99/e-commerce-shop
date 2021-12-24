@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import InputSelect from '@/components/Input/InputSelect';
 import Modal from '@/components/Modal';
-import AddressForm from '../../../../components/AddressForm';
-import Button from '../../../../components/Button';
+import AddressForm from '@/components/AddressForm';
+import Button from '@/components/Button';
 
 import { useCheckout } from '../../context/checkoutContext';
 import types from '../../context/types';
+
+import { addressInitialValues } from '@/constant/initialValues';
 
 const Shipping = ({ userState }) => {
   const [index, setIndex] = useState(null);
@@ -73,7 +75,7 @@ const Shipping = ({ userState }) => {
       {show ? (
         <Modal onClose={() => setShow(false)}>
           <AddressForm
-            data={addresses[index] ? addresses[index] : {}}
+            data={addresses[index] ? addresses[index] : addressInitialValues}
             setShow={setShow}
           />
         </Modal>

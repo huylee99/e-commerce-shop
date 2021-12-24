@@ -10,12 +10,7 @@ const checkoutReducer = (state, action) => {
         selectedAddress,
       };
     }
-    case types.PAYMENT_SELECT: {
-      return {
-        ...state,
-        paymentMethod: action.paymentMethod,
-      };
-    }
+
     case types.CART_CONFIRM: {
       const { totalPrice, items } = action.data;
       return {

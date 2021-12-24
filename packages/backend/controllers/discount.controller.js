@@ -1,4 +1,5 @@
 const discountService = require('../services/discount.service');
+const commonMessage = require('../core/constants/common.constant');
 
 const addDiscount = async (req, res) => {
   try {
@@ -21,4 +22,14 @@ const applyDiscount = async (req, res) => {
   }
 };
 
-module.exports = { addDiscount, applyDiscount };
+const getDiscount = async (req, res) => {
+  try {
+    const codes = await discountService.getDiscount();
+
+    res.status(200).send({ codes, message: commonMessage.GET_SUCCESSFULLY });
+  } catch (error) {
+    res.status(400).send({ message: commonMessage.GET_FAILED });
+  }
+};
+
+module.exports = { addDiscount, applyDiscount, getDiscount };

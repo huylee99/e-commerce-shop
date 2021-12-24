@@ -1,5 +1,5 @@
 import { totalCalculate } from '../../helpers/totalCalculate';
-
+import { discountInitialValue } from '@/constant/initialValues';
 const mutations = {
   fetchSuccess: (state, { payload }) => {
     if (payload && payload.cart) {
@@ -34,6 +34,12 @@ const mutations = {
       state.discount.code = code;
       state.discount._id = _id;
     }
+  },
+  removeDiscountSuccess: state => {
+    state.discount = discountInitialValue;
+    state.totalPrice = parseFloat(
+      +state.subTotal - state.discount.amount + state.shippingFee
+    ).toFixed(2);
   },
 };
 

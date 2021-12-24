@@ -1,7 +1,11 @@
 import store from '../../store';
 import cartRequest from '../../api/cartAPI';
 import discountRequest from '../../api/discountAPI';
-import { fetchSuccess, applyDiscountSuccess } from './cartSlice';
+import {
+  fetchSuccess,
+  applyDiscountSuccess,
+  removeDiscountSuccess,
+} from './cartSlice';
 
 import { notify } from '../../helpers/toastify';
 
@@ -53,4 +57,8 @@ const applyDiscount = async code => {
   }
 };
 
-export { increaseQty, decreaseQty, deleteItem, applyDiscount };
+const removeDiscount = () => {
+  store.dispatch(removeDiscountSuccess());
+};
+
+export { increaseQty, decreaseQty, deleteItem, applyDiscount, removeDiscount };

@@ -24,4 +24,10 @@ const applyDiscount = async discountCode => {
   }
 };
 
-module.exports = { addDiscount, applyDiscount };
+const getDiscount = async () => {
+  const codes = await Discount.find().select('-__v');
+
+  return codes;
+};
+
+module.exports = { addDiscount, applyDiscount, getDiscount };

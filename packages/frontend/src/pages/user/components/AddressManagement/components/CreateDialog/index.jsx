@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import AddressForm from '../../../../../../components/AddressForm';
-import Modal from '../../../../../../components/Modal';
+import AddressForm from '@/components/AddressForm';
+import Modal from '@/components/Modal';
 
 const CreateDialog = () => {
   const [isShow, setIsShow] = useState(false);

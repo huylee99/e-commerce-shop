@@ -90,9 +90,9 @@ const VerticalMenu = () => {
             </div>
             <div className='mt-2 px-9'>
               <ul>
-                <li className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'>
+                {/* <li className='font-bold text-dark capitalize text-base py-2 cursor-pointer hover:text-primary'>
                   Current Order
-                </li>
+                </li> */}
                 <NavLink
                   to='/user/order-history'
                   className={link =>
