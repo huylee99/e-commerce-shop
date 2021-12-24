@@ -59,6 +59,7 @@ const orderSchema = new Schema(
     paymentMethod: {
       type: String,
       required: true,
+      default: 'paypal',
     },
     shippingInformation: {
       address: {

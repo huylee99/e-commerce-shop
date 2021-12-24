@@ -14,8 +14,10 @@ import Stepper from './components/Stepper';
 import Shipping from './components/Shipping';
 import Confirmation from './components/Confirmation';
 import Summary from './components/Summary';
-import Payment from './components/Payment';
-import Button from '../../components/Button';
+
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+
+import PayButton from './components/PayButton';
 
 const STEPS = [
   {
@@ -28,11 +30,6 @@ const STEPS = [
     title: 'Payment',
     status: 'PENDING',
   },
-  {
-    id: 3,
-    title: 'Confirmation',
-    status: 'PENDING',
-  },
 ];
 
 const Checkout = () => {
@@ -40,7 +37,7 @@ const Checkout = () => {
   const [step, setStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [stepsState, setStepsState] = useState([...STEPS]);
-  const [{ shippingInformation, paymentMethod }] = useCheckout();
+  const [{ shippingInformation }] = useCheckout();
 
   const navigate = useNavigate();
 
@@ -49,8 +46,6 @@ const Checkout = () => {
       case 0:
         return <Shipping userState={auth.user} />;
       case 1:
-        return <Payment />;
-      case 2:
         return <Confirmation cartState={cart} />;
       default:
         return 'Error';
@@ -83,9 +78,6 @@ const Checkout = () => {
       case 0: {
         return !shippingInformation;
       }
-      case 1: {
-        return !shippingInformation || !paymentMethod;
-      }
       default:
         return false;
     }
@@ -104,11 +96,10 @@ const Checkout = () => {
     const data = {
       email: auth.user.email,
       items: items,
-      discount: { appliedDiscount: _id, isApplied, amount: +amount },
+      discount: { appliedDiscount: _id ?? '', isApplied, amount: +amount },
       totalPrice: cart.totalPrice,
       shippingFee: cart.shippingFee,
       subTotal: cart.subTotal,
-      paymentMethod: paymentMethod,
       shippingInformation: shippingInformation,
     };
 
@@ -154,7 +145,7 @@ const Checkout = () => {
                       Back to {STEPS[step - 1].title}
                     </button>
                   )}
-                  {step === 2 ? null : (
+                  {step === 1 ? null : (
                     <button
                       className='px-6 text-sm py-2 border border-blue-600 bg-blue-600 rounded-md text-white font-semibold hover:text-blue-600 hover:bg-transparent transition-all ml-auto disabled:opacity-50 disabled:pointer-events-none'
                       onClick={handleNext}
@@ -167,14 +158,28 @@ const Checkout = () => {
               </div>
               <div className='w-[30%]'>
                 <Summary cartState={cart} />
-                {step === 2 ? (
-                  <Button
-                    className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'
-                    onClick={handleSubmit}
-                    isLoading={isLoading}
+                {step === 1 ? (
+                  // <Button
+                  //   className='w-full bg-blue-600 py-2 font-semibold rounded-md text-white'
+                  //   onClick={handleSubmit}
+                  //   isLoading={isLoading}
+                  // >
+                  //   Place Order and Pay
+                  // </Button>
+                  <PayPalScriptProvider
+                    options={{
+                      'client-id': 'test',
+                      components: 'buttons',
+                      currency: 'USD',
+                    }}
                   >
-                    Place Order and Pay
-                  </Button>
+                    <PayButton
+                      isLoading={isLoading}
+                      callback={handleSubmit}
+                      amount={cart.totalPrice}
+                      showSpinner={false}
+                    />
+                  </PayPalScriptProvider>
                 ) : null}
               </div>
             </div>
