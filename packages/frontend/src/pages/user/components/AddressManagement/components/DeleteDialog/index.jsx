@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import { deleteAddress } from '../../../../../../features/user/actions';
-import Modal from '../../../../../../components/Modal';
+import { deleteAddress } from '@/features/user/actions';
+import Modal from '@/components/Modal';
+import { addressInitialValues } from '@/constant/initialValues';
 
 const DeleteDialog = ({ selectedAddress, setSelectedIndex }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,7 +11,7 @@ const DeleteDialog = ({ selectedAddress, setSelectedIndex }) => {
   const [request, setRequest] = useState(false);
 
   const { fullName, address, zipCode, city, state, phoneNumber, _id } =
-    selectedAddress || {};
+    selectedAddress || addressInitialValues;
 
   const handleDelete = () => {
     setRequest(true);
@@ -44,31 +45,41 @@ const DeleteDialog = ({ selectedAddress, setSelectedIndex }) => {
       </button>
       {isShow ? (
         <Modal onClose={() => setIsShow(false)}>
-          <h2>Are you sure to delete this address?</h2>
-          <div className='w-full py-4 px-5 border border-gray-200 rounded-xl flex flex-col'>
-            <h3 className='capitalize font-bold mb-2'>{fullName}</h3>
-            <ul className='mb-5'>
-              <li>
-                <span className='text-sm font-semibold'>{address}</span>
-              </li>
-              <li>
-                <span className='text-sm font-semibold'>
-                  {city}, {state} {zipCode}
-                </span>
-              </li>
-              <li>
-                <span className='text-sm font-semibold'>
-                  Phone Number: {phoneNumber}
-                </span>
-              </li>
-            </ul>
+          <div className='p-4'>
+            <h2 className='mb-4'>Are you sure to delete this address?</h2>
+            <div className='w-full py-4 px-5 border border-gray-200 rounded-xl flex flex-col mb-5'>
+              <h3 className='capitalize font-bold mb-2'>{fullName}</h3>
+              <ul>
+                <li>
+                  <span className='text-sm font-semibold'>{address}</span>
+                </li>
+                <li>
+                  <span className='text-sm font-semibold'>
+                    {city}, {state} {zipCode}
+                  </span>
+                </li>
+                <li>
+                  <span className='text-sm font-semibold'>
+                    Phone Number: {phoneNumber}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <button
+              onClick={handleDelete}
+              disabled={isLoading}
+              className='px-6 py-1 bg-blue-500 font-bold text-white mr-2 rounded-md'
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setIsShow(false)}
+              disabled={isLoading}
+              className='px-6 py-1 bg-gray-100 text-dark font-bold rounded-md'
+            >
+              No
+            </button>
           </div>
-          <button onClick={handleDelete} disabled={isLoading}>
-            Yes
-          </button>
-          <button onClick={() => setIsShow(false)} disabled={isLoading}>
-            No
-          </button>
         </Modal>
       ) : null}
     </>

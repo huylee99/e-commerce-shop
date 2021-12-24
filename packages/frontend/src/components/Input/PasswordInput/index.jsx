@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePassword, useSetPassword } from '@/context/passwordContext';
 
 const PasswordInput = ({
@@ -6,12 +6,19 @@ const PasswordInput = ({
   placeholder,
   validation,
   isSubmitted,
+  isSuccess,
   isLoading = false,
 }) => {
   const [value, setValue] = [usePassword(), useSetPassword()];
   const [touched, setTouched] = useState(false);
   const errorMessage = validation(value);
   const displayError = (touched || isSubmitted) && errorMessage;
+
+  useEffect(() => {
+    if (isSuccess) {
+      setValue('');
+    }
+  }, [isSuccess]);
 
   return (
     <div>

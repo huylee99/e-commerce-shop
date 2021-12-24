@@ -4,14 +4,14 @@ import InputLabel from '@/components/Input/InputLabel';
 import EditField from '@/components/Input/EditField';
 import Button from '@/components/Button';
 
-import { validation } from '../../services/formServices/fieldValidation';
-import { updateAddress, addAddress } from '../../features/user/actions';
-import { useForm } from '../../hooks/useForm';
+import { validation } from '@/services/formServices/fieldValidation';
+import { updateAddress, addAddress } from '@/features/user/actions';
+import { useForm } from '@/hooks/useForm';
+import { addressInitialValues } from '@/constant/initialValues';
 
-const AddressForm = ({ data, setShow }) => {
+const AddressForm = ({ data = addressInitialValues, setShow }) => {
   const { isLoading, isSubmitted, validate, setIsLoading } = useForm();
-  const { fullName, phoneNumber, address, city, state, zipCode, _id } =
-    data || {};
+  const { fullName, phoneNumber, address, city, state, zipCode, _id } = data;
   const handleSubmit = event => {
     event.preventDefault();
 

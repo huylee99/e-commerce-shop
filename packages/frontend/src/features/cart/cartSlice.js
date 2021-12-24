@@ -29,6 +29,7 @@ export const {
   decreaseQtyStorage,
   increaseQtyStorage,
   applyDiscountSuccess,
+  removeDiscountSuccess,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

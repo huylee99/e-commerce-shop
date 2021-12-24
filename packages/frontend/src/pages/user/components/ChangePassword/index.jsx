@@ -9,16 +9,18 @@ import { PasswordProvider } from '@/context/passwordContext';
 import authService from '@/services/authServices';
 import userRequest from '@/api/userAPI';
 
-import { useForm } from '../../../../hooks/useForm';
+import { useForm } from '@/hooks/useForm';
 import { validation } from '@/services/formServices/fieldValidation';
 
 const ChangePassword = () => {
   const { isLoading, setIsLoading, isSubmitted, validate } = useForm();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [notification, setNotification] = useState({ type: '', message: '' });
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
-    setErrorMessage('');
+    setIsSuccess(false);
+    setNotification({ type: '', message: '' });
     const { fieldObj, isFormValid } = validate(event.currentTarget);
 
     if (
@@ -32,9 +34,17 @@ const ChangePassword = () => {
         .then(response => {
           authService.setToken(response.data.token);
           event.target.reset();
+          setNotification({
+            type: 'success',
+            message: 'Your password has been changed successfully!',
+          });
+          setIsSuccess(true);
         })
         .catch(() =>
-          setErrorMessage('Your current password does not match our record')
+          setNotification({
+            type: 'error',
+            message: 'Your current password does not match our record',
+          })
         )
         .finally(() => setIsLoading(false));
     }
@@ -64,6 +74,7 @@ const ChangePassword = () => {
                   validation={validation.newPassword}
                   isSubmitted={isSubmitted}
                   isLoading={isLoading}
+                  isSuccess={isSuccess}
                 />
               </div>
               <div>
@@ -92,12 +103,20 @@ const ChangePassword = () => {
           </Button>
         </div>
       </form>
-      {errorMessage ? (
-        <div className='inline-block px-4 py-2 bg-red-500 bg-opacity-10 rounded-md'>
-          <span className='text-sm font-semibold text-red-500'>
-            {errorMessage}
-          </span>
-        </div>
+      {notification.message ? (
+        <>
+          <div
+            className={`inline-block px-4 py-2 bg-opacity-10 rounded-md ${
+              notification.type === 'error'
+                ? 'bg-red-500 text-red-500'
+                : 'bg-green-500 text-green-500'
+            }`}
+          >
+            <span className='text-sm font-semibold'>
+              {notification.message}
+            </span>
+          </div>
+        </>
       ) : null}
     </div>
   );

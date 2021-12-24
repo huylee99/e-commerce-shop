@@ -57,10 +57,12 @@ const ProductCard = ({ width, product }) => {
           <span className='px-2 py-1 mr-2 inline-flex text-sm leading-5 font-bold rounded-lg bg-yellow-100 text-yellow-600'>
             Hot
           </span>
-          <span className='px-2 py-1 inline-flex text-sm leading-5 font-bold rounded-lg bg-red-100 text-red-600 mr-auto'>
-            {'-10%'}
-          </span>
-          <button type='button' onClick={handleWishToggle} disabled={isLoading}>
+          <button
+            type='button'
+            onClick={handleWishToggle}
+            disabled={isLoading}
+            className='ml-auto'
+          >
             {wishList &&
             wishList.products.length > 0 &&
             _isIncluded(wishList.products, _id) ? (

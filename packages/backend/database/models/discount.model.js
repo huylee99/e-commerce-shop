@@ -18,6 +18,10 @@ const discountSchema = new Schema(
       type: Date,
       required: true,
     },
+    description: {
+      type: String,
+      default: '',
+    },
   },
   { timestamps: true }
 );
