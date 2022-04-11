@@ -28,6 +28,7 @@ const Shop = ({ query, handleChange, setPage }) => {
     setLoading(true);
     try {
       const response = await productRequest.getProducts(queries);
+      console.log(response);
       setData(response.data);
     } finally {
       if (!initial) {
