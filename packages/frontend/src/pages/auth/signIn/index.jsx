@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import SectionDivider from '@/components/SectionDivider';
@@ -69,9 +69,12 @@ const SignIn = () => {
 
             <div className='text-base font-semibold'>
               <span>New to SuperMarket?</span>{' '}
-              <span className='text-green-600 cursor-pointer hover:underline'>
+              <Link
+                to='/register'
+                className='text-green-600 cursor-pointer hover:underline'
+              >
                 Register here
-              </span>
+              </Link>
             </div>
           </div>
         </Container>

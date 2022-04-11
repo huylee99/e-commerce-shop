@@ -36,7 +36,11 @@ const getAllProducts = async ({ page = 1, limit = 12, ...rest }) => {
     .skip(skip)
     .limit(+limit);
 
-  const totalItems = await Product.countDocuments();
+  const totalItems = await Product.countDocuments({
+    ...rest,
+    price: { $lte: rest.price || 100 },
+    rating: rest.rating || { $lte: 5 },
+  });
   const { currentPage, totalPages } = paginate(totalItems, skip, limit);
 
   if (products) {

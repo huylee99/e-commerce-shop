@@ -81,12 +81,15 @@ const Header = ({ containerSize = 'lg' }) => {
               )}
             </div>
             <div className='flex items-center justify-center gap-4'>
-              <div className='w-11 h-11 border-2 border-gray-200 rounded-lg leading-[38px] text-center relative group hover:bg-primary hover:border-primary cursor-pointer transition-all'>
+              <Link
+                to='/user/wish-list'
+                className='w-11 h-11 border-2 border-gray-200 rounded-lg leading-[38px] text-center relative group hover:bg-primary hover:border-primary cursor-pointer transition-all'
+              >
                 <HeartIcon className='w-5 text-gray-400 group-hover:text-white inline-block' />
                 <div className='w-5 h-5 leading-[20px] bg-blue-600 text-white text-xs font-bold rounded-full absolute -top-2 -right-2 text-center'>
                   <span>{wishListLength}</span>
                 </div>
-              </div>
+              </Link>
               <div
                 className='w-11 h-11 border-2 border-gray-200 rounded-lg leading-[38px] text-center relative group hover:bg-primary hover:border-primary cursor-pointer transition-all'
                 onClick={() => setIsShow(true)}
